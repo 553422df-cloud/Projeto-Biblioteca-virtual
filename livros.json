@@ -1,0 +1,23 @@
+
+{
+  "livros": [
+    {
+      "id": "001",
+      "titulo": "O Pequeno Príncipe",
+      "autor": "Antoine de Saint-Exupéry",
+      "categoria": "Infantil e juvenil",
+      "sinopse": "Um pequeno príncipe viaja por diferentes planetas e descobre lições sobre amizade, amor e responsabilidade.",
+      "capa": "capas/pequeno-principe.jpg",
+      "pdfId": "ID_REAL_DO_ARQUIVO_NO_DRIVE"
+    },
+    {
+      "id": "002",
+      "titulo": "Dom Casmurro",
+      "autor": "Machado de Assis",
+      "categoria": "Ficção",
+      "sinopse": "Um romance sobre memória, ciúme e as incertezas das lembranças do narrador.",
+      "capa": "capas/dom-casmurro.jpg",
+      "pdfId": "ID_REAL_DO_ARQUIVO_NO_DRIVE"
+    }
+  ]
+}
