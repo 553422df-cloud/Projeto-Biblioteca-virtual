@@ -49,7 +49,7 @@ let livros = [
     autor: "Antoine de Saint-Exupéry",
     categoria: "Infantil e juvenil",          // tem que ser IGUAL ao data-category de um botão de categoria do HTML
     sinopse: "Um pequeno príncipe viaja por diferentes planetas e encontra personagens que o ajudam a refletir sobre amizade, afeto, responsabilidade e o sentido da vida.",   // resumo (aparece na janela)
-    pdfId: "COLOQUE_O_ID_DO_PDF_AQUI",        // ID do arquivo no Google Drive (esse texto significa "ainda não tem PDF")
+    pdfId: "https://drive.google.com/file/d/1vMvRINg5PqZxucy5Tx6WogKEVV5_Gz-S/view?usp=sharing",        // ID do arquivo no Google Drive (esse texto significa "ainda não tem PDF")
     capa: "",                                 // caminho de uma imagem de capa; vazio = usa a capa colorida
     cor: "#234b70"                            // cor da capa colorida
   },
@@ -202,11 +202,11 @@ function escaparHTML(valor = "") {                                        // val
 
 // urlPDF: monta o link de leitura do PDF no Google Drive a partir do pdfId do livro.
 // Devolve "" (texto vazio) quando o livro ainda não tem PDF.
+
 function urlPDF(livro) {
-  const id = livro.pdfId?.trim();                                         // ?. = "se existir"; .trim() tira os espaços das pontas
-  if (!id || id === "COLOQUE_O_ID_DO_PDF_AQUI") return "";                // sem id (ou ainda é o texto de exemplo): não tem PDF
-  return `https://drive.google.com/file/d/${encodeURIComponent(id)}/preview`;   // monta o link (encodeURIComponent deixa o id seguro para URL)
+  return livro.pdfId || "";
 }
+
 
 // urlCapa: devolve o caminho da imagem de capa do livro, ou "" se ele não tiver imagem.
 function urlCapa(livro) {
@@ -319,10 +319,24 @@ function abrirDetalhes(livro) {
   }
 
   // --- O botão "Ler agora" ---
-  const pdf = urlPDF(livro);                          // o link do PDF (ou "" se não tiver)
-  readLink.href = pdf || "#";                         // sem PDF, o link vira "#" (não vai a lugar nenhum)
-  readLink.setAttribute("aria-disabled", String(!pdf));   // avisa leitores de tela que o botão está desativado
-  readLink.style.opacity = pdf ? "1" : ".55";         // sem PDF, o botão fica apagado
+
+const pdf = urlPDF(livro);
+
+readLink.href = pdf || "#";
+readLink.setAttribute("aria-disabled", String(!pdf));
+readLink.style.opacity = pdf ? "1" : ".55";
+
+readLink.onclick = function (event) {
+  event.preventDefault();
+
+  if (!pdf) {
+    alert("Este livro ainda não possui um link de PDF.");
+    return;
+  }
+
+  window.open(pdf, "_blank");
+};
+
   dialogHelp.textContent = pdf                        // texto de ajuda, conforme tenha PDF ou não
     ? "O PDF será aberto em uma nova aba. O acesso depende das permissões do Google Drive."
     : "Adicione o ID real do PDF no script.js para ativar a leitura deste livro.";
