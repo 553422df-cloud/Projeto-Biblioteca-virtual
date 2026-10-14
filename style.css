@@ -8,7 +8,7 @@
   --panel: #1a201e;
   --wood: #4a2b19;
   --wood-light: #87552f;
-  --cream: #f2eadf;
+  --cream: #f2eadf; 
 }
 
 * {
@@ -766,4 +766,76 @@ h1 {
     transition-duration: .01ms !important;
     animation-duration: .01ms !important;
   }
+}
+
+/* ===== FORMULÁRIO DE NOVO LIVRO ===== */
+#add-dialog {
+  max-height: calc(100vh - 28px);
+  overflow-y: auto;
+}
+
+.add-form-wrap {
+  padding: clamp(22px, 5vw, 42px);
+}
+
+.add-form {
+  display: grid;
+  gap: 14px;
+}
+
+.add-form .eyebrow {
+  color: #8b6536;
+  margin: 0;
+}
+
+.add-form h2 {
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
+  margin: 0 36px 4px 0;
+}
+
+.add-form label {
+  display: grid;
+  gap: 6px;
+  font-size: .85rem;
+  color: #49433c;
+}
+
+.add-form input,
+.add-form select,
+.add-form textarea {
+  padding: 11px 12px;
+  border: 1px solid #cdbfae;
+  border-radius: 8px;
+  background: #fffaf3;
+  color: #25231f;
+  font: inherit;
+}
+
+.add-form :focus-visible {
+  outline: 3px solid #8b6536;
+  outline-offset: 2px;
+}
+
+.form-message {
+  margin: 0;
+  min-height: 1.3em;
+  color: #a1362b;
+  font-size: .85rem;
+  font-weight: 600;
+}
+
+#add-status:not(:empty) {
+  margin-top: 6px;
+  color: var(--gold);
+}
+
+
+/* ===== BOTÃO DE EXCLUIR ===== */
+.danger-button {
+  border-color: #d3a59f;
+  color: #8f2a20;
+}
+
+.danger-button:hover {
+  background: #f3dad6;
 }
