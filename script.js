@@ -1,3 +1,5 @@
+
+const livros = [
 /*
   CATÁLOGO DA BIBLIOTECA
   1. Troque os exemplos abaixo pelos dados reais.
@@ -59,7 +61,7 @@ let livros = [
     titulo: "Dom Casmurro",
     autor: "Machado de Assis",
     categoria: "Ficção",
-    sinopse: "Narrado por Bento Santiago, o romance revisita sua história com Capitu e convida o leitor a questionar memória, ciúme e os limites entre fatos e interpretação.",
+    sinopse: "Bento Santiago revisita sua história com Capitu e questiona memória, ciúme e interpretação.",
     pdfId: "COLOQUE_O_ID_DO_PDF_AQUI",
     capa: "",
     cor: "#6e3928"
@@ -69,7 +71,7 @@ let livros = [
     titulo: "1984",
     autor: "George Orwell",
     categoria: "Ficção",
-    sinopse: "Em uma sociedade submetida à vigilância e ao controle da informação, Winston Smith começa a questionar o regime que governa todos os aspectos da vida.",
+    sinopse: "Winston Smith começa a questionar uma sociedade submetida à vigilância e ao controle.",
     pdfId: "COLOQUE_O_ID_DO_PDF_AQUI",
     capa: "",
     cor: "#283b36"
@@ -79,7 +81,7 @@ let livros = [
     titulo: "Sapiens",
     autor: "Yuval Noah Harari",
     categoria: "Não ficção",
-    sinopse: "Uma visão panorâmica da história humana, explorando transformações culturais, sociais e tecnológicas que moldaram as sociedades.",
+    sinopse: "Uma visão da história humana e das transformações que moldaram as sociedades.",
     pdfId: "COLOQUE_O_ID_DO_PDF_AQUI",
     capa: "",
     cor: "#9b7845"
@@ -89,7 +91,7 @@ let livros = [
     titulo: "O Alquimista",
     autor: "Paulo Coelho",
     categoria: "Ficção",
-    sinopse: "Um jovem pastor parte em uma jornada em busca de um tesouro e encontra experiências que transformam sua maneira de compreender o mundo.",
+    sinopse: "Um jovem pastor parte em busca de um tesouro e transforma sua maneira de compreender o mundo.",
     pdfId: "COLOQUE_O_ID_DO_PDF_AQUI",
     capa: "",
     cor: "#81502b"
@@ -99,7 +101,7 @@ let livros = [
     titulo: "Uma Breve História do Tempo",
     autor: "Stephen Hawking",
     categoria: "Ciência e tecnologia",
-    sinopse: "Uma introdução a perguntas fundamentais sobre o universo, o espaço, o tempo, os buracos negros e as leis que regem a natureza.",
+    sinopse: "Uma introdução ao universo, ao espaço, ao tempo e aos buracos negros.",
     pdfId: "COLOQUE_O_ID_DO_PDF_AQUI",
     capa: "",
     cor: "#254c62"
@@ -111,7 +113,7 @@ let livros = [
     titulo: "Hábitos Atômicos",
     autor: "James Clear",
     categoria: "Desenvolvimento pessoal",
-    sinopse: "Uma abordagem prática sobre como pequenas mudanças repetidas podem ajudar a construir hábitos e a criar sistemas para alcançar objetivos.",
+    sinopse: "Como pequenas mudanças podem ajudar a construir hábitos e alcançar objetivos.",
     pdfId: "COLOQUE_O_ID_DO_PDF_AQUI",
     capa: "",
     cor: "#59633c"
@@ -227,6 +229,8 @@ function livrosVisiveis() {
     const campo = sortSelect.value === "author" ? "autor" : "titulo";     // ordena por autor ou por título, conforme o menu
     return a[campo].localeCompare(b[campo], "pt-BR");                     // compara respeitando acentos do português
   });
+
+  searchSuggestions.hidden = false;
 }
 
 
@@ -246,16 +250,22 @@ function criarLivro(livro) {
   // Se não tem, monta a capa colorida com o ornamento ✦, o título e o autor.
   // (escaparHTML deixa os textos seguros antes de entrarem no HTML.)
   const capa = urlCapa(livro);
+
   const conteudoCapa = capa
     ? `<img src="${escaparHTML(capa)}" alt="" style="width:100%;height:100%;object-fit:cover">`
-    : `<span class="cover-ornament" aria-hidden="true">✦</span>
-       <span class="cover-title">${escaparHTML(livro.titulo)}</span>
-       <span class="cover-author">${escaparHTML(livro.autor)}</span>`;
+    : `
+      <span class="cover-ornament" aria-hidden="true">✦</span>
+      <span class="cover-title">${escaparHTML(livro.titulo)}</span>
+      <span class="cover-author">${escaparHTML(livro.autor)}</span>
+    `;
 
   // Coloca dentro do botão: a capa (com a cor do livro; se não tiver cor, usa "#28443d")
   // e a legenda (título e autor) embaixo.
   botao.innerHTML = `
-    <span class="book-cover" style="background:${escaparHTML(livro.cor || "#28443d")}">${conteudoCapa}</span>
+    <span class="book-cover"
+      style="background:${escaparHTML(livro.cor || "#28443d")}">
+      ${conteudoCapa}
+    </span>
     <span class="book-caption">
       <strong>${escaparHTML(livro.titulo)}</strong>
       <span>${escaparHTML(livro.autor)}</span>
@@ -309,13 +319,10 @@ function abrirDetalhes(livro) {
     // Sem imagem: pinta o espaço da capa com a cor do livro (capa "de demonstração").
     dialogCover.removeAttribute("src");
     dialogCover.alt = `Capa demonstrativa de ${livro.titulo}`;
-    dialogCover.style.display = "block";
     dialogCover.style.background = livro.cor || "#28443d";
-    dialogCover.style.objectFit = "contain";
     dialogCover.style.padding = "14px";
-    dialogCover.style.color = "white";
-    dialogCover.style.minHeight = "190px";
-    dialogCover.style.border = "12px solid " + (livro.cor || "#28443d");
+    dialogCover.style.border = `12px solid ${livro.cor || "#28443d"}`;
+    dialogCover.style.objectFit = "contain";
   }
 
   // --- O botão "Ler agora" ---
@@ -339,7 +346,7 @@ readLink.onclick = function (event) {
 
   dialogHelp.textContent = pdf                        // texto de ajuda, conforme tenha PDF ou não
     ? "O PDF será aberto em uma nova aba. O acesso depende das permissões do Google Drive."
-    : "Adicione o ID real do PDF no script.js para ativar a leitura deste livro.";
+    : "Adicione o ID real do PDF no script.js para ativar a leitura.";
 
   atualizarBotaoFavorito();                           // deixa o botão de favorito com o texto certo
   dialog.showModal();                                 // ABRE a janela (com fundo escuro; Esc fecha sozinho)
