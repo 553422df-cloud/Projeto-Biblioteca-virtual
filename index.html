@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Explore uma biblioteca online e descubra sua próxima leitura.">
+
   <title>Minha Biblioteca</title>
 
   <link rel="stylesheet" href="style.css">
@@ -17,8 +18,11 @@
   <header class="topbar">
 
     <a class="brand" href="#" aria-label="Minha Biblioteca — início">
+
       <span class="brand-icon" aria-hidden="true">▤</span>
+
       <span>Minha Biblioteca</span>
+
     </a>
 
     <form class="search" role="search" id="search-form">
@@ -32,14 +36,21 @@
   </header>
 
   <main>
+
     <section class="hero" aria-labelledby="hero-title">
 
       <div class="hero-content">
+
         <p class="eyebrow">UM MUNDO DE HISTÓRIAS</p>
+
         <h1 id="hero-title">Bem-vindo à<br>sua biblioteca online!</h1>
+
         <p>Explore histórias, conhecimentos e novas perspectivas. Escolha uma categoria e comece sua jornada.</p>
+
         <a class="primary-button" href="#categorias">Explorar categorias <span aria-hidden="true">→</span></a>
+
       </div>
+
       <div class="hero-lamp" aria-hidden="true">✦</div>
       
     </section>
@@ -47,19 +58,29 @@
     <section class="categories section-wrap" id="categorias" aria-labelledby="categories-title">
 
       <div class="section-heading">
+       
         <div>
+         
           <p class="eyebrow">ENCONTRE SEU PRÓXIMO LIVRO</p>
+        
           <h2 id="categories-title">Explore por categoria</h2>
+       
         </div>
+       
         <p class="section-note">Escolha uma estante para começar.</p>
+     
       </div>
 
       <div class="category-grid" id="category-grid">
 
         <button class="category-card selected" data-category="Todas" type="button">
+        
           <span class="category-symbol" aria-hidden="true">▤</span>
+        
           <span class="category-name">Todos os livros</span>
+        
           <span class="category-description">Explore o acervo completo</span>
+      
         </button>
 
         <button class="category-card" data-category="Autoconhecimento" type="button">
@@ -117,25 +138,39 @@
     <section class="collection section-wrap" id="acervo" aria-labelledby="collection-title">
 
       <div class="section-heading collection-heading">
+      
         <div>
+        
           <p class="eyebrow">SUA PRÓXIMA DESCOBERTA</p>
+        
           <h2 id="collection-title">Estante: Todos os livros</h2>
+        
           <p class="collection-subtitle" id="results-count">Escolha um livro para conhecer a obra.</p>
           <p class="collection-subtitle" id="add-status" role="status"></p>
         </div>
+      
         <label class="sort-control">Ordenar por
+         
           <select id="sort-select">
+          
             <option value="title">Título (A–Z)</option>
+         
             <option value="author">Autor (A–Z)</option>
+        
           </select>
+      
         </label>
         <button class="primary-button" id="add-book-button" type="button">+ Adicionar livro</button>
       </div>
 
       <div class="bookcase" aria-label="Estante virtual de livros">
+      
         <div class="bookshelf" id="bookshelf"></div>
+     
       </div>
+      
       <p class="empty-state" id="empty-state" hidden>Nenhum livro encontrado. Tente outra busca ou categoria.</p>
+     
       <p class="demo-note">Demonstração visual: substitua os livros de exemplo pelos títulos e links do seu acervo.</p>
       
     </section>
@@ -145,28 +180,47 @@
 
 
   <footer class="footer">
+   
     <span class="footer-mark" aria-hidden="true">▤</span>
+   
     <p><strong>Minha Biblioteca</strong><br>Mais do que livros, um mundo de possibilidades.</p>
+  
   </footer>
-
+  
   <dialog class="book-dialog" id="book-dialog" aria-labelledby="dialog-title">
+  
     <form method="dialog"><button class="close-dialog" aria-label="Fechar detalhes">×</button></form>
+   
     <div class="dialog-layout">
+     
       <div class="dialog-cover-wrap"><img id="dialog-cover" src="" alt="" class="dialog-cover"></div>
+     
       <div class="dialog-info">
+       
         <p class="eyebrow">DETALHES DA OBRA</p>
+       
         <h2 id="dialog-title"></h2>
+       
         <p class="dialog-author" id="dialog-author"></p>
+       
         <div class="meta-row"><span id="dialog-category"></span><span class="tag">PDF</span></div>
+       
         <p class="synopsis" id="dialog-synopsis"></p>
+       
         <div class="dialog-actions">
+         
           <a class="primary-button" id="read-link" href="#" target="_blank" rel="noopener noreferrer">▤ Ler agora</a>
+         
           <button class="secondary-button" id="favorite-button" type="button">♡ Adicionar aos favoritos</button>
           <button class="secondary-button danger-button" id="delete-button" type="button">Excluir livro</button>
         </div>
+
         <p class="dialog-help" id="dialog-help">O PDF será aberto em uma nova aba.</p>
+
       </div>
+
     </div>
+
   </dialog>
 
   <dialog class="book-dialog" id="add-dialog" aria-labelledby="add-title">
@@ -208,4 +262,5 @@
     </div>
   </dialog>
 </body>
+
 </html>
