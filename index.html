@@ -8,13 +8,18 @@
 
   <title>Minha Biblioteca</title>
 
+  <!-- O visual da página -->
   <link rel="stylesheet" href="style.css">
+  <!-- A lógica. "defer" = só roda depois que o HTML inteiro foi carregado.
+       IMPORTANTE: abra o site pelo servidor (node server.js -> http://localhost:3000),
+       e não clicando duas vezes neste arquivo. -->
   <script src="script.js" defer></script>
 
 </head>
 
 <body>
 
+  <!-- ============ BARRA DO TOPO: logo, busca e link ============ -->
   <header class="topbar">
 
     <a class="brand" href="#" aria-label="Minha Biblioteca — início">
@@ -37,6 +42,7 @@
 
   <main>
 
+    <!-- ============ BANNER DE BOAS-VINDAS ============ -->
     <section class="hero" aria-labelledby="hero-title">
 
       <div class="hero-content">
@@ -55,6 +61,10 @@
       
     </section>
 
+    <!-- ============ CATEGORIAS ============
+         Cada botão tem um data-category. O script.js lê esse valor para filtrar a estante.
+         Para criar uma categoria nova: copie um botão, troque o data-category e os textos,
+         e adicione a mesma opção no formulário "Adicionar livro" (lá embaixo). -->
     <section class="categories section-wrap" id="categorias" aria-labelledby="categories-title">
 
       <div class="section-heading">
@@ -84,49 +94,49 @@
         </button>
 
         <button class="category-card" data-category="Autoconhecimento" type="button">
-          <span class="category-symbol" aria-hidden="true">✧</span>
+          <span class="category-symbol" aria-hidden="true">💭</span>
           <span class="category-name">Autoconhecimento</span>
           <span class="category-description">Psicologia, desenvolvimento pessoal, inteligência emocional e hábitos.</span>
         </button>
 
         <button class="category-card" data-category="Aventura" type="button">
-          <span class="category-symbol" aria-hidden="true">◎</span>
+          <span class="category-symbol" aria-hidden="true">⛷️</span>
           <span class="category-name">Aventura</span>
           <span class="category-description">Jornadas épicas, exploração de novos mundos, sobrevivência e grandes viagens.</span>
         </button>
 
         <button class="category-card" data-category="Comédia" type="button">
-          <span class="category-symbol" aria-hidden="true">☆</span>
+          <span class="category-symbol" aria-hidden="true">🎭</span>
           <span class="category-name">Comédia</span>
           <span class="category-description">Humor, sátiras, histórias leves e narrativas divertidas.</span>
         </button>
 
         <button class="category-card" data-category="Fantasia" type="button">
-          <span class="category-symbol" aria-hidden="true">⚛</span>
+          <span class="category-symbol" aria-hidden="true">🧚🏻</span>
           <span class="category-name">Fantasia</span>
           <span class="category-description">Magia, universos imaginários, criaturas místicas e alta fantasia.</span>
         </button>
 
         <button class="category-card" data-category="Filosofia" type="button">
-          <span class="category-symbol" aria-hidden="true">❋</span>
+          <span class="category-symbol" aria-hidden="true">📚</span>
           <span class="category-name">Filosofia</span>
           <span class="category-description">Pensamento crítico, ética, reflexões sobre a existência e história da filosofia.</span>
         </button>
 
            <button class="category-card" data-category="Infantojuvenil" type="button">
-          <span class="category-symbol" aria-hidden="true">❋</span>
+          <span class="category-symbol" aria-hidden="true">🧒🏻</span>
           <span class="category-name">Infantojuvenil</span>
           <span class="category-description">Fábulas, aventuras mágicas, contos de fadas, universos lúdicos e histórias para todas as idades.</span>
         </button>
 
          <button class="category-card" data-category="Romance" type="button">
-          <span class="category-symbol" aria-hidden="true">❋</span>
+          <span class="category-symbol" aria-hidden="true">💘</span>
           <span class="category-name">Romance</span>
           <span class="category-description">Histórias de amor, dramas relacionais, comédias românticas e ficção sentimental.</span>
         </button>
 
          <button class="category-card" data-category="Terror" type="button">
-          <span class="category-symbol" aria-hidden="true">❋</span>
+          <span class="category-symbol" aria-hidden="true">🧟</span>
           <span class="category-name">Terror</span>
           <span class="category-description">Suspense macabro, sobrenatural, ficção gótica e thrillers psicológicos.</span>
         </button>
@@ -135,6 +145,7 @@
 
     </section>
 
+    <!-- ============ ACERVO: título, ordenação, botão de adicionar e a estante ============ -->
     <section class="collection section-wrap" id="acervo" aria-labelledby="collection-title">
 
       <div class="section-heading collection-heading">
@@ -160,18 +171,20 @@
           </select>
       
         </label>
+        
         <button class="primary-button" id="add-book-button" type="button">+ Adicionar livro</button>
       </div>
 
       <div class="bookcase" aria-label="Estante virtual de livros">
       
+        <!-- Fica VAZIA aqui: o script.js desenha os livros dentro dela (renderizarAcervo) -->
         <div class="bookshelf" id="bookshelf"></div>
      
       </div>
       
       <p class="empty-state" id="empty-state" hidden>Nenhum livro encontrado. Tente outra busca ou categoria.</p>
      
-      <p class="demo-note">Demonstração visual: substitua os livros de exemplo pelos títulos e links do seu acervo.</p>
+      <p class="demo-note">Clique em “+ Adicionar livro” para montar o seu acervo.</p>
       
     </section>
 
@@ -179,6 +192,7 @@
 
 
 
+  <!-- ============ RODAPÉ ============ -->
   <footer class="footer">
    
     <span class="footer-mark" aria-hidden="true">▤</span>
@@ -187,6 +201,8 @@
   
   </footer>
   
+  <!-- ============ JANELA DE DETALHES DO LIVRO ============
+       Começa fechada. O script.js preenche os textos e abre com showModal() ao clicar num livro. -->
   <dialog class="book-dialog" id="book-dialog" aria-labelledby="dialog-title">
   
     <form method="dialog"><button class="close-dialog" aria-label="Fechar detalhes">×</button></form>
@@ -223,6 +239,8 @@
 
   </dialog>
 
+  <!-- ============ JANELA "ADICIONAR LIVRO" (formulário) ============
+       O "name" de cada campo é como o script.js encontra o valor (campos.titulo, campos.autor...). -->
   <dialog class="book-dialog" id="add-dialog" aria-labelledby="add-title">
     <form method="dialog"><button class="close-dialog" aria-label="Fechar formulário">×</button></form>
     <div class="add-form-wrap">
@@ -237,20 +255,24 @@
           <input name="autor" type="text" autocomplete="off">
         </label>
         <label>Categoria
+          <!-- As opções precisam ser IGUAIS aos data-category dos botões de categoria -->
           <select name="categoria">
             <option value="">Escolha uma categoria...</option>
-            <option>Ficção</option>
-            <option>Não ficção</option>
-            <option>Infantil e juvenil</option>
-            <option>Ciência e tecnologia</option>
-            <option>Desenvolvimento pessoal</option>
+            <option>Autoconhecimento</option>
+            <option>Aventura</option>
+            <option>Comédia</option>
+            <option>Fantasia</option>
+            <option>Filosofia</option>
+            <option>Infantojuvenil</option>
+            <option>Romance</option>
+            <option>Terror</option>
           </select>
         </label>
         <label>Sinopse
           <textarea name="sinopse" rows="4"></textarea>
         </label>
-        <label>ID do arquivo no Google Drive (opcional)
-          <input name="pdfId" type="text" autocomplete="off">
+        <label>Link do PDF (opcional)
+          <input name="pdf" type="url" autocomplete="off" placeholder="https://...">
         </label>
 
         <p class="form-message" id="add-message" role="alert"></p>

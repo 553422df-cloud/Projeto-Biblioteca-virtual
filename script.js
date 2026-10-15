@@ -1,470 +1,294 @@
 /*
-  CATÁLOGO DA BIBLIOTECA
-  1. Troque os exemplos abaixo pelos dados reais.
-  2. No campo pdfId, informe o ID do arquivo no Google Drive.
-  3. Para imagens de capa, use um caminho local (ex.: "capas/livro.jpg")
-     ou uma URL de imagem que você tenha direito de utilizar.
-*/
-
-/*
   =====================================================================
-  COMO ESTE ARQUIVO FUNCIONA (a ideia geral)
+  MINHA BIBLIOTECA — script.js
   =====================================================================
-  Tudo se resume a 3 partes:
-    1) DADOS ....... a lista "livros" e o que a página "lembra" (categoria, busca...)
-    2) DESENHAR .... renderizarAcervo() apaga a estante e desenha de novo só os livros certos
-    3) EVENTOS ..... clicar, digitar, enviar: cada evento só MUDA UM DADO e chama o desenhar de novo
+  A IDEIA GERAL:
+    - Os livros ficam guardados no arquivo livros.json.
+    - Quando a página abre, ela PEDE a lista ao servidor (carregarLivros).
+    - Quando adicionamos, excluímos ou favoritamos, a página muda a lista
+      e MANDA a lista inteira de volta para o servidor gravar (salvarLivros).
+    - Sempre que algo muda, renderizarAcervo() desenha a estante de novo.
 
-  O arquivo roda UMA vez, de cima para baixo, e termina desenhando a estante (última linha).
-  Depois a página espera o usuário clicar ou digitar.
-
-  ORDEM: 1 Dados | 2 Elementos | 3 Estado | 4 Funções de apoio | 5 Desenhar a estante |
-         6 Janela de detalhes | 7 Eventos | 8 Adicionar livro | 9 Excluir livro | 10 Primeiro desenho
+  ORDEM: 1 Dados | 2 Elementos | 3 Servidor | 4 Desenhar a estante |
+         5 Janela de detalhes | 6 Categorias e busca | 7 Adicionar | 8 Excluir | 9 Favoritar | 10 Começar
 */
 
 
 // =====================================================================
-// 1) DADOS: a lista de livros
+// 1) DADOS: o que a página "lembra"
 // =====================================================================
-// "let" (e não "const") porque, mais abaixo, essa lista é TROCADA por uma nova
-// quando livros são excluídos. Uma "const" não pode ser trocada.
-// [ ] é a lista, e cada { } é um livro. Entre um livro e outro vai uma vírgula.
-let livros = [
-  {
-    id: 1,                                    // número ÚNICO do livro (favoritos e exclusão usam o id)
-    titulo: "O Pequeno Príncipe",             // aparece na capa, na legenda e na janela de detalhes
-    autor: "Antoine de Saint-Exupéry",
-    categoria: "Infantil e juvenil",          // tem que ser IGUAL ao data-category de um botão de categoria do HTML
-    sinopse: "Um pequeno príncipe viaja por diferentes planetas e encontra personagens que o ajudam a refletir sobre amizade, afeto, responsabilidade e o sentido da vida.",   // resumo (aparece na janela)
-    pdfId: "https://drive.google.com/file/d/1vMvRINg5PqZxucy5Tx6WogKEVV5_Gz-S/view?usp=sharing",        // ID do arquivo no Google Drive (esse texto significa "ainda não tem PDF")
-    capa: "",                                 // caminho de uma imagem de capa; vazio = usa a capa colorida
-    cor: "#234b70"                            // cor da capa colorida
-  },
-  // Os outros livros seguem exatamente o mesmo modelo do livro 1.
-  {
-    id: 2,
-    titulo: "Dom Casmurro",
-    autor: "Machado de Assis",
-    categoria: "Ficção",
-    sinopse: "Narrado por Bento Santiago, o romance revisita sua história com Capitu e convida o leitor a questionar memória, ciúme e os limites entre fatos e interpretação.",
-    pdfId: "COLOQUE_O_ID_DO_PDF_AQUI",
-    capa: "",
-    cor: "#6e3928"
-  },
-  {
-    id: 3,
-    titulo: "1984",
-    autor: "George Orwell",
-    categoria: "Ficção",
-    sinopse: "Em uma sociedade submetida à vigilância e ao controle da informação, Winston Smith começa a questionar o regime que governa todos os aspectos da vida.",
-    pdfId: "COLOQUE_O_ID_DO_PDF_AQUI",
-    capa: "",
-    cor: "#283b36"
-  },
-  {
-    id: 4,
-    titulo: "Sapiens",
-    autor: "Yuval Noah Harari",
-    categoria: "Não ficção",
-    sinopse: "Uma visão panorâmica da história humana, explorando transformações culturais, sociais e tecnológicas que moldaram as sociedades.",
-    pdfId: "COLOQUE_O_ID_DO_PDF_AQUI",
-    capa: "",
-    cor: "#9b7845"
-  },
-  {
-    id: 5,
-    titulo: "O Alquimista",
-    autor: "Paulo Coelho",
-    categoria: "Ficção",
-    sinopse: "Um jovem pastor parte em uma jornada em busca de um tesouro e encontra experiências que transformam sua maneira de compreender o mundo.",
-    pdfId: "COLOQUE_O_ID_DO_PDF_AQUI",
-    capa: "",
-    cor: "#81502b"
-  },
-  {
-    id: 6,
-    titulo: "Uma Breve História do Tempo",
-    autor: "Stephen Hawking",
-    categoria: "Ciência e tecnologia",
-    sinopse: "Uma introdução a perguntas fundamentais sobre o universo, o espaço, o tempo, os buracos negros e as leis que regem a natureza.",
-    pdfId: "COLOQUE_O_ID_DO_PDF_AQUI",
-    capa: "",
-    cor: "#254c62"
-  },
-  // ATENÇÃO: os livros de id 7, 8, 9 e 10 abaixo são IDÊNTICOS (mesmo título e autor).
-  // Se não for de propósito (teste), apague os repetidos. Cada livro precisa de um id diferente.
-  {
-    id: 7,
-    titulo: "Hábitos Atômicos",
-    autor: "James Clear",
-    categoria: "Desenvolvimento pessoal",
-    sinopse: "Uma abordagem prática sobre como pequenas mudanças repetidas podem ajudar a construir hábitos e a criar sistemas para alcançar objetivos.",
-    pdfId: "COLOQUE_O_ID_DO_PDF_AQUI",
-    capa: "",
-    cor: "#59633c"
-  },
-  {
-    id: 8,
-    titulo: "Hábitos Atômicos",
-    autor: "James Clear",
-    categoria: "Desenvolvimento pessoal",
-    sinopse: "Uma abordagem prática sobre como pequenas mudanças repetidas podem ajudar a construir hábitos e a criar sistemas para alcançar objetivos.",
-    pdfId: "COLOQUE_O_ID_DO_PDF_AQUI",
-    capa: "",
-    cor: "#59633c"
-  },
-  {
-    id: 9,
-    titulo: "Hábitos Atômicos",
-    autor: "James Clear",
-    categoria: "Desenvolvimento pessoal",
-    sinopse: "Uma abordagem prática sobre como pequenas mudanças repetidas podem ajudar a construir hábitos e a criar sistemas para alcançar objetivos.",
-    pdfId: "COLOQUE_O_ID_DO_PDF_AQUI",
-    capa: "",
-    cor: "#59633c"
-  },
-  {
-    id: 10,
-    titulo: "Hábitos Atômicos",
-    autor: "James Clear",
-    categoria: "Desenvolvimento pessoal",
-    sinopse: "Uma abordagem prática sobre como pequenas mudanças repetidas podem ajudar a construir hábitos e a criar sistemas para alcançar objetivos.",
-    pdfId: "COLOQUE_O_ID_DO_PDF_AQUI",
-    capa: "",
-    cor: "#59633c"
-  }
+let livros = [];                 // a lista de livros (vem do livros.json)
+let categoriaAtiva = "Todas";    // categoria escolhida ("Todas" = mostra tudo)
+let livroSelecionado = null;     // o livro aberto na janela de detalhes
 
-];
+const cores = ["#234b70", "#6e3928", "#283b36", "#9b7845", "#81502b", "#254c62", "#59633c"];   // cores das capas
+
 
 // =====================================================================
 // 2) ELEMENTOS DA PÁGINA (pegos pelo id que está no HTML)
 // =====================================================================
-// document.querySelector("#nome") procura o elemento com id="nome" e guarda numa variável.
-
-// --- a estante e os controles ---
-const bookshelf = document.querySelector("#bookshelf");               // a caixa VAZIA onde os livros são desenhados
-const categoryGrid = document.querySelector("#category-grid");        // o grupo com os botões de categoria
-const searchForm = document.querySelector("#search-form");            // o formulário da barra de busca
-const searchInput = document.querySelector("#search-input");          // o campo onde se digita a busca
+// --- estante e controles ---
+const bookshelf = document.querySelector("#bookshelf");               // onde os livros são desenhados
+const categoryGrid = document.querySelector("#category-grid");        // os botões de categoria
+const searchForm = document.querySelector("#search-form");            // a barra de busca
+const searchInput = document.querySelector("#search-input");          // o campo de busca
 const sortSelect = document.querySelector("#sort-select");            // o menu "Ordenar por"
-const collectionTitle = document.querySelector("#collection-title");  // o título "Estante: ..."
-const resultsCount = document.querySelector("#results-count");        // o texto "X livros encontrados"
-const emptyState = document.querySelector("#empty-state");            // a mensagem "Nenhum livro encontrado"
+const collectionTitle = document.querySelector("#collection-title");  // "Estante: ..."
+const resultsCount = document.querySelector("#results-count");        // "X livros encontrados"
+const emptyState = document.querySelector("#empty-state");            // "Nenhum livro encontrado"
+const addStatus = document.querySelector("#add-status");              // avisos ("foi adicionado", "foi excluído")
 
-// --- a janela de detalhes do livro ---
-const dialog = document.querySelector("#book-dialog");                // a janela (<dialog>)
-const dialogCover = document.querySelector("#dialog-cover");          // a capa dentro da janela
+// --- janela de detalhes ---
+const dialog = document.querySelector("#book-dialog");
+const dialogCover = document.querySelector("#dialog-cover");
 const dialogTitle = document.querySelector("#dialog-title");
 const dialogAuthor = document.querySelector("#dialog-author");
 const dialogCategory = document.querySelector("#dialog-category");
 const dialogSynopsis = document.querySelector("#dialog-synopsis");
-const readLink = document.querySelector("#read-link");                // o botão "Ler agora"
-const favoriteButton = document.querySelector("#favorite-button");    // o botão de favorito
-const dialogHelp = document.querySelector("#dialog-help");            // o texto de ajuda embaixo dos botões
+const dialogHelp = document.querySelector("#dialog-help");
+const readLink = document.querySelector("#read-link");                // "Ler agora"
+const favoriteButton = document.querySelector("#favorite-button");    // "Adicionar aos favoritos"
+const deleteButton = document.querySelector("#delete-button");        // "Excluir livro"
+
+// --- janela "Adicionar livro" ---
+const addButton = document.querySelector("#add-book-button");         // "+ Adicionar livro"
+const addDialog = document.querySelector("#add-dialog");              // a janela do formulário
+const addForm = document.querySelector("#add-form");                  // o formulário
+const addMessage = document.querySelector("#add-message");            // aviso de erro do formulário
+const cancelAdd = document.querySelector("#cancel-add");              // "Cancelar"
 
 
 // =====================================================================
-// 3) ESTADO: o que a página "lembra"
+// 3) CONVERSAR COM O SERVIDOR (ler e gravar o livros.json)
 // =====================================================================
-let categoriaAtiva = "Todas";    // categoria escolhida agora ("Todas" = sem filtro)
-let termoBusca = "";             // o texto digitado na busca
-let livroSelecionado = null;     // o livro aberto na janela (null = nenhum)
-const favoritos = new Set();     // ids dos favoritos, sem repetidos (só na memória: some ao atualizar a página)
+// fetch = "buscar": faz um pedido ao servidor.
+// await = "espere a resposta chegar antes de continuar" (só funciona dentro de função async).
+
+// carregarLivros: pede a lista ao servidor e desenha a estante
+async function carregarLivros() {
+  const resposta = await fetch("/livros");   // pede: "me dá os livros"
+  livros = await resposta.json();            // transforma a resposta (texto) em lista
+  renderizarAcervo();
+}
+
+// salvarLivros: manda a lista inteira para o servidor gravar no livros.json
+async function salvarLivros() {
+  await fetch("/livros", {
+    method: "POST",                                     // POST = "estou mandando dados"
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(livros)                        // lista -> texto
+  });
+}
 
 
 // =====================================================================
-// 4) FUNÇÕES DE APOIO
+// 4) DESENHAR A ESTANTE
 // =====================================================================
 
-// Lê e salva listas no navegador. O localStorage guarda só TEXTO:
-// JSON.stringify transforma a lista em texto, e JSON.parse volta a ser lista.
-const ler = chave => JSON.parse(localStorage.getItem(chave) || "[]");
-const salvar = (chave, lista) => localStorage.setItem(chave, JSON.stringify(lista));
+// criarLivro: cria o botão de UM livro (capa colorida + legenda)
+function criarLivro(livro) {
+  const capa = document.createElement("span");
+  capa.className = "book-cover";
+  capa.style.background = livro.cor;
+  capa.innerHTML = `<span class="cover-ornament">✦</span>`;   // a estrelinha (texto fixo, sem dados do usuário)
+  capa.append(criarTexto("span", "cover-title", livro.titulo), criarTexto("span", "cover-author", livro.autor));
 
-// Cria um elemento com classe e texto. O textContent é seguro: nunca trata o texto como HTML.
-function criar(tag, classe = "", texto = "") {
+  const legenda = document.createElement("span");
+  legenda.className = "book-caption";
+  legenda.append(criarTexto("strong", "", livro.titulo), criarTexto("span", "", livro.autor));
+
+  const botao = document.createElement("button");
+  botao.className = "book";
+  botao.type = "button";
+  botao.append(capa, legenda);
+  botao.addEventListener("click", () => abrirDetalhes(livro));   // clicar no livro abre os detalhes
+  return botao;
+}
+
+// criarTexto: cria um elemento com classe e texto.
+// Usamos textContent (e não innerHTML) para o texto digitado nunca virar código HTML.
+function criarTexto(tag, classe, texto) {
   const elemento = document.createElement(tag);
-  if (classe) elemento.className = classe;
+  elemento.className = classe;
   elemento.textContent = texto;
   return elemento;
 }
 
-// urlPDF: o link do PDF do livro. Aceita o link completo do Drive OU só o ID.
-// Devolve "" quando o livro não tem PDF (campo vazio ou ainda com o texto de exemplo).
-function urlPDF(livro) {
-  const pdf = (livro.pdfId || "").trim();
-  if (!pdf || pdf === "COLOQUE_O_ID_DO_PDF_AQUI") return "";
-  return pdf.startsWith("http") ? pdf : `https://drive.google.com/file/d/${pdf}/preview`;
-}
-
-// livrosVisiveis: os livros que devem aparecer AGORA, na ordem certa.
-function livrosVisiveis() {
-  const busca = termoBusca.toLowerCase();                                // minúsculas: não importa maiúscula/minúscula
-  const campo = sortSelect.value === "author" ? "autor" : "titulo";      // ordenar por autor ou por título
-
-  return livros
-    .filter(livro => {                                                   // filter: guarda só os livros que passam nos DOIS testes
-      const categoriaCombina = categoriaAtiva === "Todas" || livro.categoria === categoriaAtiva;
-      const texto = `${livro.titulo} ${livro.autor} ${livro.categoria} ${livro.sinopse}`.toLowerCase();
-      return categoriaCombina && texto.includes(busca);
-    })
-    .sort((a, b) => a[campo].localeCompare(b[campo], "pt-BR"));          // sort: ordena respeitando os acentos do português
-}
-
-// Rola a página até a estante.
-function irParaAcervo() {
-  document.querySelector("#acervo").scrollIntoView({ behavior: "smooth", block: "start" });
-}
-
-
-// =====================================================================
-// 5) DESENHAR A ESTANTE
-// =====================================================================
-
-// criarLivro: cria o BOTÃO de um livro (capa + legenda) e devolve ele.
-// Quem coloca o botão na tela é a renderizarAcervo.
-function criarLivro(livro) {
-  // A capa: a imagem (se o livro tiver) ou uma capa colorida com título e autor
-  const capa = criar("span", "book-cover");
-  capa.style.background = livro.cor || "#28443d";
-  if (livro.capa) {
-    const imagem = criar("img");
-    imagem.src = livro.capa;
-    imagem.alt = "";
-    imagem.style.cssText = "width:100%;height:100%;object-fit:cover";
-    capa.append(imagem);
-  } else {
-    const ornamento = criar("span", "cover-ornament", "✦");
-    ornamento.setAttribute("aria-hidden", "true");
-    capa.append(ornamento, criar("span", "cover-title", livro.titulo), criar("span", "cover-author", livro.autor));
-  }
-
-  // A legenda: título e autor, embaixo da capa
-  const legenda = criar("span", "book-caption");
-  legenda.append(criar("strong", "", livro.titulo), criar("span", "", livro.autor));
-
-  // O botão que junta tudo
-  const botao = criar("button", "book");
-  botao.type = "button";
-  botao.setAttribute("aria-label", `Ver detalhes de ${livro.titulo}, por ${livro.autor}`);   // texto lido por leitores de tela
-  botao.append(capa, legenda);
-  botao.addEventListener("click", () => abrirDetalhes(livro));                                // clicar abre a janela
-  return botao;
-}
-
-// renderizarAcervo: DESENHA a estante. É a função mais importante do arquivo:
-// sempre que algo muda (categoria, busca, ordem, livro novo ou excluído), ela é chamada de novo.
+// renderizarAcervo: A FUNÇÃO PRINCIPAL. Filtra, ordena e desenha os livros.
 function renderizarAcervo() {
-  const resultado = livrosVisiveis();                 // 1) os livros que devem aparecer agora
-  bookshelf.replaceChildren();                        // 2) apaga tudo o que estava na estante
+  const busca = searchInput.value.trim().toLowerCase();               // o que foi digitado na busca
+  const campo = sortSelect.value === "author" ? "autor" : "titulo";   // ordenar por autor ou título
 
-  resultado.forEach((livro, indice) => {              // 3) coloca cada livro na estante
+  // 1) FILTRAR: só os livros da categoria escolhida E que combinam com a busca
+  const resultado = livros.filter(livro => {
+    const naCategoria = categoriaAtiva === "Todas" || livro.categoria === categoriaAtiva;
+    const naBusca = `${livro.titulo} ${livro.autor} ${livro.categoria}`.toLowerCase().includes(busca);
+    return naCategoria && naBusca;
+  });
+
+  // 2) ORDENAR: de A a Z (localeCompare respeita os acentos)
+  resultado.sort((a, b) => a[campo].localeCompare(b[campo], "pt-BR"));
+
+  // 3) DESENHAR: apaga a estante e coloca os livros, com uma prateleira a cada 5
+  bookshelf.replaceChildren();
+  resultado.forEach((livro, indice) => {
     bookshelf.append(criarLivro(livro));
-    if ((indice + 1) % 5 === 0 && indice !== resultado.length - 1) {   // a cada 5 livros, uma tábua de prateleira
-      const prateleira = criar("div", "shelf-board");
-      prateleira.setAttribute("aria-hidden", "true");                  // é só decoração: leitores de tela ignoram
+    if ((indice + 1) % 5 === 0 && indice !== resultado.length - 1) {
+      const prateleira = document.createElement("div");
+      prateleira.className = "shelf-board";
       bookshelf.append(prateleira);
     }
   });
 
-  emptyState.hidden = resultado.length > 0;           // 4) "Nenhum livro encontrado" só quando a lista está vazia
+  // 4) TEXTOS em volta da estante
+  emptyState.hidden = resultado.length > 0;
   resultsCount.textContent = `${resultado.length} ${resultado.length === 1 ? "livro encontrado" : "livros encontrados"}`;
-  collectionTitle.textContent = `Estante: ${categoriaAtiva}`;
+  collectionTitle.textContent = `Estante: ${categoriaAtiva === "Todas" ? "Todos os livros" : categoriaAtiva}`;
 }
 
 
 // =====================================================================
-// 6) JANELA DE DETALHES DO LIVRO
+// 5) JANELA DE DETALHES
 // =====================================================================
 
-// abrirDetalhes: preenche a janela com os dados do livro clicado e abre ela.
+// abrirDetalhes: preenche a janela com o livro clicado e abre
 function abrirDetalhes(livro) {
-  livroSelecionado = livro;                           // guarda qual livro está aberto (favorito, PDF e exclusão usam isso)
+  livroSelecionado = livro;   // guarda qual livro está aberto (excluir e favoritar usam isso)
+
   dialogTitle.textContent = livro.titulo;
   dialogAuthor.textContent = livro.autor;
   dialogCategory.textContent = livro.categoria;
   dialogSynopsis.textContent = livro.sinopse;
 
-  // A capa: a imagem, ou (sem imagem) o espaço pintado com a cor do livro
-  if (livro.capa) {
-    dialogCover.src = livro.capa;
-    dialogCover.alt = `Capa de ${livro.titulo}`;
-    dialogCover.style.display = "block";
-  } else {
-    const cor = livro.cor || "#28443d";
-    dialogCover.removeAttribute("src");
-    dialogCover.alt = `Capa demonstrativa de ${livro.titulo}`;
-    dialogCover.style.display = "block";
-    dialogCover.style.background = cor;
-    dialogCover.style.objectFit = "contain";
-    dialogCover.style.padding = "14px";
-    dialogCover.style.color = "white";
-    dialogCover.style.minHeight = "190px";
-    dialogCover.style.border = "12px solid " + cor;
-  }
+  // capa: um retângulo com a cor do livro
+  dialogCover.alt = `Capa demonstrativa de ${livro.titulo}`;
+  dialogCover.style.background = livro.cor;
+  dialogCover.style.borderColor = livro.cor;
 
-  // O botão "Ler agora": fica apagado quando o livro não tem PDF (o clique é tratado na seção 7)
-  const pdf = urlPDF(livro);
-  readLink.href = pdf || "#";
-  readLink.setAttribute("aria-disabled", String(!pdf));
-  readLink.style.opacity = pdf ? "1" : ".55";
-  dialogHelp.textContent = pdf
-    ? "O PDF será aberto em uma nova aba. O acesso depende das permissões do Google Drive."
-    : "Adicione o ID real do PDF no script.js para ativar a leitura deste livro.";
+  // "Ler agora": só aparece se o livro tiver link de PDF
+  readLink.href = livro.pdf;
+  readLink.style.display = livro.pdf ? "" : "none";
+  dialogHelp.textContent = livro.pdf ? "O PDF será aberto em uma nova aba." : "Este livro não tem PDF cadastrado.";
 
   atualizarBotaoFavorito();
-  dialog.showModal();                                 // ABRE a janela (com fundo escuro; Esc fecha sozinho)
+  dialog.showModal();   // abre a janela
 }
 
-// atualizarBotaoFavorito: troca o texto do botão entre "♡ Adicionar" e "♥ Remover".
+// atualizarBotaoFavorito: muda o texto do botão de favorito
 function atualizarBotaoFavorito() {
-  const favorito = favoritos.has(livroSelecionado.id);
-  favoriteButton.textContent = favorito ? "♥ Remover dos favoritos" : "♡ Adicionar aos favoritos";
-  favoriteButton.setAttribute("aria-pressed", String(favorito));
+  favoriteButton.textContent = livroSelecionado.favorito ? "♥ Remover dos favoritos" : "♡ Adicionar aos favoritos";
 }
 
 
 // =====================================================================
-// 7) EVENTOS: o que acontece quando o usuário clica ou digita
+// 6) CATEGORIAS, BUSCA E ORDENAÇÃO
 // =====================================================================
 
-// --- Clique em uma categoria (um só "ouvinte" no grupo inteiro) ---
+// Clique em uma categoria
 categoryGrid.addEventListener("click", evento => {
-  const botao = evento.target.closest("[data-category]");        // qual botão foi clicado?
-  if (!botao) return;                                            // clicou fora dos botões: ignora
-  categoriaAtiva = botao.dataset.category;                       // lê o data-category do HTML
+  const botao = evento.target.closest("[data-category]");   // qual botão foi clicado?
+  if (!botao) return;                                       // clicou fora de um botão: ignora
+
+  categoriaAtiva = botao.dataset.category;                  // lê o data-category do HTML
   categoryGrid.querySelectorAll("[data-category]").forEach(item => {
-    item.classList.toggle("selected", item === botao);           // só o clicado fica destacado
-    item.setAttribute("aria-pressed", String(item === botao));
+    item.classList.toggle("selected", item === botao);      // só o botão clicado fica destacado
   });
   renderizarAcervo();
-  irParaAcervo();
+  document.querySelector("#acervo").scrollIntoView({ behavior: "smooth" });   // rola até a estante
 });
 
-// --- Digitar na busca: filtra a cada letra ---
-searchInput.addEventListener("input", () => {
-  termoBusca = searchInput.value.trim();
-  renderizarAcervo();
-});
+// Digitar na busca: filtra a cada letra
+searchInput.addEventListener("input", renderizarAcervo);
 
-// --- Enter na busca: não recarrega a página, só leva até a estante ---
-searchForm.addEventListener("submit", evento => {
-  evento.preventDefault();
-  irParaAcervo();
-});
+// Apertar Enter na busca: não recarrega a página
+searchForm.addEventListener("submit", evento => evento.preventDefault());
 
-// --- Mudar o menu "Ordenar por" (livrosVisiveis já lê o menu sozinha) ---
+// Mudar a ordenação
 sortSelect.addEventListener("change", renderizarAcervo);
 
-// --- Botão de favorito ---
-favoriteButton.addEventListener("click", () => {
-  if (favoritos.has(livroSelecionado.id)) favoritos.delete(livroSelecionado.id);
-  else favoritos.add(livroSelecionado.id);
-  atualizarBotaoFavorito();
-});
-
-// --- Botão "Ler agora": abre o PDF em outra aba, ou avisa que o livro não tem PDF ---
-readLink.addEventListener("click", evento => {
-  evento.preventDefault();                                       // nós mesmos abrimos o PDF
-  const pdf = urlPDF(livroSelecionado);
-  if (!pdf) {
-    alert("Este livro ainda não possui um link de PDF.");
-    return;
-  }
-  window.open(pdf, "_blank");
-});
-
-// --- Clicar no fundo escuro da janela fecha ela ---
-dialog.addEventListener("click", evento => {
-  if (evento.target === dialog) dialog.close();                  // só é verdade quando o clique foi no fundo, não no conteúdo
-});
-
 
 // =====================================================================
-// 8) ADICIONAR LIVRO PELO SITE
+// 7) ADICIONAR LIVRO
 // =====================================================================
-const addButton = document.querySelector("#add-book-button");   // o botão "+ Adicionar livro"
-const addDialog = document.querySelector("#add-dialog");        // a janela do formulário
-const addForm = document.querySelector("#add-form");            // o formulário
-const addMessage = document.querySelector("#add-message");      // o aviso de erro dentro da janela
-const addStatus = document.querySelector("#add-status");        // o aviso de sucesso (e de exclusão) na página
-const cores = ["#234b70", "#6e3928", "#283b36", "#9b7845", "#81502b", "#254c62", "#59633c"];   // cores das capas dos livros novos
 
-// Ao abrir a página, recupera o que ficou salvo no navegador:
-let meusLivros = ler("meusLivros");                       // os livros que você cadastrou antes: entram na lista
-meusLivros.forEach(livro => livros.push(livro));
-const apagados = ler("apagados");                         // os ids dos livros que você excluiu: saem da lista
-livros = livros.filter(livro => !apagados.includes(livro.id));
-
-// --- "+ Adicionar livro" abre o formulário; "Cancelar" fecha ---
+// "+ Adicionar livro" abre o formulário limpo
 addButton.addEventListener("click", () => {
-  addForm.reset();                  // limpa o formulário
-  addMessage.textContent = "";      // limpa o aviso de erro
+  addForm.reset();
+  addMessage.textContent = "";
   addDialog.showModal();
 });
-document.querySelector("#cancel-add").addEventListener("click", () => addDialog.close());
 
-// --- Enviar o formulário: valida, cria o livro, salva e redesenha ---
-addForm.addEventListener("submit", evento => {
-  evento.preventDefault();                          // não recarrega a página
+// "Cancelar" fecha o formulário
+cancelAdd.addEventListener("click", () => addDialog.close());
 
-  const campos = addForm.elements;                  // os campos do formulário, pelo "name" do HTML
-  const titulo = campos.titulo.value.trim();        // .trim() tira espaços das pontas
-  const autor = campos.autor.value.trim();
-  const categoria = campos.categoria.value;
-  const sinopse = campos.sinopse.value.trim();
-  const pdfId = campos.pdfId.value.trim();          // opcional: pode ficar vazio
+// Enviar o formulário
+addForm.addEventListener("submit", async evento => {
+  evento.preventDefault();   // não recarrega a página
 
-  // 1) Validação: se algo estiver errado, mostra o aviso e para por aqui (return)
-  if (!titulo || !autor || !categoria || !sinopse) {
+  // 1) Pega o que foi digitado (pelo "name" de cada campo no HTML)
+  const campos = addForm.elements;
+  const novo = {
+    id: Date.now(),                                   // número único (milissegundos desde 1970)
+    titulo: campos.titulo.value.trim(),
+    autor: campos.autor.value.trim(),
+    categoria: campos.categoria.value,
+    sinopse: campos.sinopse.value.trim(),
+    pdf: campos.pdf.value.trim(),                     // opcional
+    cor: cores[livros.length % cores.length],         // escolhe uma cor da lista, em rodízio
+    favorito: false
+  };
+
+  // 2) Confere se está tudo preenchido
+  if (!novo.titulo || !novo.autor || !novo.categoria || !novo.sinopse) {
     addMessage.textContent = "Preencha título, autor, categoria e sinopse.";
     return;
   }
-  const jaExiste = livros.some(livro =>             // .some(): existe ALGUM livro com o mesmo título e autor?
-    livro.titulo.toLowerCase() === titulo.toLowerCase() && livro.autor.toLowerCase() === autor.toLowerCase());
+
+  // 3) Confere se o livro já existe (mesmo título e autor)
+  const jaExiste = livros.some(livro =>
+    livro.titulo.toLowerCase() === novo.titulo.toLowerCase() &&
+    livro.autor.toLowerCase() === novo.autor.toLowerCase());
   if (jaExiste) {
     addMessage.textContent = "Esse livro já está na estante.";
     return;
   }
 
-  // 2) Cria o livro (mesmos campos dos outros). Date.now() (ms desde 1970) dá um id que não repete.
-  const novo = { id: Date.now(), titulo, autor, categoria, sinopse, pdfId, capa: "", cor: cores[livros.length % cores.length] };
+  // 4) Coloca na lista, GRAVA no livros.json e redesenha
   livros.push(novo);
-
-  // 3) Guarda no navegador, para o livro continuar lá depois de atualizar a página
-  meusLivros.push(novo);
-  salvar("meusLivros", meusLivros);
-
-  // 4) Fecha a janela, avisa, e redesenha tudo (o .click() reaproveita o clique de categoria "Todas")
+  await salvarLivros();
   addDialog.close();
-  searchInput.value = "";
-  termoBusca = "";
-  document.querySelector('[data-category="Todas"]').click();
-  addStatus.textContent = `"${titulo}" foi adicionado à estante.`;
+  renderizarAcervo();
+  addStatus.textContent = `"${novo.titulo}" foi adicionado à estante.`;
 });
 
 
 // =====================================================================
-// 9) EXCLUIR LIVRO
+// 8) EXCLUIR LIVRO
 // =====================================================================
-// O código NÃO consegue apagar o livro do arquivo. Então ele ANOTA o id do livro excluído
-// (em "apagados") e esconde esse livro sempre que a página abre.
-document.querySelector("#delete-button").addEventListener("click", () => {
-  if (!confirm(`Excluir "${livroSelecionado.titulo}" da estante?`)) return;   // pergunta antes; se cancelar, para aqui
+deleteButton.addEventListener("click", async () => {
+  if (!confirm(`Excluir "${livroSelecionado.titulo}" da estante?`)) return;   // se cancelar, para aqui
 
-  apagados.push(livroSelecionado.id);                                         // anota o id do livro excluído
-  salvar("apagados", apagados);
-  livros = livros.filter(livro => livro.id !== livroSelecionado.id);          // tira da lista (filter cria uma lista nova, sem ele)
-  meusLivros = meusLivros.filter(livro => livro.id !== livroSelecionado.id);  // se foi você que adicionou, tira dos salvos também
-  salvar("meusLivros", meusLivros);
-
-  addStatus.textContent = `"${livroSelecionado.titulo}" foi excluído.`;
+  livros = livros.filter(livro => livro.id !== livroSelecionado.id);          // lista nova SEM esse livro
+  await salvarLivros();                                                       // grava no livros.json
   dialog.close();
   renderizarAcervo();
+  addStatus.textContent = `"${livroSelecionado.titulo}" foi excluído.`;
 });
 
 
 // =====================================================================
-// 10) PRIMEIRO DESENHO DA ESTANTE
+// 9) FAVORITAR
 // =====================================================================
-renderizarAcervo();   // desenha a estante pela primeira vez, já com tudo carregado
+favoriteButton.addEventListener("click", async () => {
+  livroSelecionado.favorito = !livroSelecionado.favorito;   // ! inverte: true vira false, false vira true
+  await salvarLivros();                                     // grava no livros.json
+  atualizarBotaoFavorito();
+});
+
+
+// =====================================================================
+// 10) COMEÇAR: busca os livros no servidor e desenha a estante
+// =====================================================================
+carregarLivros().catch(() => {
+  resultsCount.textContent = "Servidor desligado. No terminal, rode: node server.js";
+});

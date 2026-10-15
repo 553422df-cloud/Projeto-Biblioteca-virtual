@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
 
+/* ===== CORES E FONTES DO SITE (variáveis usadas com var(--nome)) ===== */
 :root {
   --ink: #f8f2e9;
   --muted: #c9c0b4;
@@ -11,6 +12,7 @@
   --cream: #f2eadf;
 }
 
+/* ===== REGRAS GERAIS (valem para a página toda) ===== */
 * {
   box-sizing: border-box;
 }
@@ -62,6 +64,7 @@ select:focus-visible {
   border: 0;
 }
 
+/* ===== BARRA DO TOPO: logo, busca, link ===== */
 .topbar {
   min-height: 68px;
   padding: 12px clamp(18px, 4vw, 58px);
@@ -134,6 +137,7 @@ select:focus-visible {
   color: var(--gold);
 }
 
+/* ===== BANNER DE BOAS-VINDAS (hero) ===== */
 .hero {
   min-height: 360px;
   position: relative;
@@ -205,6 +209,7 @@ h1 {
   max-width: 460px;
 }
 
+/* ===== BOTÕES (dourado = primary, contorno = secondary) ===== */
 .primary-button,
 .secondary-button {
   min-height: 44px;
@@ -245,6 +250,7 @@ h1 {
   text-shadow: 0 0 35px #ffbd5a, 0 0 85px #ffb347;
 }
 
+/* ===== SEÇÕES E TÍTULOS ===== */
 .section-wrap {
   padding: 42px clamp(18px, 4vw, 58px);
 }
@@ -269,6 +275,7 @@ h1 {
   font-size: .92rem;
 }
 
+/* ===== CARTÕES DE CATEGORIA ===== */
 .category-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -276,8 +283,8 @@ h1 {
 }
 
 .category-card {
-  min-height: 150px;
-  padding: 19px;
+  min-height: 110px;     /* altura mínima do cartão (era 150px) */
+  padding: 14px;         /* espaço interno (era 19px) */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -317,9 +324,9 @@ h1 {
 }
 
 .category-symbol {
-  font-size: 27px;
+  font-size: 22px;       /* tamanho do ícone (era 27px) */
   color: var(--gold);
-  margin-bottom: 14px;
+  margin-bottom: 8px;    /* espaço abaixo do ícone (era 14px) */
 }
 
 .category-name {
@@ -333,6 +340,7 @@ h1 {
   line-height: 1.4;
 }
 
+/* ===== ACERVO: cabeçalho e menu "Ordenar por" ===== */
 .collection {
   padding-top: 30px;
   background: #0e1211;
@@ -359,6 +367,7 @@ h1 {
   padding: 10px;
 }
 
+/* ===== ESTANTE DE MADEIRA E OS LIVROS (capas, legendas, prateleiras) ===== */
 .bookcase {
   padding: 22px 18px 0;
   background: linear-gradient(90deg, #29180f, #5b3820 4%, #3a2416 50%, #654027 96%, #21140d);
@@ -488,6 +497,7 @@ h1 {
   box-shadow: 0 8px 12px #0008;
 }
 
+/* ===== MENSAGENS EMBAIXO DA ESTANTE ===== */
 .empty-state {
   padding: 36px 0;
   color: var(--muted);
@@ -500,6 +510,7 @@ h1 {
   margin: 16px 0 0;
 }
 
+/* ===== RODAPÉ ===== */
 .footer {
   padding: 28px 20px;
   display: flex;
@@ -526,6 +537,7 @@ h1 {
   font-size: 1.1rem;
 }
 
+/* ===== JANELAS (detalhes do livro e formulário) ===== */
 .book-dialog {
   width: min(760px, calc(100% - 28px));
   max-width: none;
@@ -650,6 +662,7 @@ h1 {
   margin: 13px 0 0;
 }
 
+/* ===== CELULAR E TABLET (telas até 760px) ===== */
 @media (max-width: 760px) {
   .topbar {
     gap: 12px;
@@ -702,8 +715,8 @@ h1 {
   }
 
   .category-card {
-    min-height: 138px;
-    padding: 15px;
+    min-height: 100px;   /* no celular (era 138px) */
+    padding: 12px;       /* no celular (era 15px) */
   }
 
   .bookshelf {
@@ -739,6 +752,7 @@ h1 {
   }
 }
 
+/* ===== CELULAR PEQUENO (telas até 390px) ===== */
 @media (max-width: 390px) {
   .category-grid {
     grid-template-columns: 1fr;
@@ -757,6 +771,7 @@ h1 {
   }
 }
 
+/* ===== ACESSIBILIDADE: menos animação para quem pediu isso no sistema ===== */
 @media (prefers-reduced-motion: reduce) {
 
   *,
@@ -838,4 +853,14 @@ h1 {
 
 .danger-button:hover {
   background: #f3dad6;
+}
+
+/* ===== CAPA COLORIDA DENTRO DA JANELA DE DETALHES =====
+   A cor de fundo e da borda vem de cada livro (o script.js coloca). */
+.dialog-cover {
+  min-height: 190px;
+  padding: 14px;
+  border: 12px solid transparent;
+  color: white;
+  object-fit: contain;
 }
