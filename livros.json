@@ -1,12 +1,62 @@
 [
   {
-    "id": 1792100397117,
-    "titulo": "Drácula",
-    "autor": "Bram Stoker",
+    "id": 1792103561986,
+    "titulo": "A volta ao mundo em 80 dias",
+    "autor": "Júlio Verne",
+    "categoria": "Aventura",
+    "sinopse": "Texto integral traduzido de Le Tour du monde en quatre-vingts jours,\npublicado em folhetim no jornal parisiense Le Temps no fim de 1872 e\nem volume em 1873. Nenhum episódio foi cortado nem acrescentado:\nos 37 capítulos e os títulos irônicos de Verne estão como ele os\nescreveu. A introdução apresenta o autor e a aposta; o posfácio, que só\ndeve ser lido depois do romance, explica o truque matemático do\ndesfecho; as Notas do tradutor esclarecem o uíste, o sati, os tugues, o\ncanal de Suez e as medidas inglesas conservadas no texto.",
+    "pdf": "https://drive.google.com/file/d/1DQyGm6X9kLSX5NLQmlZ5d0gW8gHlIf6D/view?usp=sharing",
+    "cor": "#6e3928",
+    "favorito": false
+  },
+  {
+    "id": 1792103690272,
+    "titulo": "O fantasma da Ópera",
+    "autor": "Gaston Leroux",
     "categoria": "Terror",
-    "sinopse": "Sinopse de Drácula",
-    "pdf": "https://example.com/a.pdf",
-    "cor": "#234b70",
-    "favorito": true
+    "sinopse": "Prefácio: Em que o autor desta obra singular conta ao leitor como foi levado a adquirir a certeza de que o fantasma da Ópera realmente existiu.",
+    "pdf": "https://drive.google.com/file/d/1WhmnqDCxivG7IJzvTgLHaeCXrKutzrkl/view?usp=sharing",
+    "cor": "#6e3928",
+    "favorito": false
+  },
+  {
+    "id": 1792103767912,
+    "titulo": "Sobre a Providência divina",
+    "autor": "Sêneca",
+    "categoria": "Filosofia",
+    "sinopse": "Esta edição traz sobre a providência na\níntegra, nos seis capítulos em que o diálogo\nse divide, precedido da rubrica que o\nidentifica na tradição.",
+    "pdf": "https://drive.google.com/file/d/1kbTSP8Ma2LJDXnxQIs3ux_jmgWgoCbz4/view?usp=sharing",
+    "cor": "#283b36",
+    "favorito": false
+  },
+  {
+    "id": 1792103847385,
+    "titulo": "A Arte da Guerra",
+    "autor": "Sun Tzu",
+    "categoria": "Autoconhecimento",
+    "sinopse": "Texto integral de A Arte da Guerra — os treze capítulos, sem\ncortes e sem resumos —, em português brasileiro\ncontemporâneo, a partir da clássica versão inglesa de Lionel\nGiles, de 1910.\nA tradução preserva a divisão original em treze capítulos e a\nnumeração dos parágrafos, e conserva o tom sentencioso do\noriginal; atualiza o vocabulário para uma linguagem clara,\nacessível ao leitor jovem, e mantém, explicando quando\nnecessário, os termos históricos e culturais chineses de sabor\ninsubstituível.",
+    "pdf": "https://drive.google.com/file/d/1XdtlFHrgkggLSq2Y01CQhmMIBCX5e9QP/view?usp=sharing",
+    "cor": "#9b7845",
+    "favorito": false
+  },
+  {
+    "id": 1792103898486,
+    "titulo": "Emma",
+    "autor": "Jane Austen",
+    "categoria": "Romance",
+    "sinopse": "Esta edição traz a tradução integral de Emma, de Jane Austen,\npublicado em dezembro de 1815: os três volumes do romance, em 55\ncapítulos, com a numeração romana do original, que recomeça em\ncada volume. Buscamos um português claro e elegante, fiel ao sentido\ne ao ritmo de Austen, sem modernizá-la demais.",
+    "pdf": "https://drive.google.com/file/d/1wExD6ADWLNuduHB0OsUMmT-jOypPOYbP/view?usp=sharing",
+    "cor": "#81502b",
+    "favorito": false
+  },
+  {
+    "id": 1792103964450,
+    "titulo": "A Odisseia",
+    "autor": "Homero",
+    "categoria": "Aventura",
+    "sinopse": "Tradução integral em prosa dos vinte e quatro cantos da Odisseia,\npoema fixado por escrito provavelmente no século VIII a.C. Nenhum\nepisódio foi resumido ou omitido. Os nomes próprios seguem a forma\ngrega consagrada no Brasil — Odisseu, Zeus, Atena, Posêidon, Telêmaco\n—, e não as variantes latinas das edições antigas.",
+    "pdf": "https://drive.google.com/file/d/1-fLTwX9p-EtkyzURdR6rbr1a75RC6wse/view?usp=sharing",
+    "cor": "#254c62",
+    "favorito": false
   }
 ]
