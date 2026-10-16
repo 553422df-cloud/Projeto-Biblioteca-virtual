@@ -1,62 +1,688 @@
 [
   {
-    "id": 1792103561986,
-    "titulo": "A volta ao mundo em 80 dias",
-    "autor": "Júlio Verne",
-    "categoria": "Aventura",
-    "sinopse": "Texto integral traduzido de Le Tour du monde en quatre-vingts jours,\npublicado em folhetim no jornal parisiense Le Temps no fim de 1872 e\nem volume em 1873. Nenhum episódio foi cortado nem acrescentado:\nos 37 capítulos e os títulos irônicos de Verne estão como ele os\nescreveu. A introdução apresenta o autor e a aposta; o posfácio, que só\ndeve ser lido depois do romance, explica o truque matemático do\ndesfecho; as Notas do tradutor esclarecem o uíste, o sati, os tugues, o\ncanal de Suez e as medidas inglesas conservadas no texto.",
-    "pdf": "https://drive.google.com/file/d/1DQyGm6X9kLSX5NLQmlZ5d0gW8gHlIf6D/view?usp=sharing",
-    "cor": "#6e3928",
-    "favorito": false
-  },
-  {
-    "id": 1792103690272,
-    "titulo": "O fantasma da Ópera",
-    "autor": "Gaston Leroux",
-    "categoria": "Terror",
-    "sinopse": "Prefácio: Em que o autor desta obra singular conta ao leitor como foi levado a adquirir a certeza de que o fantasma da Ópera realmente existiu.",
-    "pdf": "https://drive.google.com/file/d/1WhmnqDCxivG7IJzvTgLHaeCXrKutzrkl/view?usp=sharing",
-    "cor": "#6e3928",
-    "favorito": false
-  },
-  {
-    "id": 1792103767912,
-    "titulo": "Sobre a Providência divina",
-    "autor": "Sêneca",
-    "categoria": "Filosofia",
-    "sinopse": "Esta edição traz sobre a providência na\níntegra, nos seis capítulos em que o diálogo\nse divide, precedido da rubrica que o\nidentifica na tradição.",
-    "pdf": "https://drive.google.com/file/d/1kbTSP8Ma2LJDXnxQIs3ux_jmgWgoCbz4/view?usp=sharing",
-    "cor": "#283b36",
-    "favorito": false
-  },
-  {
-    "id": 1792103847385,
+    "id": 1792104001001,
     "titulo": "A Arte da Guerra",
     "autor": "Sun Tzu",
     "categoria": "Autoconhecimento",
-    "sinopse": "Texto integral de A Arte da Guerra — os treze capítulos, sem\ncortes e sem resumos —, em português brasileiro\ncontemporâneo, a partir da clássica versão inglesa de Lionel\nGiles, de 1910.\nA tradução preserva a divisão original em treze capítulos e a\nnumeração dos parágrafos, e conserva o tom sentencioso do\noriginal; atualiza o vocabulário para uma linguagem clara,\nacessível ao leitor jovem, e mantém, explicando quando\nnecessário, os termos históricos e culturais chineses de sabor\ninsubstituível.",
-    "pdf": "https://drive.google.com/file/d/1XdtlFHrgkggLSq2Y01CQhmMIBCX5e9QP/view?usp=sharing",
-    "cor": "#9b7845",
+    "sinopse": "Um antigo tratado militar chinês cujos ensinamentos ultrapassaram o campo de batalha e tornaram-se referências de estratégia, liderança e autoconhecimento. Sun Tzu aborda o planejamento, a avaliação de forças e fraquezas, a importância da disciplina e o domínio das próprias emoções para superar conflitos e desafios da vida.",
+    "pdf": "https://drive.google.com/file/d/1XdtlFHrgkggLSq2Y01CQhmMIBCX5e9QP/view",
+    "cor": "#6E3928",
     "favorito": false
   },
   {
-    "id": 1792103898486,
-    "titulo": "Emma",
-    "autor": "Jane Austen",
-    "categoria": "Romance",
-    "sinopse": "Esta edição traz a tradução integral de Emma, de Jane Austen,\npublicado em dezembro de 1815: os três volumes do romance, em 55\ncapítulos, com a numeração romana do original, que recomeça em\ncada volume. Buscamos um português claro e elegante, fiel ao sentido\ne ao ritmo de Austen, sem modernizá-la demais.",
-    "pdf": "https://drive.google.com/file/d/1wExD6ADWLNuduHB0OsUMmT-jOypPOYbP/view?usp=sharing",
-    "cor": "#81502b",
+    "id": 1792104001002,
+    "titulo": "O Homem é Aquilo que Pensa",
+    "autor": "James Allen",
+    "categoria": "Autoconhecimento",
+    "sinopse": "Um clássico da literatura de desenvolvimento pessoal que explora como os pensamentos moldam diretamente o caráter, as circunstâncias de vida, a saúde e o destino de uma pessoa. Allen argumenta que a mente é como um jardim que produzirá exatamente aquilo que nele for cultivado.",
+    "pdf": "https://drive.google.com/file/d/1BW5Bi_pPUG4oyUtlaDrdwOpu_qO_95b-/view",
+    "cor": "#657A52",
     "favorito": false
   },
   {
-    "id": 1792103964450,
+    "id": 1792104001003,
+    "titulo": "O Homem e seus Símbolos",
+    "autor": "C. G. Jung",
+    "categoria": "Autoconhecimento",
+    "sinopse": "Única obra criada pelo psiquiatra Carl Gustav Jung para o público geral, o livro explora a linguagem dos sonhos, os arquétipos e o inconsciente coletivo. A obra explica como a compreensão dos símbolos que surgem em nossos sonhos e na cultura é fundamental para o processo de individuação e para a integração do ser.",
+    "pdf": "https://drive.google.com/file/d/1Qse98IgOnk6tSsO9ISZjjxud2CqTHPrZ/view",
+    "cor": "#55466D",
+    "favorito": false
+  },
+  {
+    "id": 1792104001004,
+    "titulo": "O Manual de Epicteto",
+    "autor": "Epicteto (tradução e comentários de Aldo Dinucci)",
+    "categoria": "Autoconhecimento",
+    "sinopse": "Conhecido como Enchiridion, este é o guia essencial da filosofia estoica prática. O filósofo Epicteto ensina como alcançar a paz de espírito focando apenas naquilo que está sob nosso controle direto (nossos pensamentos, atitudes e escolhas) e aceitando com serenidade as coisas externas que não podemos mudar.",
+    "pdf": "https://drive.google.com/file/d/12BSmw65_Zdg554fomIezQr-NKCYT2xBm/view",
+    "cor": "#283B36",
+    "favorito": false
+  },
+  {
+    "id": 1792104001005,
+    "titulo": "O Sistema Chave Mestra",
+    "autor": "Charles F. Haanel",
+    "categoria": "Autoconhecimento",
+    "sinopse": "Um curso prático em forma de livro dividido em 24 lições sobre o poder do pensamento, a lei da atração e o desenvolvimento mental. Haanel explica como harmonizar a mente consciente e o subconsciente para atrair prosperidade, saúde e sucesso pessoal por meio do controle dos pensamentos.",
+    "pdf": "https://drive.google.com/file/d/1_x1iNVJ5yx_ZFRt6hf5ZzccCWygGh8LY/view",
+    "cor": "#A67C42",
+    "favorito": false
+  },
+  {
+    "id": 1792104001006,
+    "titulo": "Quem Pensa Enriquece",
+    "autor": "Napoleon Hill",
+    "categoria": "Autoconhecimento",
+    "sinopse": "Resultado de décadas de estudo sobre os hábitos e perfis dos homens mais ricos e bem-sucedidos de sua época, o livro apresenta os 13 princípios da realização pessoal e financeira. Hill defende que o sucesso começa na mente, por meio do desejo ardente, da fé inabalável, da autossugestão e do planejamento organizado.",
+    "pdf": "https://drive.google.com/file/d/1adJ2Z9N8IMQilsWopnNxd6AIruONCIf8/view",
+    "cor": "#B08D57",
+    "favorito": false
+  },
+
+  {
+    "id": 1792104002001,
+    "titulo": "20 Mil Léguas Submarinas",
+    "autor": "Júlio Verne",
+    "categoria": "Aventura",
+    "sinopse": "Um misterioso monstro marinho está aterrorizando os oceanos e ameaçando navios. Para investigar o caso, uma expedição é montada, integrando o professor Aronnax, seu criado Conseil e o arpoador Ned Land. Ao naufragarem, eles descobrem que o monstro é, na verdade, o Nautilus, um submarino avançado comandado pelo enigmático e misantropo Capitão Nemo, iniciando uma jornada extraordinária pelas profundezas marinhas.",
+    "pdf": "https://drive.google.com/file/d/1uMGwq5ETaVT8DuL8_0682xg5QP_Rjmpv/view",
+    "cor": "#235C70",
+    "favorito": false
+  },
+  {
+    "id": 1792104002002,
+    "titulo": "A Ilha do Tesouro",
+    "autor": "Robert Louis Stevenson",
+    "categoria": "Aventura",
+    "sinopse": "O jovem Jim Hawkins encontra por acaso o mapa de um tesouro pirata escondido em uma ilha distante após a morte de um hóspede misterioso na estalagem de seus pais. Ele embarca em uma expedição a bordo do navio Hispaniola, sem saber que muitos dos marinheiros contratados são, na verdade, piratas impiedosos liderados pelo carismático e perigoso Long John Silver.",
+    "pdf": "https://drive.google.com/file/d/16JAEjIiW_NpHMXmJMUEwiewA_OojMmOK/view",
+    "cor": "#47734D",
+    "favorito": false
+  },
+  {
+    "id": 1792104002003,
     "titulo": "A Odisseia",
     "autor": "Homero",
     "categoria": "Aventura",
-    "sinopse": "Tradução integral em prosa dos vinte e quatro cantos da Odisseia,\npoema fixado por escrito provavelmente no século VIII a.C. Nenhum\nepisódio foi resumido ou omitido. Os nomes próprios seguem a forma\ngrega consagrada no Brasil — Odisseu, Zeus, Atena, Posêidon, Telêmaco\n—, e não as variantes latinas das edições antigas.",
-    "pdf": "https://drive.google.com/file/d/1-fLTwX9p-EtkyzURdR6rbr1a75RC6wse/view?usp=sharing",
-    "cor": "#254c62",
+    "sinopse": "O clássico épico da mitologia grega narra a longa e perigosa jornada de volta para casa de Odisseu (Ulisses), rei de Ítaca, após a queda de Troia. Em sua viagem de dez anos, ele e sua tripulação enfrentam monstros terríveis, como o ciclope Polifemo e a feiticeira Circe, enquanto sua esposa Penélope resiste bravamente aos pretendentes em Ítaca.",
+    "pdf": "https://drive.google.com/file/d/1-fLTwX9p-EtkyzURdR6rbr1a75RC6wse/view",
+    "cor": "#9A713C",
+    "favorito": false
+  },
+  {
+    "id": 1792104002004,
+    "titulo": "As Aventuras de Sherlock Holmes",
+    "autor": "Arthur Conan Doyle",
+    "categoria": "Aventura",
+    "sinopse": "Uma famosa coletânea de contos policiais que apresenta os casos mais intrigantes solucionados pelo brilhante detetive Sherlock Holmes e seu leal parceiro, o Doutor John Watson. Usando seu método inigualável de dedução lógica e observação detalhada, Holmes desvenda mistérios aparentemente insolúveis na Londres vitoriana.",
+    "pdf": "https://drive.google.com/file/d/1aLEL8xxv9MvvqNWpngT_o72Ua2kb58ve/view",
+    "cor": "#4A5268",
+    "favorito": false
+  },
+  {
+    "id": 1792104002005,
+    "titulo": "O Conde de Monte Cristo",
+    "autor": "Alexandre Dumas",
+    "categoria": "Aventura",
+    "sinopse": "Edmond Dantès, um jovem marinheiro honesto e promissor, é falsamente acusado de traição por rivais invejosos e encarcerado sem julgamento no sombrio Castelo de If. Após passar anos preso e receber uma educação secreta de um companheiro de cela, ele consegue escapar, encontra um tesouro fabuloso e retorna sob a identidade do Conde de Monte Cristo para executar um plano de vingança minucioso contra aqueles que arruinaram sua vida.",
+    "pdf": "https://drive.google.com/file/d/1RltLtUj4QoSC1X4zy-E31FRH_egAl4yp/view",
+    "cor": "#702F35",
+    "favorito": false
+  },
+  {
+    "id": 1792104002006,
+    "titulo": "O Jogador",
+    "autor": "Fiódor Dostoiévski",
+    "categoria": "Aventura",
+    "sinopse": "Uma novela intensa baseada nas próprias experiências de jogo de Dostoiévski. A história acompanha Alexei Ivanovitch, um jovem preceptor russo que trabalha para uma família aristocrática arruinada em um spa fictício na Alemanha. O enredo explora a obsessão avassaladora pelo jogo de roleta, as paixões destrutivas e a degradação moral provocada pela ânsia por dinheiro rápido.",
+    "pdf": "https://drive.google.com/file/d/16U6TcifkukRrvoN7s5LQOgN9zyV1qNE2/view",
+    "cor": "#70558C",
+    "favorito": false
+  },
+  {
+    "id": 1792104002007,
+    "titulo": "Os Três Mosqueteiros",
+    "autor": "Alexandre Dumas",
+    "categoria": "Aventura",
+    "sinopse": "O jovem e ambicioso d'Artagnan chega a Paris com o sonho de se tornar um mosqueteiro do rei. Lá, ele acaba fazendo amizade com três dos mais destemidos membros da guarda: Athos, Porthos e Aramis (todos por um, um por todos). Juntos, eles se envolvem em intrigas palacianas, duelos e conspirações para proteger a honra da Rainha da França contra as maquinações do poderoso Cardeal Richelieu.",
+    "pdf": "https://drive.google.com/file/d/15bpyqGqVr_EOcx7zc4KdZfS6xHjp37Vh/view",
+    "cor": "#8B5E3C",
+    "favorito": false
+  },
+  {
+    "id": 1792104002008,
+    "titulo": "Raptar um Rei",
+    "autor": "Jack Higgins",
+    "categoria": "Aventura",
+    "sinopse": "Um thriller de aventura e espionagem ambientado na Segunda Guerra Mundial, que narra um plano ousado e secreto articulado pela Alemanha nazista: infiltrar um esquadrão de comandos de elite disfarçados na Inglaterra rural com a missão audaciosa de capturar ou assassinar o primeiro-ministro Winston Churchill.",
+    "pdf": "https://drive.google.com/file/d/1MZ4d07kjgGHj1GsxHpNeFChwEtiDVcBy/view",
+    "cor": "#59636D",
+    "favorito": false
+  },
+  {
+    "id": 1792104002009,
+    "titulo": "Volta ao Mundo em 80 Dias",
+    "autor": "Júlio Verne",
+    "categoria": "Aventura",
+    "sinopse": "O aristocrata britânico Phileas Fogg aposta com os membros de seu clube que consegue dar a volta ao mundo em apenas oitenta dias. Acompanhado por seu fiel criado francês, Passepartout, Fogg embarca em uma corrida frenética contra o tempo, enfrentando imprevistos, perigos exóticos e sendo perseguido por um detetive desconfiado que acredita que ele é um ladrão de banco.",
+    "pdf": "https://drive.google.com/file/d/1DQyGm6X9kLSX5NLQmlZ5d0gW8gHlIf6D/view",
+    "cor": "#6E3928",
+    "favorito": false
+  },
+
+  {
+    "id": 1792104003001,
+    "titulo": "A Chinela Turca",
+    "autor": "Machado de Assis",
+    "categoria": "Comédia",
+    "sinopse": "Um conto satírico e espirituoso de Machado de Assis que explora o estresse e as pequenas neuroses cotidianas de um homem comum. O protagonista tenta desesperadamente sair de casa para cumprir uma obrigação social, mas é impedido por uma série de contratempos domésticos e detalhes banais que ganham proporções cômicas e exageradas.",
+    "pdf": "https://drive.google.com/file/d/1s9BaQ9wJeaCF7HdnKXXJiUxb6_uQU1X0/view",
+    "cor": "#8B5E3C",
+    "favorito": false
+  },
+  {
+    "id": 1792104003002,
+    "titulo": "A Comédia dos Erros",
+    "autor": "William Shakespeare",
+    "categoria": "Comédia",
+    "sinopse": "Uma das primeiras e mais frenéticas comédias de Shakespeare, baseada em mal-entendidos de identidade. A história gira em torno de dois pares de gêmeos idênticos (dois senhores e seus dois criados) que foram separados na infância e, anos depois, acabam na mesma cidade, gerando uma série vertiginosa de confusões, ciumeiras, espancamentos por engano e situações hilárias até o reconhecimento final.",
+    "pdf": "https://drive.google.com/file/d/1ZnQfdwLnS5bZVrRZQoYn3JwncBJ5YtH4/view",
+    "cor": "#B58A42",
+    "favorito": false
+  },
+  {
+    "id": 1792104003003,
+    "titulo": "Diário de um Banana",
+    "autor": "Jeff Kinney",
+    "categoria": "Comédia",
+    "sinopse": "Na sequência cômica da famosa série infantojuvenil, Greg Heffley precisa lidar com os tormentos da escola e, principalmente, com as chantagens e travessuras de seu irmão mais velho, Rodrick. O livro relata, em formato de diário ilustrado, as tentativas hilárias de Greg de sobreviver aos segredos constrangedores que Rodrick guarda sobre ele.",
+    "pdf": "https://drive.google.com/file/d/18LJrNsWl1o8_q3t7kO6sKv0SxL9_8ngs/view",
+    "cor": "#5C8C61",
+    "favorito": false
+  },
+  {
+    "id": 1792104003004,
+    "titulo": "Do Jeito que Você Gosta",
+    "autor": "William Shakespeare",
+    "categoria": "Comédia",
+    "sinopse": "Comédia pastoral de Shakespeare que acompanha Rosalinda, banida da corte por seu tio usurpador. Ela se disfarça de homem e foge para a Floresta de Arden, onde reencontra o homem que ama, Orlando, também exilado. A peça explora disfarces, identidades trocadas, o amor idealizado versus o realista, e reflexões bem-humoradas sobre a natureza humana.",
+    "pdf": "https://drive.google.com/file/d/1YXzKjZeOfeiTbHXXBG_7ZrolNzijaMkJ/view",
+    "cor": "#A45D73",
+    "favorito": false
+  },
+  {
+    "id": 1792104003005,
+    "titulo": "Memórias de um Sargento de Milícias",
+    "autor": "Manuel Antônio de Almeida",
+    "categoria": "Comédia",
+    "sinopse": "Romance que inaugura o estilo picaresco no Brasil, retrata o Rio de Janeiro do tempo do rei com muito bom humor e leveza. O protagonista é Leonardo Pataca (o filho), um malandro simpático e trapaceiro que vive se metendo em confusões e pequenas trapalhadas, tendo como contraponto a figura severa do Major Vidigal, a autoridade policial da cidade.",
+    "pdf": "https://drive.google.com/file/d/1zo19s7XHtyjryKmiQJupbMfEH_fytYs7/view",
+    "cor": "#A66D45",
+    "favorito": false
+  },
+  {
+    "id": 1792104003006,
+    "titulo": "O Alienista",
+    "autor": "Machado de Assis",
+    "categoria": "Comédia",
+    "sinopse": "Uma das sátiras mais geniais da literatura brasileira, acompanha o Dr. Simão Bacamarte, um médico psiquiatra que funda um manicômio (a Casa Verde) na vila de Itaguaí. Determinado a isolar todos os desvios da razão humana, ele passa a internar praticamente toda a população da cidade, gerando reviravoltas cômicas e profundas reflexões sobre os limites entre a sanidade e a loucura.",
+    "pdf": "https://drive.google.com/file/d/1ARbrH46-YAuNUbqUSN_Dx7hUzTWryT9O/view",
+    "cor": "#6E3928",
+    "favorito": false
+  },
+  {
+    "id": 1792104003007,
+    "titulo": "O Juiz de Paz da Roça",
+    "autor": "Martins Pena",
+    "categoria": "Comédia",
+    "sinopse": "Considerada uma das pioneiras do teatro cômico nacional, esta comédia de costumes retrata de forma satírica a burocracia, a corrupção e a ignorância em um lugarejo do interior do Brasil. O juiz de paz local precisa lidar com disputas absurdas e trivialidades entre os moradores, revelando os vícios da justiça e da política da época.",
+    "pdf": "https://drive.google.com/file/d/1tf8G7NRMqOQk2nSkBHwfFG2ji4OSNWBa/view",
+    "cor": "#647B8A",
+    "favorito": false
+  },
+  {
+    "id": 1792104003008,
+    "titulo": "São Camilo",
+    "autor": "Marie-Christine Brocherieux",
+    "categoria": "Comédia",
+    "sinopse": "Uma obra leve e bem-humorada que aborda o cotidiano, as peripécias e o lado cômico e humano por trás de contextos institucionais e sociais ligados a figuras ou ambientes de cuidado e assistência, explorando situações caricatas do dia a dia.",
+    "pdf": "https://drive.google.com/file/d/1YsCT_5TiHERege330ERlyvRNEN0LKc79/view",
+    "cor": "#7D6B91",
+    "favorito": false
+  },
+  {
+    "id": 1792104003009,
+    "titulo": "Um Sonho de Verão",
+    "autor": "William Shakespeare",
+    "categoria": "Comédia",
+    "sinopse": "Esta clássica comédia romântica de Shakespeare passa-se em Atenas e nas florestas mágicas vizinhas, onde fadas e duendes interferem nas vidas e nos romances de dois casais de jovens atenienses. Com confusões causadas por poções de amor e a peça desajeitada ensaiada por um grupo de artesãos locais (incluindo o famoso personagem Cabeça de Burro), a trama explora a ilusão, o capricho e a magia do amor.",
+    "pdf": "https://drive.google.com/file/d/1HZVoOvFrpd0al-YCIR93QDL9f0stxvi5/view",
+    "cor": "#72558C",
+    "favorito": false
+  },
+
+
+  {
+    "id": 1792104004001,
+    "titulo": "A História Sem Fim",
+    "autor": "Michael Ende",
+    "categoria": "Fantasia",
+    "sinopse": "Bastian Balthazar Bux é um garoto solitário que encontra um livro misterioso chamado A História Sem Fim em um sebo. Ao começar a ler, ele descobre a história do reino de Fantasia, que está sendo tragicamente consumido pelo Nada devido ao esquecimento dos humanos. Conforme lê, Bastian percebe gradualmente que faz parte daquela história e que o destino de Fantasia depende diretamente de sua imaginação.",
+    "pdf": "https://drive.google.com/file/d/1CldJDXIAfUGwjQNMinnQjB064b6p199T/view",
+    "cor": "#426B8A",
+    "favorito": false
+  },
+  {
+    "id": 1792104004002,
+    "titulo": "A Metamorfose",
+    "autor": "Franz Kafka",
+    "categoria": "Fantasia",
+    "sinopse": "Gregor Samsa, um caixeiro-viajante que sustenta a família, acorda numa manhã transformado em um inseto monstruoso. O enredo acompanha de forma kafkiana o isolamento progressivo de Gregor, a repulsa e o constrangimento de seus familiares diante da nova condição, e as profundas reflexões sobre alienação, culpa, identidade e as pressões da vida moderna.",
+    "pdf": "https://drive.google.com/file/d/1dpTEpwmSYD95Y3Skqw7w6KhN2EdkJiiz/view",
+    "cor": "#55515D",
+    "favorito": false
+  },
+  {
+    "id": 1792104004003,
+    "titulo": "O Jardim Secreto",
+    "autor": "Frances Hodgson Burnett",
+    "categoria": "Fantasia",
+    "sinopse": "Mary Lennox é uma menina rica, mal-humorada e órfã que é enviada para morar na sombria e isolada mansão de seu tio na Inglaterra. Lá, ela descobre a existência de um jardim murado e trancado que estava proibido há anos. Ao lado de novos amigos, Mary começa a cuidar do espaço, o que traz uma transformação mágica e curativa tanto para a natureza ao redor quanto para a saúde e o espírito das crianças da casa.",
+    "pdf": "https://drive.google.com/file/d/1gbgUUTpwYWg_r3n0n5k10j1sBprRgk5p/view",
+    "cor": "#55764B",
+    "favorito": false
+  },
+  {
+    "id": 1792104004004,
+    "titulo": "O Maravilhoso Mágico de Oz",
+    "autor": "L. Frank Baum",
+    "categoria": "Fantasia",
+    "sinopse": "Dorothy é uma menina que vive no Kansas até que um ciclone a arremessa, junto com seu cachorro Totó, para a fantástica e colorida Terra de Oz. Para conseguir voltar para casa, ela precisa seguir pela Estrada de Tijolos Amarelos até a Cidade das Esmeraldas e pedir ajuda ao poderoso Mágico de Oz, fazendo amizade no caminho com o Espantalho, o Homem de Lata e o Leão Covarde.",
+    "pdf": "https://drive.google.com/file/d/1Gxr-rINDHPmJi4juojTwppiNqx2oH9Z2/view",
+    "cor": "#4F8A78",
+    "favorito": false
+  },
+  {
+    "id": 1792104004005,
+    "titulo": "O Nome do Vento (A Crônica do Matador de Reis)",
+    "autor": "Patrick Rothfuss",
+    "categoria": "Fantasia",
+    "sinopse": "O livro narra a extraordinária trajetória de Kvothe — de sua infância em uma trupe de artistas itinerantes e anos de sobrevivência nas ruas de uma cidade grande até sua entrada na lendária Universidade de magia. Contada pelo próprio protagonista já adulto (agora vivendo escondido como um humilde estalajadeiro), a história revela como ele se tornou a figura mais temida e lendária de seu mundo.",
+    "pdf": "https://drive.google.com/file/d/13LNgE-XwEN9uifoeAkaV9cLc_-i0JPXC/view",
+    "cor": "#754A8B",
+    "favorito": false
+  },
+
+
+  {
+    "id": 1792104005001,
+    "titulo": "A Alegoria da Caverna",
+    "autor": "Platão",
+    "categoria": "Filosofia",
+    "sinopse": "Parte integrante do livro VII de A República, esta metáfora visual descreve prisioneiros acorrentados no fundo de uma caverna escura, olhando apenas para sombras projetadas na parede por uma fogueira. A alegoria ilustra o doloroso e iluminador processo de libertação do homem através da educação e da filosofia rumo ao conhecimento da verdadeira realidade (o mundo inteligível).",
+    "pdf": "https://drive.google.com/file/d/1ytCLuLI2JkP5PKtBs3OWMsKC5DcLERX4/view",
+    "cor": "#55466D",
+    "favorito": false
+  },
+  {
+    "id": 1792104005002,
+    "titulo": "A República",
+    "autor": "Platão",
+    "categoria": "Filosofia",
+    "sinopse": "Diálogo socrático monumental que investiga a natureza da justiça e o formato da cidade-estado ideal. Platão aborda a famosa Teoria das Ideias (ou Formas), a educação dos guardiões, a tripartição da alma e o célebre mito de que a sociedade perfeita seria governada por filósofos-reis.",
+    "pdf": "https://drive.google.com/file/d/1rBqwR44m5S_-k78ZQXD9vv44fwveeMhY/view",
+    "cor": "#75618B",
+    "favorito": false
+  },
+  {
+    "id": 1792104005003,
+    "titulo": "Bhagavad Gita",
+    "autor": "Vyasa",
+    "categoria": "Filosofia",
+    "sinopse": "Parte épica do Mahabharata, o texto retrata o diálogo filosófico e espiritual entre o príncipe Arjuna e seu cocheiro, o deus Krishna, ocorrido pouco antes de uma grande batalha. Krishna orienta Arjuna sobre o cumprimento do dever (dharma), o karma, a natureza imortal da alma e os caminhos da devoção, do conhecimento e da ação desinteressada.",
+    "pdf": "https://drive.google.com/file/d/1ayuQRSPfiB_JGQjrNp4oVeBC_AGttjHR/view",
+    "cor": "#A67C42",
+    "favorito": false
+  },
+  {
+    "id": 1792104005004,
+    "titulo": "Ética a Nicômaco",
+    "autor": "Aristóteles",
+    "categoria": "Filosofia",
+    "sinopse": "Tratado fundamental da ética ocidental no qual Aristóteles investiga o propósito supremo da vida humana: a eudaimonia (felicidade ou florescimento humano). O filósofo defende que a virtude se encontra no justo meio entre dois extremos (o excesso e a deficiência) e que ela é cultivada por meio do hábito e da deliberação racional.",
+    "pdf": "https://drive.google.com/file/d/1G7q28tMdI0lAyz-SAEA4vm8IJXBrAxkK/view",
+    "cor": "#8A754A",
+    "favorito": false
+  },
+  {
+    "id": 1792104005005,
+    "titulo": "Meditações",
+    "autor": "Marco Aurélio",
+    "categoria": "Filosofia",
+    "sinopse": "Uma das maiores obras do estoicismo imperial, composta pelo próprio imperador romano Marco Aurélio como um diário de reflexões íntimas. O livro traz anotações sobre autocontrole, aceitação do destino, dever cívico, a impermanência das coisas e a importância de viver de acordo com a razão e a virtude.",
+    "pdf": "https://drive.google.com/file/d/1BeTh2SYghFQkFl18S1Ln1AFWdB0uw8CD/view",
+    "cor": "#536B61",
+    "favorito": false
+  },
+  {
+    "id": 1792104005006,
+    "titulo": "O paradoxo de Moore",
+    "autor": "George Edward Moore",
+    "categoria": "Filosofia",
+    "sinopse": "Envolve um famoso enigma da filosofia analítica e da epistemologia formulado por G. E. Moore. O paradoxo reside na incoerência lógica de enunciar frases do tipo Chove, mas eu não acredito que chove. Embora a afirmação possa ser verdadeira no mundo externo, proferi-la revela uma contradição pragmática e racional intrínseca ao pensamento e à linguagem.",
+    "pdf": "https://drive.google.com/file/d/1flBveXdIRa12XzHxmcEsEKkBxckJ5fEM/view",
+    "cor": "#64758B",
+    "favorito": false
+  },
+  {
+    "id": 1792104005007,
+    "titulo": "O Príncipe",
+    "autor": "Nicolau Maquiavel",
+    "categoria": "Filosofia",
+    "sinopse": "Um clássico da filosofia política moderna que rompeu com a moralidade idealista da Idade Média. Maquiavel analisa de forma pragmática e realista como os governantes conquistam e mantêm o poder, introduzindo a separação entre a ética política e a moral religiosa, e explorando a relação entre os fins políticos e os meios utilizados para alcançá-los.",
+    "pdf": "https://drive.google.com/file/d/1mF09upGw_TsjDzACLfpF8T6C6nCQldyS/view",
+    "cor": "#8B473C",
+    "favorito": false
+  },
+  {
+    "id": 1792104005008,
+    "titulo": "Sobre a ira",
+    "autor": "Sêneca",
+    "categoria": "Filosofia",
+    "sinopse": "Uma análise psicológica e ética profunda sobre a ira, considerada por Sêneca como a mais destrutiva e temporariamente insana das paixões humanas. Ele examina as causas da raiva, os danos irreparáveis que ela provoca nas relações e na sociedade, e oferece métodos estoicos para preveni-la e controlá-la por meio da razão.",
+    "pdf": "https://drive.google.com/file/d/1SySevZQYPYfxZTLzx7_AbOrEIs-qa3e1/view",
+    "cor": "#8C5547",
+    "favorito": false
+  },
+  {
+    "id": 1792104005009,
+    "titulo": "Sobre a providência",
+    "autor": "Sêneca",
+    "categoria": "Filosofia",
+    "sinopse": "A obra aborda uma questão filosófica clássica: por que coisas ruins acontecem a pessoas boas se existe uma providência divina? Sêneca argumenta que os infortúnios e as dificuldades não são castigos, mas sim testes e treinamentos que fortalecem o caráter do homem virtuoso.",
+    "pdf": "https://drive.google.com/file/d/1NAm5fehQWCCkHerDrFKZl17AeM6xrlWu/view",
+    "cor": "#5B6E56",
+    "favorito": false
+  },
+  {
+    "id": 1792104005010,
+    "titulo": "Sobre a providência divina",
+    "autor": "Sêneca",
+    "categoria": "Filosofia",
+    "sinopse": "Esta obra investiga por que pessoas virtuosas enfrentam adversidades apesar da existência de uma providência divina. Sêneca apresenta as dificuldades como oportunidades de exercitar a coragem, fortalecer o caráter e demonstrar a firmeza da virtude diante das circunstâncias da vida.",
+    "pdf": "https://drive.google.com/file/d/1kbTSP8Ma2LJDXnxQIs3ux_jmgWgoCbz4/view",
+    "cor": "#496B59",
+    "favorito": false
+  },
+  {
+    "id": 1792104005011,
+    "titulo": "Sobre a tranquilidade da alma",
+    "autor": "Sêneca",
+    "categoria": "Filosofia",
+    "sinopse": "Escrito em formato de diálogo com seu amigo Serenus, o texto aborda a ansiedade, a insatisfação crônica e a inconstância humana. Sêneca oferece conselhos práticos de como alcançar a serenidade interior (ataraxia), controlando as expectativas, aceitando os reveses da vida e dedicando-se a tarefas úteis e moderadas.",
+    "pdf": "https://drive.google.com/file/d/1Q7iZR9OBSP0VFYNv4A94lAsiKfDsJJdx/view",
+    "cor": "#577C73",
+    "favorito": false
+  },
+  {
+    "id": 1792104005012,
+    "titulo": "Sobre a tranquilidade da alma",
+    "autor": "Sêneca",
+    "categoria": "Filosofia",
+    "sinopse": "Escrito em formato de diálogo com seu amigo Serenus, o texto aborda a ansiedade, a insatisfação crônica e a inconstância humana. Sêneca oferece conselhos práticos de como alcançar a serenidade interior (ataraxia), controlando as expectativas, aceitando os reveses da vida e dedicando-se a tarefas úteis e moderadas.",
+    "pdf": "https://drive.google.com/file/d/1gNbmH81wY6jKfXu2A3Gw2iAN3GtLwyO1/view",
+    "cor": "#6C8A80",
+    "favorito": false
+  },
+  {
+    "id": 1792104005013,
+    "titulo": "Sobre a vida feliz",
+    "autor": "Sêneca",
+    "categoria": "Filosofia",
+    "sinopse": "Neste tratado, Sêneca debate o conceito de felicidade sob a ótica do estoicismo. Ele defende que a verdadeira felicidade não provém do acúmulo de riquezas ou do prazer sensorial, mas sim de uma vida guiada pela virtude, pela razão e pela consonância com a natureza humana, mantendo a alma livre de paixões desordenadas.",
+    "pdf": "https://drive.google.com/file/d/1MA4AlLp1Tb9ZhzSl-kAzWrJ9pRvhMcUf/view",
+    "cor": "#B08D57",
+    "favorito": false
+  },
+  {
+    "id": 1792104005014,
+    "titulo": "Sobre o ócio",
+    "autor": "Sêneca",
+    "categoria": "Filosofia",
+    "sinopse": "Uma carta ou ensaio estoico em que Sêneca discute a importância de o sábio se afastar dos turbilhões, obrigações políticas e agitações da vida pública para se dedicar à contemplação, ao autoconhecimento, à filosofia e ao cultivo da mente. O autor argumenta que o verdadeiro ócio produtivo é essencial para a alma.",
+    "pdf": "https://drive.google.com/file/d/1V3m4TwQ6xBEb0cU7mwg1eG5-qM875D_T/view",
+    "cor": "#6E7563",
+    "favorito": false
+  },
+  {
+    "id": 1792104005015,
+    "titulo": "Vida e Obra de Santo Agostinho",
+    "autor": "Rish Annenkov",
+    "categoria": "Filosofia",
+    "sinopse": "Esta obra explora a trajetória intelectual e espiritual de Santo Agostinho, um dos pensadores mais importantes do cristianismo antigo e da filosofia patrística. O texto aborda sua transição do maniqueísmo para a fé cristã, suas reflexões profundas sobre o tempo, a graça divina, o livre-arbítrio e o impacto duradouro de sua teologia na filosofia ocidental.",
+    "pdf": "https://drive.google.com/file/d/1eFwmSyjU8XHtlIuxSsb-KaF6dAGtmhXd/view",
+    "cor": "#745B82",
+    "favorito": false
+  },
+  {
+    "id": 1792104006001,
+    "titulo": "Alice no País das Maravilhas",
+    "autor": "Lewis Carroll",
+    "categoria": "Infantojuvenil",
+    "sinopse": "Alice é uma menina curiosa que segue um Coelho Branco apressado e acaba caindo em um mundo fantástico, repleto de criaturas extraordinárias e situações absurdas. Durante sua jornada, ela encontra personagens inesquecíveis, como o Gato de Cheshire, o Chapeleiro Maluco e a Rainha de Copas. Em meio a mudanças de tamanho, enigmas e acontecimentos inesperados, Alice descobre um universo que desafia a lógica e a imaginação.",
+    "pdf": "https://drive.google.com/file/d/1OShoseFcl9DJzZwMBI9ToywcJscphsgg/view",
+    "cor": "#6A8DAD",
+    "favorito": false
+  },
+  {
+    "id": 1792104006002,
+    "titulo": "As Crônicas de Nárnia: O Leão, a Feiticeira e o Guarda-Roupa",
+    "autor": "C. S. Lewis",
+    "categoria": "Infantojuvenil",
+    "sinopse": "Durante a Segunda Guerra Mundial, os irmãos Peter, Susan, Edmund e Lucy são enviados para uma casa no campo, onde descobrem um guarda-roupa que funciona como passagem para o mundo mágico de Nárnia. Nesse reino, encontram uma terra dominada pela Feiticeira Branca, condenada a um inverno sem fim. Com a ajuda de criaturas fantásticas e do majestoso leão Aslam, os irmãos embarcam em uma aventura para libertar Nárnia e restaurar a paz.",
+    "pdf": "https://drive.google.com/file/d/1Zurvh5EVXWWRlIPuEYB_MoHkdH00weQa/view",
+    "cor": "#52734D",
+    "favorito": false
+  },
+  {
+    "id": 1792104006003,
+    "titulo": "Coraline",
+    "autor": "Neil Gaiman",
+    "categoria": "Infantojuvenil",
+    "sinopse": "Coraline é uma menina curiosa que, ao explorar sua nova casa, encontra uma porta que leva a uma versão aparentemente perfeita de sua própria vida. Nesse outro mundo, seus outros pais parecem mais atenciosos e tudo parece feito para agradá-la, mas há algo assustador por trás daquela realidade. Quando percebe que está diante de uma ameaça, Coraline precisa demonstrar coragem, inteligência e determinação para proteger sua família e escapar daquela armadilha.",
+    "pdf": "https://drive.google.com/file/d/1y1ioMz7UQjk_-0SH7kTjgdgToC9ZUvv8/view",
+    "cor": "#55445F",
+    "favorito": false
+  },
+  {
+    "id": 1792104006004,
+    "titulo": "O Pequeno Príncipe",
+    "autor": "Antoine de Saint-Exupéry",
+    "categoria": "Infantojuvenil",
+    "sinopse": "Após uma pane em seu avião, um piloto perdido no deserto do Saara conhece um pequeno príncipe que veio de outro planeta. Por meio das histórias de suas viagens e dos encontros com diferentes personagens, o menino revela reflexões sobre amizade, amor, solidão e responsabilidade. Sua relação com uma rosa especial e a amizade com uma raposa ajudam a mostrar a importância de enxergar além das aparências e valorizar os laços afetivos.",
+    "pdf": "https://drive.google.com/file/d/1vMvRINg5PqZxucy5Tx6WogKEVV5_Gz-S/view",
+    "cor": "#C49A53",
+    "favorito": false
+  },
+  {
+    "id": 1792104006005,
+    "titulo": "Peter Pan",
+    "autor": "J. M. Barrie",
+    "categoria": "Infantojuvenil",
+    "sinopse": "Peter Pan é um menino que se recusa a crescer e vive na Terra do Nunca, um lugar mágico habitado por fadas, sereias, crianças perdidas e piratas. Ao conhecer Wendy e seus irmãos, ele os leva em uma aventura repleta de descobertas e perigos. Juntos, eles enfrentam o temido Capitão Gancho e sua tripulação, enquanto descobrem o valor da coragem, da amizade e das escolhas que acompanham o crescimento.",
+    "pdf": "https://drive.google.com/file/d/1WF3lPgMsxSUlnQr7Rk84YcTeOunrdLia/view",
+    "cor": "#438B87",
+    "favorito": false
+  },
+  {
+    "id": 1792104006006,
+    "titulo": "A Dama das Camélias",
+    "autor": "Alexandre Dumas Filho",
+    "categoria": "Romance",
+    "sinopse": "O jovem Armand Duval apaixona-se por Marguerite Gautier, uma das cortesãs mais cobiçadas da sociedade parisiense. Marguerite decide abandonar sua vida de luxo para viver esse amor sincero no campo, mas o preconceito social e as pressões da família de Armand impõem um sacrifício doloroso que marcará o destino de ambos.",
+    "pdf": "https://drive.google.com/file/d/1H3rlzImMHXhGsyywuwelG3YdnVnCvrvp/view",
+    "cor": "#9B4555",
+    "favorito": false
+  },
+  {
+    "id": 1792104006007,
+    "titulo": "A Pata da Gazela",
+    "autor": "José de Alencar",
+    "categoria": "Romance",
+    "sinopse": "Um romance urbano que gira em torno do fascínio da sociedade carioca pelos pés femininos. Horácio, um jovem fútil e refinado, apaixona-se ao encontrar uma delicada botina perdida na rua. Ele passa a buscar a dona do calçado perfeito, dividindo-se entre a beleza física e as qualidades morais da jovem Amélia.",
+    "pdf": "https://drive.google.com/file/d/17McRHyp5YWjzMa0-zKKBMFczUeyk1Ijt/view",
+    "cor": "#C18B65",
+    "favorito": false
+  },
+  {
+    "id": 1792104006008,
+    "titulo": "Dom Casmurro",
+    "autor": "Machado de Assis",
+    "categoria": "Romance",
+    "sinopse": "Narrado em primeira pessoa pelo já idoso Bento Santiago (Bentinho), o romance reconstrói sua memória da infância até a vida adulta, focando em sua intensa paixão por Capitu. Consumido pelo ciúme e pela dúvida, Bentinho convence-se de que Capitu o traiu com seu melhor amigo, Escobar, deixando para o leitor o eterno enigma sobre a veracidade do adultério.",
+    "pdf": "https://drive.google.com/file/d/1IZ4duxYVE8_mSnUIqVxenXHjVaAqxxpK/view",
+    "cor": "#6E3928",
+    "favorito": false
+  },
+  {
+    "id": 1792104006009,
+    "titulo": "Dom Quixote de La Mancha",
+    "autor": "Miguel de Cervantes",
+    "categoria": "Romance",
+    "sinopse": "Alonso Quijano é um fidalgo espanhol que, de tanto ler romances de cavalaria, perde a razão e decide se tornar um cavaleiro andante sob o nome de Dom Quixote. Acompanhado de seu fiel e prático escudeiro, Sancho Pança, ele parte pelo mundo enfrentando perigos imaginários — como moinhos de vento que acredita serem gigantes —, na busca por justiça e pela glória de sua amada Dulcinéia.",
+    "pdf": "https://drive.google.com/file/d/1WGnzVlaeqIRlWyK5JrKawfmewTetV4ax/view",
+    "cor": "#8A6D3B",
+    "favorito": false
+  },
+  {
+    "id": 1792104006010,
+    "titulo": "Emma",
+    "autor": "Jane Austen",
+    "categoria": "Romance",
+    "sinopse": "Emma Woodhouse é uma jovem rica, inteligente e um pouco arrogante que gosta de brincar de cupido, organizando casamentos para seus amigos e conhecidos no vilarejo onde mora. No entanto, ao interferir constantemente na vida alheia, ela comete diversos equívocos e acaba descobrindo seus próprios sentimentos de forma inesperada.",
+    "pdf": "https://drive.google.com/file/d/1wExD6ADWLNuduHB0OsUMmT-jOypPOYbP/view",
+    "cor": "#B77B8B",
+    "favorito": false
+  },
+  {
+    "id": 1792104006011,
+    "titulo": "Iracema",
+    "autor": "José de Alencar",
+    "categoria": "Romance",
+    "sinopse": "Obra do Romantismo indianista brasileiro, conta a história de amor proibido entre Iracema, a \"virgem dos lábios de mel\" e guardiã do segredo da jurema, e Martim, um guerreiro branco português. A união entre os dois simboliza a gênese do povo cearense e a miscigenação cultural, envolta em sacrifício e saudade.",
+    "pdf": "https://drive.google.com/file/d/1WSdJolqTg9XB-E2bRwixPaH24M0K_X0a/view",
+    "cor": "#52734D",
+    "favorito": false
+  },
+  {
+    "id": 1792104006012,
+    "titulo": "O Cortiço",
+    "autor": "Aluísio Azevedo",
+    "categoria": "Romance",
+    "sinopse": "Um marco do Naturalismo brasileiro, a obra retrata a vida dos moradores de uma habitação coletiva (o cortiço) no Rio de Janeiro, de propriedade do ganancioso português João Romão. O livro explora como o meio ambiente, a exploração financeira e os instintos humanos moldam e degradam o comportamento dos personagens ao longo do tempo.",
+    "pdf": "https://drive.google.com/file/d/17TZrzWGvkE9srUOQsZB-tVytLBEkWrIk/view",
+    "cor": "#80513D",
+    "favorito": false
+  },
+  {
+    "id": 1792104006013,
+    "titulo": "O Morro dos Ventos Uivantes",
+    "autor": "Emily Brontë",
+    "categoria": "Romance",
+    "sinopse": "Um romance intenso sobre a paixão avassaladora e destrutiva entre Heathcliff, um órfão acolhido pela família Earnshaw, e Catherine Earnshaw. Impedidos de ficarem juntos devido às barreiras sociais, a rejeição desperta em Heathcliff um desejo obsessivo de vingança que atravessa gerações e afeta todos à sua volta nas sombrias e isoladas terras de Yorkshire.",
+    "pdf": "https://drive.google.com/file/d/1JREstP2oI4lrin2pbvONw59ATN8_wsRS/view",
+    "cor": "#45404F",
+    "favorito": false
+  },
+  {
+    "id": 1792104006014,
+    "titulo": "Orgulho e Preconceito",
+    "autor": "Jane Austen",
+    "categoria": "Romance",
+    "sinopse": "Ambientado na Inglaterra do século XIX, o livro narra a história da perspicaz Elizabeth Bennet e do altivo e rico Mr. Darcy. Enquanto tentam navegar pelas convenções sociais e expectativas de casamento de sua época, ambos precisam superar seus próprios defeitos: o preconceito de Elizabeth em relação ao caráter de Darcy e o orgulho de classe do próprio Sr. Darcy.",
+    "pdf": "https://drive.google.com/file/d/1XIYbB-LdjA5KqoT6v7RPCdemWwT0H8PX/view",
+    "cor": "#A66B78",
+    "favorito": false
+  },
+  {
+    "id": 1792104006015,
+    "titulo": "Romeu e Julieta",
+    "autor": "William Shakespeare",
+    "categoria": "Romance",
+    "sinopse": "A clássica tragédia se passa em Verona, onde duas famílias aristocráticas, os Montecchio e os Capuleto, mantêm uma rivalidade ancestral. Romeu Montecchio e Julieta Capuleto se apaixonam intensamente em um baile de máscaras. Desafiando o ódio de suas famílias, eles se casam em segredo, desencadeando uma série de eventos dramáticos que culminam em um desfecho trágico e imortal.",
+    "pdf": "https://drive.google.com/file/d/1i81PmZni8AgnwYfI2zvoyK1a0Nebs76S/view",
+    "cor": "#8D3545",
+    "favorito": false
+  },
+  {
+    "id": 1792104006016,
+    "titulo": "Senhora",
+    "autor": "José de Alencar",
+    "categoria": "Romance",
+    "sinopse": "Aurélia Camargo, uma jovem pobre, é abandonada por seu noivo, Fernando Seixas, que prefere se casar por interesse financeiro. Após herdar uma imensa fortuna do avô, Aurélia decide se vingar: \"compra\" Fernando como marido por meio de um dote vultoso. O casamento transforma-se em um jogo de aparências e conflitos éticos entre o orgulho, o amor e o poder do dinheiro.",
+    "pdf": "https://drive.google.com/file/d/1ZLZIszxdjdL5RiYRdjzf7aE_-O8UVVrm/view",
+    "cor": "#6F536F",
+    "favorito": false
+  },
+  {
+    "id": 1792104006017,
+    "titulo": "O Horror de Dunwich",
+    "autor": "H. P. Lovecraft",
+    "categoria": "Terror e Suspense",
+    "sinopse": "Passado no isolado vilarejo de Dunwich, em Massachusetts, o conto narra a estranha história da família Whateley, especialmente o nascimento e o rápido crescimento do grotesco Wilbur Whateley. Wilbur é neto de um feiticeiro local e busca desesperadamente um grimório proibido para abrir portais a entidades cósmicas ancestrais, culminando em uma ameaça aterrorizante para toda a região.",
+    "pdf": "https://drive.google.com/file/d/1a-t1m0k3MozQMCDzcNqJA7-kbBdlvxf9/view",
+    "cor": "#342C46",
+    "favorito": false
+  },
+  {
+    "id": 1792104006018,
+    "titulo": "O Silêncio dos Inocentes",
+    "autor": "Thomas Harris",
+    "categoria": "Terror e Suspense",
+    "sinopse": "Clarice Starling, uma jovem agente em treinamento do FBI, é encarregada de entrevistar o Dr. Hannibal Lecter, um brilhante psiquiatra e assassino em série canibal preso em segurança máxima. Clarice precisa da ajuda e dos insights psicológicos de Lecter para traçar o perfil de um novo assassino em série à solta, conhecido como Buffalo Bill, em um jogo tenso de inteligência e manipulação.",
+    "pdf": "https://drive.google.com/file/d/15F6KRe0yR5fIU50DEgRMVo2yygw53qiw/view",
+    "cor": "#6B3438",
+    "favorito": false
+  },
+  {
+    "id": 1792104006019,
+    "titulo": "A Volta do Parafuso",
+    "autor": "Henry James",
+    "categoria": "Terror e Suspense",
+    "sinopse": "Uma governanta jovem e inexperiente é contratada para cuidar de dois irmãos órfãos, Miles e Flora, em uma isolada e sombria mansão de campo. Com o tempo, ela passa a avistar os fantasmas de antigos empregados da casa que parecem exercer uma influência maligna e possessiva sobre as crianças, gerando uma atmosfera de constante ambiguidade psicológica entre o terror sobrenatural e a loucura.",
+    "pdf": "https://drive.google.com/file/d/1e1TU4ZEdnHVMvVBWc4gMYOtifjM50QAs/view",
+    "cor": "#66617A",
+    "favorito": false
+  },
+  {
+    "id": 1792104006020,
+    "titulo": "Drácula",
+    "autor": "Bram Stoker",
+    "categoria": "Terror e Suspense",
+    "sinopse": "O clássico epistolar narra a tentativa do Conde Drácula de se mudar da Transilvânia para a Inglaterra em busca de novas presas e sangue fresco, começando com o jovem advogado Jonathan Harker. O livro acompanha a luta de um grupo liderado pelo Professor Abraham Van Helsing para rastrear e destruir o vampiro antes que ele corrompa e destrua a vida daqueles que eles amam.",
+    "pdf": "https://drive.google.com/file/d/1h14GFKmGBfnvMlzKxTOEfM4zl2uxYhmo/view",
+    "cor": "#702D35",
+    "favorito": false
+  },
+  {
+    "id": 1792104006021,
+    "titulo": "Frankenstein",
+    "autor": "Mary Shelley",
+    "categoria": "Terror e Suspense",
+    "sinopse": "Considerada uma das obras fundadoras da ficção científica e do terror, acompanha o jovem cientista Victor Frankenstein. Impulsionado pela ambição de vencer a morte, Victor consegue dar vida a uma criatura construída com partes de cadáveres. Horrorizado com sua própria criação, ele abandona o monstro, que, solitário e rejeitado pela sociedade, busca vingança contra seu criador.",
+    "pdf": "https://drive.google.com/file/d/10Mr4VYVEfGTubBiZYPZdpnmg7aub6B_V/view",
+    "cor": "#526B58",
+    "favorito": false
+  },
+  {
+    "id": 1792104006022,
+    "titulo": "Garota Exemplar",
+    "autor": "Gillian Flynn",
+    "categoria": "Terror e Suspense",
+    "sinopse": "No dia de seu quinto aniversário de casamento, Amy Dunne desaparece misteriosamente de sua casa. À medida que a investigação da polícia avança e a pressão da mídia aumenta, o marido, Nick Dunne, torna-se o principal suspeito devido a seu comportamento ambíguo. No entanto, reviravoltas chocantes revelam que o casamento perfeito escondia camadas profundas de manipulação, mentiras e ressentimento mútuo.",
+    "pdf": "https://drive.google.com/file/d/1aYg6AYvBwGAd2WZ7oNenFxK6jgdexNb_/view",
+    "cor": "#8C4148",
+    "favorito": false
+  },
+  {
+    "id": 1792104006023,
+    "titulo": "O Fantasma da Ópera",
+    "autor": "Gaston Leroux",
+    "categoria": "Terror e Suspense",
+    "sinopse": "Situado na Ópera de Paris, o romance gótico gira em torno de uma misteriosa figura mascarada conhecida como o Fantasma da Ópera, um gênio musical desfigurado que vive nos subterrâneos do teatro. Ele se apaixona perdidamente por Christine Daaé, uma jovem cantora de coro, e passa a aterrorizar a administração e o elenco para garantir que ela alcance o estrelato, desencadeando um enredo de ciúmes, obsessão e tragédia.",
+    "pdf": "https://drive.google.com/file/d/1WhmnqDCxivG7IJzvTgLHaeCXrKutzrkl/view",
+    "cor": "#51405F",
+    "favorito": false
+  },
+  {
+    "id": 1792104006024,
+    "titulo": "O Retrato de Dorian Gray",
+    "autor": "Oscar Wilde",
+    "categoria": "Terror e Suspense",
+    "sinopse": "A história acompanha Dorian Gray, um jovem de beleza extraordinária que se deslumbra com seu próprio retrato pintado pelo artista Basil Hallward. Obcecado pela ideia de que a juventude é efêmera, Dorian faz um pacto místico para que o retrato envelheça em seu lugar, enquanto ele próprio permanece eternamente jovem. Conforme ele se entrega a uma vida de hedonismo e crueldade, a pintura passa a refletir a verdadeira podridão de sua alma.",
+    "pdf": "https://drive.google.com/file/d/1xHnX9ZlxQmh9bCiDNY2nZgt0jlP8AfdU/view",
+    "cor": "#8B8061",
     "favorito": false
   }
 ]
