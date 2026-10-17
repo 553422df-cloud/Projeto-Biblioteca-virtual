@@ -73,6 +73,22 @@ const servidor = http.createServer((pedido, resposta) => {
     return;
   }
 
+  // 4) Imagens da pasta "img" (ex.: /img/autoconhecimento.jpg)
+  if (pedido.url.startsWith("/img/")) {
+    const nome = decodeURIComponent(pedido.url.slice(5));   // tira o "/img/" e fica só "autoconhecimento.jpg"
+    const caminho = path.join(__dirname, "img", nome);      // o caminho do arquivo no computador
+    const tipos = { ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png", ".webp": "image/webp" };
+    const tipo = tipos[path.extname(nome).toLowerCase()];   // descobre o tipo pela extensão
+
+    // Segurança: o nome não pode ter "..", "/" ou "\" (assim ninguém sai da pasta img)
+    const nomeSeguro = !nome.includes("..") && !nome.includes("/") && !nome.includes("\\");
+    if (nomeSeguro && tipo && fs.existsSync(caminho)) {
+      resposta.writeHead(200, { "Content-Type": tipo });
+      resposta.end(fs.readFileSync(caminho));                // lê a imagem e manda
+      return;
+    }
+  }
+
   // Nada disso: endereço não existe
   resposta.writeHead(404);   // 404 = "não encontrado"
   resposta.end("Não encontrado");
@@ -82,3 +98,4 @@ const servidor = http.createServer((pedido, resposta) => {
 servidor.listen(PORTA, () => {
   console.log(`Biblioteca no ar: abra http://localhost:${PORTA} no navegador`);
 });
+

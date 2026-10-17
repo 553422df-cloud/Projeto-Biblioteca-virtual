@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="pt-BR">
 
-<head> 
+<head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Explore uma biblioteca online e descubra sua próxima leitura.">
@@ -58,7 +58,7 @@
       </div>
 
       <div class="hero-lamp" aria-hidden="true">✦</div>
-      
+
     </section>
 
     <!-- ============ CATEGORIAS ============
@@ -68,41 +68,44 @@
     <section class="categories section-wrap" id="categorias" aria-labelledby="categories-title">
 
       <div class="section-heading">
-       
+
         <div>
-         
+
           <p class="eyebrow">ENCONTRE SEU PRÓXIMO LIVRO</p>
-        
+
           <h2 id="categories-title">Explore por categoria</h2>
-       
+
         </div>
-       
+
         <p class="section-note">Escolha uma estante para começar.</p>
-     
+
       </div>
 
       <div class="category-grid" id="category-grid">
 
         <button class="category-card selected" data-category="Todas" type="button">
-        
+
           <span class="category-symbol" aria-hidden="true">▤</span>
-        
+
           <span class="category-name">Todos os livros</span>
-        
+
           <span class="category-description">Explore o acervo completo</span>
-      
+
         </button>
 
         <button class="category-card" data-category="Autoconhecimento" type="button">
+          <img class="category-image" src="img/Autoconhecimento.jpeg" alt="">
           <span class="category-symbol" aria-hidden="true">💭</span>
           <span class="category-name">Autoconhecimento</span>
-          <span class="category-description">Psicologia, desenvolvimento pessoal, inteligência emocional e hábitos.</span>
+          <span class="category-description">Psicologia, desenvolvimento pessoal, inteligência emocional e
+            hábitos.</span>
         </button>
 
         <button class="category-card" data-category="Aventura" type="button">
           <span class="category-symbol" aria-hidden="true">⛷️</span>
           <span class="category-name">Aventura</span>
-          <span class="category-description">Jornadas épicas, exploração de novos mundos, sobrevivência e grandes viagens.</span>
+          <span class="category-description">Jornadas épicas, exploração de novos mundos, sobrevivência e grandes
+            viagens.</span>
         </button>
 
         <button class="category-card" data-category="Comédia" type="button">
@@ -120,25 +123,29 @@
         <button class="category-card" data-category="Filosofia" type="button">
           <span class="category-symbol" aria-hidden="true">📚</span>
           <span class="category-name">Filosofia</span>
-          <span class="category-description">Pensamento crítico, ética, reflexões sobre a existência e história da filosofia.</span>
+          <span class="category-description">Pensamento crítico, ética, reflexões sobre a existência e história da
+            filosofia.</span>
         </button>
 
-           <button class="category-card" data-category="Infantojuvenil" type="button">
+        <button class="category-card" data-category="Infantojuvenil" type="button">
           <span class="category-symbol" aria-hidden="true">🧒🏻</span>
           <span class="category-name">Infantojuvenil</span>
-          <span class="category-description">Fábulas, aventuras mágicas, contos de fadas, universos lúdicos e histórias para todas as idades.</span>
+          <span class="category-description">Fábulas, aventuras mágicas, contos de fadas, universos lúdicos e histórias
+            para todas as idades.</span>
         </button>
 
-         <button class="category-card" data-category="Romance" type="button">
+        <button class="category-card" data-category="Romance" type="button">
           <span class="category-symbol" aria-hidden="true">💘</span>
           <span class="category-name">Romance</span>
-          <span class="category-description">Histórias de amor, dramas relacionais, comédias românticas e ficção sentimental.</span>
+          <span class="category-description">Histórias de amor, dramas relacionais, comédias românticas e ficção
+            sentimental.</span>
         </button>
 
-         <button class="category-card" data-category="Terror" type="button">
+        <button class="category-card" data-category="Terror" type="button">
           <span class="category-symbol" aria-hidden="true">🧟</span>
           <span class="category-name">Terror</span>
-          <span class="category-description">Suspense macabro, sobrenatural, ficção gótica e thrillers psicológicos.</span>
+          <span class="category-description">Suspense macabro, sobrenatural, ficção gótica e thrillers
+            psicológicos.</span>
         </button>
 
       </div>
@@ -149,43 +156,43 @@
     <section class="collection section-wrap" id="acervo" aria-labelledby="collection-title">
 
       <div class="section-heading collection-heading">
-      
+
         <div>
-        
+
           <p class="eyebrow">SUA PRÓXIMA DESCOBERTA</p>
-        
+
           <h2 id="collection-title">Estante: Todos os livros</h2>
-        
+
           <p class="collection-subtitle" id="results-count">Escolha um livro para conhecer a obra.</p>
           <p class="collection-subtitle" id="add-status" role="status"></p>
         </div>
-      
+
         <label class="sort-control">Ordenar por
-         
+
           <select id="sort-select">
-          
+
             <option value="title">Título (A–Z)</option>
-         
+
             <option value="author">Autor (A–Z)</option>
-        
+
           </select>
-      
+
         </label>
-        
+
         <button class="primary-button" id="add-book-button" type="button">+ Adicionar livro</button>
       </div>
 
       <div class="bookcase" aria-label="Estante virtual de livros">
-      
+
         <!-- Fica VAZIA aqui: o script.js desenha os livros dentro dela (renderizarAcervo) -->
         <div class="bookshelf" id="bookshelf"></div>
-     
+
       </div>
-      
+
       <p class="empty-state" id="empty-state" hidden>Nenhum livro encontrado. Tente outra busca ou categoria.</p>
-     
+
       <p class="demo-note">Clique em “+ Adicionar livro” para montar o seu acervo.</p>
-      
+
     </section>
 
   </main>
@@ -194,39 +201,39 @@
 
   <!-- ============ RODAPÉ ============ -->
   <footer class="footer">
-   
+
     <span class="footer-mark" aria-hidden="true">▤</span>
-   
+
     <p><strong>Minha Biblioteca</strong><br>Mais do que livros, um mundo de possibilidades.</p>
-  
+
   </footer>
-  
+
   <!-- ============ JANELA DE DETALHES DO LIVRO ============
        Começa fechada. O script.js preenche os textos e abre com showModal() ao clicar num livro. -->
   <dialog class="book-dialog" id="book-dialog" aria-labelledby="dialog-title">
-  
+
     <form method="dialog"><button class="close-dialog" aria-label="Fechar detalhes">×</button></form>
-   
+
     <div class="dialog-layout">
-     
+
       <div class="dialog-cover-wrap"><img id="dialog-cover" src="" alt="" class="dialog-cover"></div>
-     
+
       <div class="dialog-info">
-       
+
         <p class="eyebrow">DETALHES DA OBRA</p>
-       
+
         <h2 id="dialog-title"></h2>
-       
+
         <p class="dialog-author" id="dialog-author"></p>
-       
+
         <div class="meta-row"><span id="dialog-category"></span><span class="tag">PDF</span></div>
-       
+
         <p class="synopsis" id="dialog-synopsis"></p>
-       
+
         <div class="dialog-actions">
-         
+
           <a class="primary-button" id="read-link" href="#" target="_blank" rel="noopener noreferrer">▤ Ler agora</a>
-         
+
           <button class="secondary-button" id="favorite-button" type="button">♡ Adicionar aos favoritos</button>
           <button class="secondary-button danger-button" id="delete-button" type="button">Excluir livro</button>
         </div>

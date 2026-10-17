@@ -283,8 +283,10 @@ h1 {
 }
 
 .category-card {
-  min-height: 110px;     /* altura mínima do cartão (era 150px) */
-  padding: 14px;         /* espaço interno (era 19px) */
+  min-height: 110px;
+  /* altura mínima do cartão (era 150px) */
+  padding: 14px;
+  /* espaço interno (era 19px) */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -323,10 +325,44 @@ h1 {
   border-color: var(--gold);
 }
 
+/* ===== IMAGEM DE FUNDO NOS CARTÕES DE CATEGORIA ===== */
+.category-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.category-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: .35;
+  /* escurece a imagem para o texto aparecer */
+  z-index: 0;
+}
+
+.category-card>span {
+  position: relative;
+  z-index: 1;
+  /* mantém o texto acima da imagem */
+}
+
+
+.category-card {
+  min-height: 100px;
+  /* no celular (era 138px) */
+  padding: 12px;
+  /* no celular (era 15px) */
+}
+
+
 .category-symbol {
-  font-size: 22px;       /* tamanho do ícone (era 27px) */
+  font-size: 22px;
+  /* tamanho do ícone (era 27px) */
   color: var(--gold);
-  margin-bottom: 8px;    /* espaço abaixo do ícone (era 14px) */
+  margin-bottom: 8px;
+  /* espaço abaixo do ícone (era 14px) */
 }
 
 .category-name {
@@ -712,11 +748,6 @@ h1 {
 
   .category-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .category-card {
-    min-height: 100px;   /* no celular (era 138px) */
-    padding: 12px;       /* no celular (era 15px) */
   }
 
   .bookshelf {
