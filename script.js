@@ -1,44 +1,47 @@
-/*
-  =====================================================================
-  MINHA BIBLIOTECA — script.js
-  =====================================================================
-  A IDEIA GERAL:
-    - Os livros ficam guardados no arquivo livros.json.
-    - Quando a página abre, ela PEDE a lista ao servidor (carregarLivros).
-    - Quando adicionamos, excluímos ou favoritamos, a página muda a lista
-      e MANDA a lista inteira de volta para o servidor gravar (salvarLivros).
-    - Sempre que algo muda, renderizarAcervo() desenha a estante de novo.
 
-  ORDEM: 1 Dados | 2 Elementos | 3 Servidor | 4 Desenhar a estante |
-         5 Janela de detalhes | 6 Categorias e busca | 7 Adicionar | 8 Excluir | 9 Favoritar | 10 Começar
-*/
+/* ============================================================
+   MINHA BIBLIOTECA — script.js
+   Busca com sugestões, categorias, cadastro, exclusão e favoritos.
+   Os livros são lidos e gravados pelo servidor em livros.json.
+   ============================================================ */
 
 
-// =====================================================================
-// 1) DADOS: o que a página "lembra"
-// =====================================================================
-let livros = [];                 // a lista de livros (vem do livros.json)
-let categoriaAtiva = "Todas";    // categoria escolhida ("Todas" = mostra tudo)
-let livroSelecionado = null;     // o livro aberto na janela de detalhes
+/* ============================================================
+   1. DADOS
+   ============================================================ */
 
-const cores = ["#234b70", "#6e3928", "#283b36", "#9b7845", "#81502b", "#254c62", "#59633c"];   // cores das capas
+let livros = [];
+let categoriaAtiva = "Todas";
+let livroSelecionado = null;
+let sugestoesVisiveis = false;
+
+const cores = [
+    "#234b70",
+    "#6e3928",
+    "#283b36",
+    "#9b7845",
+    "#81502b",
+    "#254c62",
+    "#59633c"
+];
 
 
-// =====================================================================
-// 2) ELEMENTOS DA PÁGINA (pegos pelo id que está no HTML)
-// =====================================================================
-// --- estante e controles ---
-const bookshelf = document.querySelector("#bookshelf");               // onde os livros são desenhados
-const categoryGrid = document.querySelector("#category-grid");        // os botões de categoria
-const searchForm = document.querySelector("#search-form");            // a barra de busca
-const searchInput = document.querySelector("#search-input");          // o campo de busca
-const sortSelect = document.querySelector("#sort-select");            // o menu "Ordenar por"
-const collectionTitle = document.querySelector("#collection-title");  // "Estante: ..."
-const resultsCount = document.querySelector("#results-count");        // "X livros encontrados"
-const emptyState = document.querySelector("#empty-state");            // "Nenhum livro encontrado"
-const addStatus = document.querySelector("#add-status");              // avisos ("foi adicionado", "foi excluído")
+/* ============================================================
+   2. ELEMENTOS DO HTML
+   ============================================================ */
 
-// --- janela de detalhes ---
+// Estante e controles
+const bookshelf = document.querySelector("#bookshelf");
+const categoryGrid = document.querySelector("#category-grid");
+const searchForm = document.querySelector("#search-form");
+const searchInput = document.querySelector("#search-input");
+const sortSelect = document.querySelector("#sort-select");
+const collectionTitle = document.querySelector("#collection-title");
+const resultsCount = document.querySelector("#results-count");
+const emptyState = document.querySelector("#empty-state");
+const addStatus = document.querySelector("#add-status");
+
+// Janela de detalhes
 const dialog = document.querySelector("#book-dialog");
 const dialogCover = document.querySelector("#dialog-cover");
 const dialogTitle = document.querySelector("#dialog-title");
@@ -46,249 +49,709 @@ const dialogAuthor = document.querySelector("#dialog-author");
 const dialogCategory = document.querySelector("#dialog-category");
 const dialogSynopsis = document.querySelector("#dialog-synopsis");
 const dialogHelp = document.querySelector("#dialog-help");
-const readLink = document.querySelector("#read-link");                // "Ler agora"
-const favoriteButton = document.querySelector("#favorite-button");    // "Adicionar aos favoritos"
-const deleteButton = document.querySelector("#delete-button");        // "Excluir livro"
+const readLink = document.querySelector("#read-link");
+const favoriteButton = document.querySelector("#favorite-button");
+const deleteButton = document.querySelector("#delete-button");
 
-// --- janela "Adicionar livro" ---
-const addButton = document.querySelector("#add-book-button");         // "+ Adicionar livro"
-const addDialog = document.querySelector("#add-dialog");              // a janela do formulário
-const addForm = document.querySelector("#add-form");                  // o formulário
-const addMessage = document.querySelector("#add-message");            // aviso de erro do formulário
-const cancelAdd = document.querySelector("#cancel-add");              // "Cancelar"
+// Formulário de cadastro
+const addButton = document.querySelector("#add-book-button");
+const addDialog = document.querySelector("#add-dialog");
+const addForm = document.querySelector("#add-form");
+const addMessage = document.querySelector("#add-message");
+const cancelAdd = document.querySelector("#cancel-add");
 
 
-// =====================================================================
-// 3) CONVERSAR COM O SERVIDOR (ler e gravar o livros.json)
-// =====================================================================
-// fetch = "buscar": faz um pedido ao servidor.
-// await = "espere a resposta chegar antes de continuar" (só funciona dentro de função async).
+/* ============================================================
+   3. FUNÇÕES AUXILIARES
+   ============================================================ */
 
-// carregarLivros: pede a lista ao servidor e desenha a estante
-async function carregarLivros() {
-  const resposta = await fetch("/livros");   // pede: "me dá os livros"
-  livros = await resposta.json();            // transforma a resposta (texto) em lista
-  renderizarAcervo();
-}
-
-// salvarLivros: manda a lista inteira para o servidor gravar no livros.json
-async function salvarLivros() {
-  await fetch("/livros", {
-    method: "POST",                                     // POST = "estou mandando dados"
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(livros)                        // lista -> texto
-  });
+// Deixa a busca sem acentos e em letras minúsculas.
+// Exemplo: "Hábitos" vira "habitos".
+function normalizarTexto(texto) {
+    return String(texto ?? "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLocaleLowerCase("pt-BR")
+        .trim();
 }
 
 
-// =====================================================================
-// 4) DESENHAR A ESTANTE
-// =====================================================================
-
-// criarLivro: cria o botão de UM livro (capa colorida + legenda)
-function criarLivro(livro) {
-  const capa = document.createElement("span");
-  capa.className = "book-cover";
-  capa.style.background = livro.cor;
-  capa.innerHTML = `<span class="cover-ornament">✦</span>`;   // a estrelinha (texto fixo, sem dados do usuário)
-  capa.append(criarTexto("span", "cover-title", livro.titulo), criarTexto("span", "cover-author", livro.autor));
-
-  const legenda = document.createElement("span");
-  legenda.className = "book-caption";
-  legenda.append(criarTexto("strong", "", livro.titulo), criarTexto("span", "", livro.autor));
-
-  const botao = document.createElement("button");
-  botao.className = "book";
-  botao.type = "button";
-  botao.append(capa, legenda);
-  botao.addEventListener("click", () => abrirDetalhes(livro));   // clicar no livro abre os detalhes
-  return botao;
-}
-
-// criarTexto: cria um elemento com classe e texto.
-// Usamos textContent (e não innerHTML) para o texto digitado nunca virar código HTML.
+// Cria um elemento HTML usando texto seguro.
 function criarTexto(tag, classe, texto) {
-  const elemento = document.createElement(tag);
-  elemento.className = classe;
-  elemento.textContent = texto;
-  return elemento;
+    const elemento = document.createElement(tag);
+
+    elemento.className = classe;
+    elemento.textContent = texto ?? "";
+
+    return elemento;
 }
 
-// renderizarAcervo: A FUNÇÃO PRINCIPAL. Filtra, ordena e desenha os livros.
-function renderizarAcervo() {
-  const busca = searchInput.value.trim().toLowerCase();               // o que foi digitado na busca
-  const campo = sortSelect.value === "author" ? "autor" : "titulo";   // ordenar por autor ou título
 
-  // 1) FILTRAR: só os livros da categoria escolhida E que combinam com a busca
-  const resultado = livros.filter(livro => {
-    const naCategoria = categoriaAtiva === "Todas" || livro.categoria === categoriaAtiva;
-    const naBusca = `${livro.titulo} ${livro.autor} ${livro.categoria}`.toLowerCase().includes(busca);
-    return naCategoria && naBusca;
-  });
+// Compara textos em português, ignorando diferenças de acentos
+// para que a ordenação seja mais natural.
+function compararTextos(a, b) {
+    return String(a ?? "").localeCompare(
+        String(b ?? ""),
+        "pt-BR",
+        { sensitivity: "base" }
+    );
+}
 
-  // 2) ORDENAR: de A a Z (localeCompare respeita os acentos)
-  resultado.sort((a, b) => a[campo].localeCompare(b[campo], "pt-BR"));
 
-  // 3) DESENHAR: apaga a estante e coloca os livros, com uma prateleira a cada 5
-  bookshelf.replaceChildren();
-  resultado.forEach((livro, indice) => {
-    bookshelf.append(criarLivro(livro));
-    if ((indice + 1) % 5 === 0 && indice !== resultado.length - 1) {
-      const prateleira = document.createElement("div");
-      prateleira.className = "shelf-board";
-      bookshelf.append(prateleira);
+// Retorna um texto com os campos que podem ser pesquisados.
+function textoPesquisavel(livro) {
+    return [
+        livro.titulo,
+        livro.autor,
+        livro.categoria,
+        livro.sinopse
+    ].join(" ");
+}
+
+
+/* ============================================================
+   4. COMUNICAÇÃO COM O SERVIDOR
+   ============================================================ */
+
+// Carrega os livros do livros.json por meio do servidor.
+async function carregarLivros() {
+    const resposta = await fetch("/livros");
+
+    if (!resposta.ok) {
+        throw new Error("Não foi possível carregar os livros.");
     }
-  });
 
-  // 4) TEXTOS em volta da estante
-  emptyState.hidden = resultado.length > 0;
-  resultsCount.textContent = `${resultado.length} ${resultado.length === 1 ? "livro encontrado" : "livros encontrados"}`;
-  collectionTitle.textContent = `Estante: ${categoriaAtiva === "Todas" ? "Todos os livros" : categoriaAtiva}`;
+    const dados = await resposta.json();
+
+    if (!Array.isArray(dados)) {
+        throw new Error("A lista de livros recebida é inválida.");
+    }
+
+    // Prepara os campos opcionais para evitar erros.
+    livros = dados.map((livro, indice) => ({
+        ...livro,
+        id: livro.id ?? `livro-${indice}`,
+        titulo: livro.titulo ?? "",
+        autor: livro.autor ?? "",
+        categoria: livro.categoria ?? "",
+        sinopse: livro.sinopse ?? "",
+        pdf: livro.pdf ?? "",
+        cor: livro.cor || cores[indice % cores.length],
+        favorito: Boolean(livro.favorito)
+    }));
+
+    renderizarAcervo();
 }
 
 
-// =====================================================================
-// 5) JANELA DE DETALHES
-// =====================================================================
+// Grava a lista atual no servidor.
+async function salvarLivros() {
+    const resposta = await fetch("/livros", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(livros)
+    });
 
-// abrirDetalhes: preenche a janela com o livro clicado e abre
-function abrirDetalhes(livro) {
-  livroSelecionado = livro;   // guarda qual livro está aberto (excluir e favoritar usam isso)
-
-  dialogTitle.textContent = livro.titulo;
-  dialogAuthor.textContent = livro.autor;
-  dialogCategory.textContent = livro.categoria;
-  dialogSynopsis.textContent = livro.sinopse;
-
-  // capa: um retângulo com a cor do livro
-  dialogCover.alt = `Capa demonstrativa de ${livro.titulo}`;
-  dialogCover.style.background = livro.cor;
-  dialogCover.style.borderColor = livro.cor;
-
-  // "Ler agora": só aparece se o livro tiver link de PDF
-  readLink.href = livro.pdf;
-  readLink.style.display = livro.pdf ? "" : "none";
-  dialogHelp.textContent = livro.pdf ? "O PDF será aberto em uma nova aba." : "Este livro não tem PDF cadastrado.";
-
-  atualizarBotaoFavorito();
-  dialog.showModal();   // abre a janela
-}
-
-// atualizarBotaoFavorito: muda o texto do botão de favorito
-function atualizarBotaoFavorito() {
-  favoriteButton.textContent = livroSelecionado.favorito ? "♥ Remover dos favoritos" : "♡ Adicionar aos favoritos";
+    if (!resposta.ok) {
+        throw new Error("Não foi possível salvar os livros.");
+    }
 }
 
 
-// =====================================================================
-// 6) CATEGORIAS, BUSCA E ORDENAÇÃO
-// =====================================================================
+/* ============================================================
+   5. CRIAR OS LIVROS NA ESTANTE
+   ============================================================ */
 
-// Clique em uma categoria
-categoryGrid.addEventListener("click", evento => {
-  const botao = evento.target.closest("[data-category]");   // qual botão foi clicado?
-  if (!botao) return;                                       // clicou fora de um botão: ignora
+function criarLivro(livro) {
+    const capa = document.createElement("span");
 
-  categoriaAtiva = botao.dataset.category;                  // lê o data-category do HTML
-  categoryGrid.querySelectorAll("[data-category]").forEach(item => {
-    item.classList.toggle("selected", item === botao);      // só o botão clicado fica destacado
-  });
-  renderizarAcervo();
-  document.querySelector("#acervo").scrollIntoView({ behavior: "smooth" });   // rola até a estante
+    capa.className = "book-cover";
+    capa.style.background = livro.cor;
+
+    const ornamento = criarTexto(
+        "span",
+        "cover-ornament",
+        "✦"
+    );
+
+    capa.append(
+        ornamento,
+        criarTexto("span", "cover-title", livro.titulo),
+        criarTexto("span", "cover-author", livro.autor)
+    );
+
+    const legenda = document.createElement("span");
+    legenda.className = "book-caption";
+
+    legenda.append(
+        criarTexto("strong", "", livro.titulo),
+        criarTexto("span", "", livro.autor)
+    );
+
+    const botao = document.createElement("button");
+
+    botao.className = "book";
+    botao.type = "button";
+    botao.setAttribute(
+        "aria-label",
+        `Ver detalhes de ${livro.titulo}`
+    );
+
+    botao.append(capa, legenda);
+
+    botao.addEventListener("click", () => {
+        abrirDetalhes(livro);
+    });
+
+    return botao;
+}
+
+
+/* ============================================================
+   6. FILTRAR, ORDENAR E DESENHAR A ESTANTE
+   ============================================================ */
+
+function renderizarAcervo() {
+    const busca = normalizarTexto(searchInput.value);
+
+    const campo =
+        sortSelect.value === "author" ? "autor" : "titulo";
+
+    // Primeiro filtra pela categoria e pelo texto digitado.
+    const resultado = livros.filter(livro => {
+        const naCategoria =
+            categoriaAtiva === "Todas" ||
+            normalizarTexto(livro.categoria) ===
+                normalizarTexto(categoriaAtiva);
+
+        const naBusca = normalizarTexto(
+            textoPesquisavel(livro)
+        ).includes(busca);
+
+        return naCategoria && naBusca;
+    });
+
+    // Depois ordena os resultados.
+    resultado.sort((a, b) => {
+        return compararTextos(a[campo], b[campo]);
+    });
+
+    // Limpa a estante antes de desenhá-la novamente.
+    bookshelf.replaceChildren();
+
+    resultado.forEach((livro, indice) => {
+        bookshelf.append(criarLivro(livro));
+
+        // Acrescenta uma prateleira a cada cinco livros.
+        if (
+            (indice + 1) % 5 === 0 &&
+            indice !== resultado.length - 1
+        ) {
+            const prateleira = document.createElement("div");
+
+            prateleira.className = "shelf-board";
+            bookshelf.append(prateleira);
+        }
+    });
+
+    // Atualiza as mensagens da página.
+    emptyState.hidden = resultado.length > 0;
+
+    resultsCount.textContent =
+        `${resultado.length} ${
+            resultado.length === 1
+                ? "livro encontrado"
+                : "livros encontrados"
+        }`;
+
+    collectionTitle.textContent =
+        `Estante: ${
+            categoriaAtiva === "Todas"
+                ? "Todos os livros"
+                : categoriaAtiva
+        }`;
+}
+
+
+/* ============================================================
+   7. SUGESTÕES DA BUSCA
+   ============================================================ */
+
+// Cria a caixa de sugestões sem precisar alterar o HTML.
+const searchSuggestions = document.createElement("div");
+
+searchSuggestions.id = "search-suggestions";
+searchSuggestions.setAttribute("role", "listbox");
+searchSuggestions.setAttribute(
+    "aria-label",
+    "Sugestões de livros"
+);
+
+Object.assign(searchSuggestions.style, {
+    position: "fixed",
+    display: "none",
+    overflowY: "auto",
+    maxHeight: "min(60vh, 420px)",
+    background: "#1a201e",
+    color: "#f8f2e9",
+    border: "1px solid #87552f",
+    borderRadius: "12px",
+    boxShadow: "0 12px 30px #0008",
+    zIndex: "9999",
+    padding: "6px",
+    boxSizing: "border-box"
 });
 
-// Digitar na busca: filtra a cada letra
-searchInput.addEventListener("input", renderizarAcervo);
+document.body.append(searchSuggestions);
 
-// Apertar Enter na busca: não recarrega a página
-searchForm.addEventListener("submit", evento => evento.preventDefault());
 
-// Mudar a ordenação
+// Ajusta a caixa para ficar logo abaixo do campo de busca.
+function posicionarSugestoes() {
+    if (!sugestoesVisiveis) return;
+
+    const retangulo = searchInput.getBoundingClientRect();
+
+    searchSuggestions.style.left = `${retangulo.left}px`;
+    searchSuggestions.style.top = `${retangulo.bottom + 6}px`;
+    searchSuggestions.style.width = `${retangulo.width}px`;
+}
+
+
+// Exibe uma mensagem dentro da lista de sugestões.
+function mostrarMensagemSugestoes(mensagem) {
+    searchSuggestions.replaceChildren();
+
+    const texto = criarTexto("div", "", mensagem);
+
+    Object.assign(texto.style, {
+        padding: "14px",
+        color: "#c9c0b4",
+        fontSize: "14px"
+    });
+
+    searchSuggestions.append(texto);
+}
+
+
+// Monta a lista de sugestões.
+function mostrarSugestoes() {
+    const termo = normalizarTexto(searchInput.value);
+
+    // A lista de sugestões considera todos os livros,
+    // independentemente da categoria selecionada.
+    const encontrados = livros
+        .filter(livro => {
+            return normalizarTexto(
+                textoPesquisavel(livro)
+            ).includes(termo);
+        })
+        .sort((a, b) => compararTextos(a.titulo, b.titulo));
+
+    searchSuggestions.replaceChildren();
+
+    if (encontrados.length === 0) {
+        mostrarMensagemSugestoes(
+            "Nenhum livro correspondente."
+        );
+    } else {
+        encontrados.forEach(livro => {
+            const opcao = document.createElement("button");
+
+            opcao.type = "button";
+            opcao.setAttribute("role", "option");
+
+            Object.assign(opcao.style, {
+                display: "block",
+                width: "100%",
+                padding: "11px 12px",
+                border: "0",
+                borderRadius: "7px",
+                background: "transparent",
+                color: "#f8f2e9",
+                textAlign: "left",
+                cursor: "pointer"
+            });
+
+            const titulo = criarTexto(
+                "span",
+                "",
+                livro.titulo
+            );
+
+            titulo.style.display = "block";
+            titulo.style.fontWeight = "700";
+
+            const autor = criarTexto(
+                "span",
+                "",
+                `${livro.autor} · ${livro.categoria}`
+            );
+
+            Object.assign(autor.style, {
+                display: "block",
+                marginTop: "4px",
+                fontSize: "12px",
+                color: "#c9c0b4"
+            });
+
+            opcao.append(titulo, autor);
+
+            opcao.addEventListener("mouseenter", () => {
+                opcao.style.background = "#303a35";
+            });
+
+            opcao.addEventListener("mouseleave", () => {
+                opcao.style.background = "transparent";
+            });
+
+            opcao.addEventListener("click", () => {
+                searchInput.value = livro.titulo;
+
+                // Ao escolher uma sugestão, mostra o livro
+                // mesmo que outra categoria estivesse selecionada.
+                categoriaAtiva = "Todas";
+
+                categoryGrid
+                    .querySelectorAll("[data-category]")
+                    .forEach(botao => {
+                        botao.classList.toggle(
+                            "selected",
+                            botao.dataset.category === "Todas"
+                        );
+                    });
+
+                esconderSugestoes();
+                renderizarAcervo();
+
+                document.querySelector("#acervo").scrollIntoView({
+                    behavior: "smooth"
+                });
+            });
+
+            searchSuggestions.append(opcao);
+        });
+    }
+
+    sugestoesVisiveis = true;
+    searchSuggestions.style.display = "block";
+
+    posicionarSugestoes();
+}
+
+
+// Esconde a caixa de sugestões.
+function esconderSugestoes() {
+    sugestoesVisiveis = false;
+    searchSuggestions.style.display = "none";
+}
+
+
+// Ao digitar, atualiza os resultados e as sugestões.
+searchInput.addEventListener("input", () => {
+    renderizarAcervo();
+    mostrarSugestoes();
+});
+
+
+// Ao clicar no campo, mostra todos os livros em ordem alfabética
+// quando a pesquisa estiver vazia.
+searchInput.addEventListener("focus", mostrarSugestoes);
+
+
+// Enter não recarrega a página.
+searchForm.addEventListener("submit", evento => {
+    evento.preventDefault();
+
+    esconderSugestoes();
+    renderizarAcervo();
+
+    document.querySelector("#acervo").scrollIntoView({
+        behavior: "smooth"
+    });
+});
+
+
+// Fecha a lista ao clicar fora dela.
+document.addEventListener("click", evento => {
+    if (
+        !searchInput.contains(evento.target) &&
+        !searchSuggestions.contains(evento.target)
+    ) {
+        esconderSugestoes();
+    }
+});
+
+
+// Fecha as sugestões com Escape.
+searchInput.addEventListener("keydown", evento => {
+    if (evento.key === "Escape") {
+        esconderSugestoes();
+    }
+});
+
+
+// Mantém a caixa alinhada durante a rolagem ou redimensionamento.
+window.addEventListener("resize", posicionarSugestoes);
+window.addEventListener("scroll", posicionarSugestoes, true);
+
+
+// Muda a ordenação da estante.
 sortSelect.addEventListener("change", renderizarAcervo);
 
 
-// =====================================================================
-// 7) ADICIONAR LIVRO
-// =====================================================================
+/* ============================================================
+   8. CATEGORIAS
+   ============================================================ */
 
-// "+ Adicionar livro" abre o formulário limpo
+categoryGrid.addEventListener("click", evento => {
+    const botao = evento.target.closest("[data-category]");
+
+    if (!botao) return;
+
+    categoriaAtiva = botao.dataset.category;
+
+    categoryGrid
+        .querySelectorAll("[data-category]")
+        .forEach(item => {
+            item.classList.toggle("selected", item === botao);
+        });
+
+    renderizarAcervo();
+
+    document.querySelector("#acervo").scrollIntoView({
+        behavior: "smooth"
+    });
+});
+
+
+/* ============================================================
+   9. JANELA DE DETALHES
+   ============================================================ */
+
+function abrirDetalhes(livro) {
+    livroSelecionado = livro;
+
+    dialogTitle.textContent = livro.titulo;
+    dialogAuthor.textContent = livro.autor;
+    dialogCategory.textContent = livro.categoria;
+    dialogSynopsis.textContent =
+        livro.sinopse || "Nenhuma sinopse cadastrada.";
+
+    dialogCover.alt = `Capa demonstrativa de ${livro.titulo}`;
+    dialogCover.removeAttribute("src");
+    dialogCover.style.background = livro.cor;
+    dialogCover.style.borderColor = livro.cor;
+
+    // Só mostra o botão de leitura se existir um PDF cadastrado.
+    const temPdf = Boolean(livro.pdf);
+
+    readLink.href = temPdf ? livro.pdf : "#";
+    readLink.style.display = temPdf ? "" : "none";
+
+    dialogHelp.textContent = temPdf
+        ? "O PDF será aberto em uma nova aba."
+        : "Este livro não tem PDF cadastrado.";
+
+    atualizarBotaoFavorito();
+
+    dialog.showModal();
+}
+
+
+function atualizarBotaoFavorito() {
+    if (!livroSelecionado) return;
+
+    favoriteButton.textContent = livroSelecionado.favorito
+        ? "♥ Remover dos favoritos"
+        : "♡ Adicionar aos favoritos";
+}
+
+
+/* ============================================================
+   10. ADICIONAR LIVRO
+   ============================================================ */
+
 addButton.addEventListener("click", () => {
-  addForm.reset();
-  addMessage.textContent = "";
-  addDialog.showModal();
+    addForm.reset();
+    addMessage.textContent = "";
+    addDialog.showModal();
 });
 
-// "Cancelar" fecha o formulário
-cancelAdd.addEventListener("click", () => addDialog.close());
 
-// Enviar o formulário
+cancelAdd.addEventListener("click", () => {
+    addDialog.close();
+});
+
+
 addForm.addEventListener("submit", async evento => {
-  evento.preventDefault();   // não recarrega a página
+    evento.preventDefault();
 
-  // 1) Pega o que foi digitado (pelo "name" de cada campo no HTML)
-  const campos = addForm.elements;
-  const novo = {
-    id: Date.now(),                                   // número único (milissegundos desde 1970)
-    titulo: campos.titulo.value.trim(),
-    autor: campos.autor.value.trim(),
-    categoria: campos.categoria.value,
-    sinopse: campos.sinopse.value.trim(),
-    pdf: campos.pdf.value.trim(),                     // opcional
-    cor: cores[livros.length % cores.length],         // escolhe uma cor da lista, em rodízio
-    favorito: false
-  };
+    const campos = addForm.elements;
 
-  // 2) Confere se está tudo preenchido
-  if (!novo.titulo || !novo.autor || !novo.categoria || !novo.sinopse) {
-    addMessage.textContent = "Preencha título, autor, categoria e sinopse.";
-    return;
-  }
+    const novo = {
+        id: Date.now(),
+        titulo: campos.titulo.value.trim(),
+        autor: campos.autor.value.trim(),
+        categoria: campos.categoria.value,
+        sinopse: campos.sinopse.value.trim(),
+        pdf: campos.pdf.value.trim(),
+        cor: cores[livros.length % cores.length],
+        favorito: false
+    };
 
-  // 3) Confere se o livro já existe (mesmo título e autor)
-  const jaExiste = livros.some(livro =>
-    livro.titulo.toLowerCase() === novo.titulo.toLowerCase() &&
-    livro.autor.toLowerCase() === novo.autor.toLowerCase());
-  if (jaExiste) {
-    addMessage.textContent = "Esse livro já está na estante.";
-    return;
-  }
+    if (
+        !novo.titulo ||
+        !novo.autor ||
+        !novo.categoria ||
+        !novo.sinopse
+    ) {
+        addMessage.textContent =
+            "Preencha título, autor, categoria e sinopse.";
+        return;
+    }
 
-  // 4) Coloca na lista, GRAVA no livros.json e redesenha
-  livros.push(novo);
-  await salvarLivros();
-  addDialog.close();
-  renderizarAcervo();
-  addStatus.textContent = `"${novo.titulo}" foi adicionado à estante.`;
+    if (
+        novo.pdf &&
+        !/^https?:\/\//i.test(novo.pdf)
+    ) {
+        addMessage.textContent =
+            "O link do PDF deve começar com http:// ou https://.";
+        return;
+    }
+
+    const jaExiste = livros.some(livro =>
+        normalizarTexto(livro.titulo) ===
+            normalizarTexto(novo.titulo) &&
+        normalizarTexto(livro.autor) ===
+            normalizarTexto(novo.autor)
+    );
+
+    if (jaExiste) {
+        addMessage.textContent =
+            "Esse livro já está na estante.";
+        return;
+    }
+
+    livros.push(novo);
+
+    try {
+        await salvarLivros();
+
+        addDialog.close();
+        renderizarAcervo();
+
+        addStatus.textContent =
+            `"${novo.titulo}" foi adicionado à estante.`;
+
+        // Atualiza as sugestões se a caixa de busca estiver aberta.
+        if (sugestoesVisiveis) {
+            mostrarSugestoes();
+        }
+    } catch (erro) {
+        // Desfaz a inclusão local se o servidor não salvar.
+        livros = livros.filter(livro => livro.id !== novo.id);
+
+        addMessage.textContent =
+            "Não foi possível salvar o livro. Verifique se o servidor está ligado.";
+
+        console.error(erro);
+    }
 });
 
 
-// =====================================================================
-// 8) EXCLUIR LIVRO
-// =====================================================================
+/* ============================================================
+   11. EXCLUIR LIVRO
+   ============================================================ */
+
 deleteButton.addEventListener("click", async () => {
-  if (!confirm(`Excluir "${livroSelecionado.titulo}" da estante?`)) return;   // se cancelar, para aqui
+    if (!livroSelecionado) return;
 
-  livros = livros.filter(livro => livro.id !== livroSelecionado.id);          // lista nova SEM esse livro
-  await salvarLivros();                                                       // grava no livros.json
-  dialog.close();
-  renderizarAcervo();
-  addStatus.textContent = `"${livroSelecionado.titulo}" foi excluído.`;
+    const livroExcluido = livroSelecionado;
+
+    const confirmou = confirm(
+        `Excluir "${livroExcluido.titulo}" da estante?`
+    );
+
+    if (!confirmou) return;
+
+    const listaAnterior = [...livros];
+
+    livros = livros.filter(
+        livro => livro.id !== livroExcluido.id
+    );
+
+    try {
+        await salvarLivros();
+
+        dialog.close();
+        livroSelecionado = null;
+
+        renderizarAcervo();
+
+        addStatus.textContent =
+            `"${livroExcluido.titulo}" foi excluído.`;
+
+        if (sugestoesVisiveis) {
+            mostrarSugestoes();
+        }
+    } catch (erro) {
+        livros = listaAnterior;
+
+        renderizarAcervo();
+
+        alert(
+            "Não foi possível excluir o livro. Verifique o servidor."
+        );
+
+        console.error(erro);
+    }
 });
 
 
-// =====================================================================
-// 9) FAVORITAR
-// =====================================================================
+/* ============================================================
+   12. FAVORITAR LIVRO
+   ============================================================ */
+
 favoriteButton.addEventListener("click", async () => {
-  livroSelecionado.favorito = !livroSelecionado.favorito;   // ! inverte: true vira false, false vira true
-  await salvarLivros();                                     // grava no livros.json
-  atualizarBotaoFavorito();
+    if (!livroSelecionado) return;
+
+    const favoritoAnterior = livroSelecionado.favorito;
+
+    livroSelecionado.favorito = !favoritoAnterior;
+
+    atualizarBotaoFavorito();
+
+    try {
+        await salvarLivros();
+    } catch (erro) {
+        // Reverte o botão se não foi possível gravar a mudança.
+        livroSelecionado.favorito = favoritoAnterior;
+
+        atualizarBotaoFavorito();
+
+        alert(
+            "Não foi possível salvar o favorito. Verifique o servidor."
+        );
+
+        console.error(erro);
+    }
 });
 
 
-// =====================================================================
-// 10) COMEÇAR: busca os livros no servidor e desenha a estante
-// =====================================================================
-carregarLivros().catch(() => {
-  resultsCount.textContent = "Servidor desligado. No terminal, rode: node server.js";
+/* ============================================================
+   13. INICIALIZAÇÃO
+   ============================================================ */
+
+carregarLivros().catch(erro => {
+    resultsCount.textContent =
+        "Servidor desligado. No terminal, rode: node server.js";
+
+    emptyState.hidden = false;
+
+    console.error(
+        "Erro ao carregar os livros:",
+        erro
+    );
 });
