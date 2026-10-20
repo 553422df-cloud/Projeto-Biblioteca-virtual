@@ -521,8 +521,12 @@ h1 {
 }
 
 .book-caption span {
+  display: block;            /* ocupa a linha inteira, para o "..." funcionar */
   color: #c2b3a3;
   font-size: .75rem;
+  overflow: hidden;          /* esconde o que passar da largura */
+  text-overflow: ellipsis;   /* coloca "..." no fim */
+  white-space: nowrap;       /* não deixa quebrar em duas linhas */
 }
 
 .shelf-board {
@@ -899,9 +903,12 @@ h1 {
 
 /* ===== IMAGEM DE CAPA DOS LIVROS ===== */
 .cover-image {
-  position: absolute;    /* fica por cima da capa colorida */
-  inset: 0;              /* encosta nas 4 bordas da capa */
+  position: absolute;
+  /* fica por cima da capa colorida */
+  inset: 0;
+  /* encosta nas 4 bordas da capa */
   width: 100%;
   height: 100%;
-  object-fit: cover;     /* preenche a capa inteira sem distorcer a imagem */
+  object-fit: cover;
+  /* preenche a capa inteira sem distorcer a imagem */
 }

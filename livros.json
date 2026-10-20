@@ -59,7 +59,6 @@
     "cor": "#B08D57",
     "favorito": false
   },
-
   {
     "id": 1792104002001,
     "titulo": "20 Mil Léguas Submarinas",
@@ -69,7 +68,7 @@
     "pdf": "https://drive.google.com/file/d/1uMGwq5ETaVT8DuL8_0682xg5QP_Rjmpv/view",
     "cor": "#235C70",
     "favorito": false,
-    "capa": "https://m.media-amazon.com/images/I/61hVav2nvIL._SY445_SX342_.jpg" 
+    "capa": "https://m.media-amazon.com/images/I/61hVav2nvIL._SY445_SX342_.jpg"
   },
   {
     "id": 1792104002002,
@@ -149,9 +148,9 @@
     "sinopse": "O aristocrata britânico Phileas Fogg aposta com os membros de seu clube que consegue dar a volta ao mundo em apenas oitenta dias. Acompanhado por seu fiel criado francês, Passepartout, Fogg embarca em uma corrida frenética contra o tempo, enfrentando imprevistos, perigos exóticos e sendo perseguido por um detetive desconfiado que acredita que ele é um ladrão de banco.",
     "pdf": "https://drive.google.com/file/d/1DQyGm6X9kLSX5NLQmlZ5d0gW8gHlIf6D/view",
     "cor": "#6E3928",
-    "favorito": false
+    "favorito": false,
+    "capa": "https://img.wook.pt/images/a-volta-ao-mundo-em-80-dias-julio-verne/MXwzNzM3OTIzfDI3MjM0Mzd8MTM4MzUyMzIwMDAwMA==/500x"
   },
-
   {
     "id": 1792104003001,
     "titulo": "A Chinela Turca",
@@ -242,8 +241,6 @@
     "cor": "#72558C",
     "favorito": false
   },
-
-
   {
     "id": 1792104004001,
     "titulo": "A História Sem Fim",
@@ -294,8 +291,6 @@
     "cor": "#754A8B",
     "favorito": false
   },
-
-
   {
     "id": 1792104005001,
     "titulo": "A Alegoria da Caverna",
@@ -304,7 +299,8 @@
     "sinopse": "Parte integrante do livro VII de A República, esta metáfora visual descreve prisioneiros acorrentados no fundo de uma caverna escura, olhando apenas para sombras projetadas na parede por uma fogueira. A alegoria ilustra o doloroso e iluminador processo de libertação do homem através da educação e da filosofia rumo ao conhecimento da verdadeira realidade (o mundo inteligível).",
     "pdf": "https://drive.google.com/file/d/1ytCLuLI2JkP5PKtBs3OWMsKC5DcLERX4/view",
     "cor": "#55466D",
-    "favorito": false
+    "favorito": false,
+    "capa": "https://img.wook.pt/images/a-alegoria-da-caverna-platao/MXwxMDE1MjN8MTMxNTkwfDEzODM1MjMyMDAwMDA=/250x"
   },
   {
     "id": 1792104005002,

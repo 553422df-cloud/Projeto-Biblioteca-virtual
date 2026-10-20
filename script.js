@@ -75,7 +75,6 @@ function normalizarTexto(texto) {
     .trim();
 }
 
-
 // Cria um elemento HTML usando texto seguro.
 function criarTexto(tag, classe, texto) {
   const elemento = document.createElement(tag);
@@ -86,7 +85,6 @@ function criarTexto(tag, classe, texto) {
   return elemento;
 }
 
-
 // Compara textos em português, ignorando diferenças de acentos
 // para que a ordenação seja mais natural.
 function compararTextos(a, b) {
@@ -96,7 +94,6 @@ function compararTextos(a, b) {
     { sensitivity: "base" }
   );
 }
-
 
 // Retorna um texto com os campos que podem ser pesquisados.
 function textoPesquisavel(livro) {
@@ -189,20 +186,16 @@ function criarLivro(livro) {
   );
 
   const botao = document.createElement("button");
-
   botao.className = "book";
   botao.type = "button";
   botao.setAttribute(
     "aria-label",
-    `Ver detalhes de ${livro.titulo}`
-  );
+    `Ver detalhes de ${livro.titulo}`);
 
   botao.append(capa, legenda);
-
   botao.addEventListener("click", () => {
     abrirDetalhes(livro);
   });
-
   return botao;
 }
 
@@ -436,13 +429,11 @@ function mostrarSugestoes() {
   posicionarSugestoes();
 }
 
-
 // Esconde a caixa de sugestões.
 function esconderSugestoes() {
   sugestoesVisiveis = false;
   searchSuggestions.style.display = "none";
 }
-
 
 // Ao digitar, atualiza os resultados e as sugestões.
 searchInput.addEventListener("input", () => {
