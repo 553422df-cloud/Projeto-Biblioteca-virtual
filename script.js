@@ -110,18 +110,25 @@ function textoPesquisavel(livro) {
 
 
 /* ============================================================
-   4. COMUNICAÇÃO COM O SERVIDOR
+   4. CARREGAR E SALVAR OS LIVROS (sem servidor)
    ============================================================ */
 
-// Carrega os livros do livros.json por meio do servidor.
+// Carrega os livros: primeiro procura no navegador; se não tiver, lê o livros.json.
 async function carregarLivros() {
-  const resposta = await fetch("/livros");
+  const salvos = localStorage.getItem("livros");   // este navegador já tem uma lista salva?
+  let dados;
 
-  if (!resposta.ok) {
-    throw new Error("Não foi possível carregar os livros.");
+  if (salvos) {
+    dados = JSON.parse(salvos);                     // SIM: usa a lista salva (texto -> lista)
+  } else {
+    const resposta = await fetch("livros.json");    // NÃO: lê o arquivo livros.json (lista inicial)
+
+    if (!resposta.ok) {
+      throw new Error("Não foi possível carregar os livros.");
+    }
+
+    dados = await resposta.json();
   }
-
-  const dados = await resposta.json();
 
   if (!Array.isArray(dados)) {
     throw new Error("A lista de livros recebida é inválida.");
@@ -144,19 +151,9 @@ async function carregarLivros() {
 }
 
 
-// Grava a lista atual no servidor.
+// Grava a lista atual no navegador de quem está usando o site.
 async function salvarLivros() {
-  const resposta = await fetch("/livros", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(livros)
-  });
-
-  if (!resposta.ok) {
-    throw new Error("Não foi possível salvar os livros.");
-  }
+  localStorage.setItem("livros", JSON.stringify(livros));   // lista -> texto, e guarda
 }
 
 
