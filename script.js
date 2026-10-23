@@ -5,6 +5,12 @@
    Os livros são lidos e gravados pelo servidor em livros.json.
    ============================================================ */
 
+// Conexão com o Supabase
+const supabaseClient = window.supabase.createClient(
+  "https://qhawjvcaeawgbuhyopxp.supabase.co",
+  "sb_publishable_rIrWotQfvIKzyQ-YMTsrgA_BH9mGZgp"
+);
+
 
 /* ============================================================
    1. DADOS
@@ -111,28 +117,26 @@ function textoPesquisavel(livro) {
    ============================================================ */
 
 // Carrega os livros: primeiro procura no navegador; se não tiver, lê o livros.json.
+
+/* ============================================================
+   4. CARREGAR OS LIVROS DO SUPABASE
+   ============================================================ */
+
 async function carregarLivros() {
-  const salvos = localStorage.getItem("livros");   // este navegador já tem uma lista salva?
-  let dados;
+  const { data, error } = await supabaseClient
+    .from("Biblioteca Virtual")
+    .select("*")
+    .order("titulo", { ascending: true });
 
-  if (salvos) {
-    dados = JSON.parse(salvos);                     // SIM: usa a lista salva (texto -> lista)
-  } else {
-    const resposta = await fetch("livros.json");    // NÃO: lê o arquivo livros.json (lista inicial)
-
-    if (!resposta.ok) {
-      throw new Error("Não foi possível carregar os livros.");
-    }
-
-    dados = await resposta.json();
+  if (error) {
+    throw error;
   }
 
-  if (!Array.isArray(dados)) {
+  if (!Array.isArray(data)) {
     throw new Error("A lista de livros recebida é inválida.");
   }
 
-  // Prepara os campos opcionais para evitar erros.
-  livros = dados.map((livro, indice) => ({
+  livros = data.map((livro, indice) => ({
     ...livro,
     id: livro.id ?? `livro-${indice}`,
     titulo: livro.titulo ?? "",
@@ -140,6 +144,7 @@ async function carregarLivros() {
     categoria: livro.categoria ?? "",
     sinopse: livro.sinopse ?? "",
     pdf: livro.pdf ?? "",
+    capa: livro.capa ?? "",
     cor: livro.cor || cores[indice % cores.length],
     favorito: Boolean(livro.favorito)
   }));
@@ -148,9 +153,10 @@ async function carregarLivros() {
 }
 
 
-// Grava a lista atual no navegador de quem está usando o site.
+// Mantém o salvamento local temporariamente.
+// Vamos conectar essa função ao Supabase na próxima etapa.
 async function salvarLivros() {
-  localStorage.setItem("livros", JSON.stringify(livros));   // lista -> texto, e guarda
+  localStorage.setItem("livros", JSON.stringify(livros));
 }
 
 
