@@ -10,9 +10,7 @@
 
   <!-- O visual da página -->
   <link rel="stylesheet" href="style.css">
-  <!-- A lógica. "defer" = só roda depois que o HTML inteiro foi carregado.
-       IMPORTANTE: abra o site pelo servidor (node server.js -> http://localhost:3000),
-       e não clicando duas vezes neste arquivo. -->
+  <!-- O script usa o Supabase para carregar e gravar os livros. -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="script.js" defer></script>
 
@@ -255,7 +253,7 @@
   </dialog>
 
   <!-- ============ JANELA "ADICIONAR LIVRO" (formulário) ============
-       O "name" de cada campo é como o script.js encontra o valor (campos.titulo, campos.autor...). -->
+       Os campos PDF e capa recebem arquivos reais que serão enviados ao Supabase Storage. -->
   <dialog class="book-dialog" id="add-dialog" aria-labelledby="add-title">
     <form method="dialog"><button class="close-dialog" aria-label="Fechar formulário">×</button></form>
     <div class="add-form-wrap">
@@ -286,8 +284,11 @@
         <label>Sinopse
           <textarea name="sinopse" rows="4"></textarea>
         </label>
-        <label>Link do PDF (opcional)
-          <input name="pdf" type="url" autocomplete="off" placeholder="https://...">
+        <label>Arquivo PDF
+          <input name="pdf" type="file" accept="application/pdf,.pdf" required>
+        </label>
+        <label>Imagem da capa
+          <input name="capa" type="file" accept="image/*" required>
         </label>
 
         <p class="form-message" id="add-message" role="alert"></p>
@@ -300,4 +301,4 @@
   </dialog>
 </body>
 
-</html>
+</html> 
