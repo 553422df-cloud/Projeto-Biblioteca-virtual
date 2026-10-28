@@ -1,14 +1,19 @@
 
 /* ============================================================
    MINHA BIBLIOTECA — script.js
-   Busca com sugestões, categorias, cadastro, exclusão e favoritos.
-   Os livros são lidos e gravados pelo servidor em livros.json.
+   Busca, categorias, cadastro de arquivos, exclusão e favoritos.
+   O Supabase é a única fonte de dados dos livros.
    ============================================================ */
 
 // Conexão com o Supabase
+const SUPABASE_URL = "https://qhawjvcaeawgbuhyopxp.supabase.co";
+const SUPABASE_PUBLIC_KEY = "sb_publishable_rIrWotQfvIKzyQ-YMTsrgA_BH9mGZgp";
+const TABELA_LIVROS = "Biblioteca Virtual";
+const BUCKET_LIVROS = "livros"; // Vamos criar este bucket na etapa do banco.
+
 const supabaseClient = window.supabase.createClient(
-  "https://qhawjvcaeawgbuhyopxp.supabase.co",
-  "sb_publishable_rIrWotQfvIKzyQ-YMTsrgA_BH9mGZgp"
+  SUPABASE_URL,
+  SUPABASE_PUBLIC_KEY
 );
 
 
@@ -20,16 +25,6 @@ let livros = [];
 let categoriaAtiva = "Todas";
 let livroSelecionado = null;
 let sugestoesVisiveis = false;
-
-const cores = [
-  "#234b70",
-  "#6e3928",
-  "#283b36",
-  "#9b7845",
-  "#81502b",
-  "#254c62",
-  "#59633c"
-];
 
 
 /* ============================================================
@@ -113,18 +108,12 @@ function textoPesquisavel(livro) {
 
 
 /* ============================================================
-   4. CARREGAR E SALVAR OS LIVROS (sem servidor)
-   ============================================================ */
-
-// Carrega os livros: primeiro procura no navegador; se não tiver, lê o livros.json.
-
-/* ============================================================
    4. CARREGAR OS LIVROS DO SUPABASE
    ============================================================ */
 
 async function carregarLivros() {
   const { data, error } = await supabaseClient
-    .from("Biblioteca Virtual")
+    .from(TABELA_LIVROS)
     .select("*")
     .order("titulo", { ascending: true });
 
@@ -138,14 +127,13 @@ async function carregarLivros() {
 
   livros = data.map((livro, indice) => ({
     ...livro,
-    id: livro.id ?? `livro-${indice}`,
+    id: livro.id,
     titulo: livro.titulo ?? "",
     autor: livro.autor ?? "",
     categoria: livro.categoria ?? "",
     sinopse: livro.sinopse ?? "",
     pdf: livro.pdf ?? "",
     capa: livro.capa ?? "",
-    cor: livro.cor || cores[indice % cores.length],
     favorito: Boolean(livro.favorito)
   }));
 
@@ -153,10 +141,44 @@ async function carregarLivros() {
 }
 
 
-// Mantém o salvamento local temporariamente.
-// Vamos conectar essa função ao Supabase na próxima etapa.
-async function salvarLivros() {
-  localStorage.setItem("livros", JSON.stringify(livros));
+// Envia um arquivo para o Storage e retorna a URL pública dele.
+// O bucket precisa estar configurado como público e aceitar uploads.
+async function enviarArquivo(arquivo, pasta) {
+  if (!arquivo) return "";
+
+  const nomeSeguro = arquivo.name
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-zA-Z0-9._-]/g, "-");
+  const caminho = `${pasta}/${crypto.randomUUID()}-${nomeSeguro}`;
+
+  const { error } = await supabaseClient.storage
+    .from(BUCKET_LIVROS)
+    .upload(caminho, arquivo, {
+      contentType: arquivo.type,
+      upsert: false
+    });
+
+  if (error) throw error;
+
+  const { data } = supabaseClient.storage
+    .from(BUCKET_LIVROS)
+    .getPublicUrl(caminho);
+
+  return data.publicUrl;
+}
+
+// Atualiza apenas os dados necessários diretamente na tabela do Supabase.
+async function atualizarLivroNoBanco(id, alteracoes) {
+  const { data, error } = await supabaseClient
+    .from(TABELA_LIVROS)
+    .update(alteracoes)
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data;
 }
 
 
@@ -168,19 +190,21 @@ function criarLivro(livro) {
   const capa = document.createElement("span");
 
   capa.className = "book-cover";
-  capa.style.background = livro.cor;
 
   if (livro.capa) {
     // O livro TEM imagem de capa: mostra a imagem
     const imagem = document.createElement("img");
     imagem.className = "cover-image";
-    imagem.src = livro.capa;      // o caminho que está no livros.json (ex.: "img/dom-casmurro.jpg")
+    imagem.src = livro.capa;      // URL da capa salva no Supabase Storage ou link existente.
     imagem.alt = "";
     capa.append(imagem);
   } else {
-    // O livro NÃO tem imagem: capa colorida com estrelinha, título e autor (como antes)
+    // Livro antigo sem capa cadastrada: mostra o título até a imagem ser adicionada.
     capa.innerHTML = `<span class="cover-ornament">✦</span>`;
-    capa.append(criarTexto("span", "cover-title", livro.titulo), criarTexto("span", "cover-author", livro.autor));
+    capa.append(
+      criarTexto("span", "cover-title", livro.titulo),
+      criarTexto("span", "cover-author", livro.autor)
+    );
   }
 
   const legenda = document.createElement("span");
@@ -532,14 +556,13 @@ function abrirDetalhes(livro) {
   dialogSynopsis.textContent =
     livro.sinopse || "Nenhuma sinopse cadastrada.";
 
-  dialogCover.alt = `Capa demonstrativa de ${livro.titulo}`;
-  dialogCover.removeAttribute("src");
-  dialogCover.style.background = livro.cor;
-  dialogCover.style.borderColor = livro.cor;
+  dialogCover.alt = `Capa de ${livro.titulo}`;
   if (livro.capa) {
-    dialogCover.src = livro.capa;          // tem imagem: mostra a imagem na janela
+    dialogCover.src = livro.capa;
+    dialogCover.hidden = false;
   } else {
-    dialogCover.removeAttribute("src");    // não tem: tira a imagem do livro anterior (fica só a cor)
+    dialogCover.removeAttribute("src");
+    dialogCover.hidden = true;
   }
 
   // Só mostra o botão de leitura se existir um PDF cadastrado.
@@ -587,77 +610,89 @@ addForm.addEventListener("submit", async evento => {
   evento.preventDefault();
 
   const campos = addForm.elements;
+  const titulo = campos.titulo.value.trim();
+  const autor = campos.autor.value.trim();
+  const categoria = campos.categoria.value;
+  const sinopse = campos.sinopse.value.trim();
+  const arquivoPdf = campos.pdf.files[0];
+  const arquivoCapa = campos.capa.files[0];
 
-  const novo = {
-    id: Date.now(),
-    titulo: campos.titulo.value.trim(),
-    autor: campos.autor.value.trim(),
-    categoria: campos.categoria.value,
-    sinopse: campos.sinopse.value.trim(),
-    pdf: campos.pdf.value.trim(),
-    cor: cores[livros.length % cores.length],
-    favorito: false
-  };
-
-  if (
-    !novo.titulo ||
-    !novo.autor ||
-    !novo.categoria ||
-    !novo.sinopse
-  ) {
-    addMessage.textContent =
-      "Preencha título, autor, categoria e sinopse.";
+  if (!titulo || !autor || !categoria || !sinopse || !arquivoPdf || !arquivoCapa) {
+    addMessage.textContent = "Preencha todos os campos e selecione o PDF e a imagem da capa.";
     return;
   }
 
-  if (
-    novo.pdf &&
-    !/^https?:\/\//i.test(novo.pdf)
-  ) {
-    addMessage.textContent =
-      "O link do PDF deve começar com http:// ou https://.";
+  if (arquivoPdf.type !== "application/pdf" && !arquivoPdf.name.toLowerCase().endsWith(".pdf")) {
+    addMessage.textContent = "Selecione um arquivo PDF válido.";
+    return;
+  }
+
+  if (!arquivoCapa.type.startsWith("image/")) {
+    addMessage.textContent = "Selecione um arquivo de imagem para a capa.";
     return;
   }
 
   const jaExiste = livros.some(livro =>
-    normalizarTexto(livro.titulo) ===
-    normalizarTexto(novo.titulo) &&
-    normalizarTexto(livro.autor) ===
-    normalizarTexto(novo.autor)
+    normalizarTexto(livro.titulo) === normalizarTexto(titulo) &&
+    normalizarTexto(livro.autor) === normalizarTexto(autor)
   );
 
   if (jaExiste) {
-    addMessage.textContent =
-      "Esse livro já está na estante.";
+    addMessage.textContent = "Esse livro já está na estante.";
     return;
   }
 
-  livros.push(novo);
+  const botaoEnviar = addForm.querySelector('button[type="submit"]');
+  botaoEnviar.disabled = true;
+  botaoEnviar.textContent = "Enviando arquivos...";
+  addMessage.textContent = "Enviando PDF e capa. Aguarde...";
 
   try {
-    await salvarLivros();
+    // Primeiro envia os dois arquivos para o Storage.
+    const pdfUrl = await enviarArquivo(arquivoPdf, "pdfs");
+    const capaUrl = await enviarArquivo(arquivoCapa, "capas");
+
+    // Não enviamos o id: o Supabase deve gerá-lo automaticamente.
+    const { data, error } = await supabaseClient
+      .from(TABELA_LIVROS)
+      .insert({
+        titulo,
+        autor,
+        categoria,
+        sinopse,
+        pdf: pdfUrl,
+        capa: capaUrl,
+        favorito: false
+      })
+      .select()
+      .single();
+
+    if (error) throw error;
+
+    livros.push({
+      ...data,
+      titulo: data.titulo ?? titulo,
+      autor: data.autor ?? autor,
+      categoria: data.categoria ?? categoria,
+      sinopse: data.sinopse ?? sinopse,
+      pdf: data.pdf ?? pdfUrl,
+      capa: data.capa ?? capaUrl,
+      favorito: Boolean(data.favorito)
+    });
 
     addDialog.close();
     renderizarAcervo();
+    addStatus.textContent = `"${titulo}" foi adicionado à estante.`;
 
-    addStatus.textContent =
-      `"${novo.titulo}" foi adicionado à estante.`;
-
-    // Atualiza as sugestões se a caixa de busca estiver aberta.
-    if (sugestoesVisiveis) {
-      mostrarSugestoes();
-    }
+    if (sugestoesVisiveis) mostrarSugestoes();
   } catch (erro) {
-    // Desfaz a inclusão local se o servidor não salvar.
-    livros = livros.filter(livro => livro.id !== novo.id);
-
-    addMessage.textContent =
-      "Não foi possível salvar o livro. Verifique se o servidor está ligado.";
-
-    console.error(erro);
+    addMessage.textContent = "Não foi possível cadastrar o livro. Na próxima etapa vamos configurar o Storage e as permissões do Supabase.";
+    console.error("Erro ao cadastrar livro:", erro);
+  } finally {
+    botaoEnviar.disabled = false;
+    botaoEnviar.textContent = "Adicionar livro";
   }
 });
-
 
 /* ============================================================
    11. EXCLUIR LIVRO
@@ -667,46 +702,32 @@ deleteButton.addEventListener("click", async () => {
   if (!livroSelecionado) return;
 
   const livroExcluido = livroSelecionado;
-
-  const confirmou = confirm(
-    `Excluir "${livroExcluido.titulo}" da estante?`
-  );
-
+  const confirmou = confirm(`Excluir "${livroExcluido.titulo}" da estante?`);
   if (!confirmou) return;
 
-  const listaAnterior = [...livros];
-
-  livros = livros.filter(
-    livro => livro.id !== livroExcluido.id
-  );
+  deleteButton.disabled = true;
 
   try {
-    await salvarLivros();
+    const { error } = await supabaseClient
+      .from(TABELA_LIVROS)
+      .delete()
+      .eq("id", livroExcluido.id);
 
+    if (error) throw error;
+
+    livros = livros.filter(livro => livro.id !== livroExcluido.id);
     dialog.close();
     livroSelecionado = null;
-
     renderizarAcervo();
-
-    addStatus.textContent =
-      `"${livroExcluido.titulo}" foi excluído.`;
-
-    if (sugestoesVisiveis) {
-      mostrarSugestoes();
-    }
+    addStatus.textContent = `"${livroExcluido.titulo}" foi excluído.`;
+    if (sugestoesVisiveis) mostrarSugestoes();
   } catch (erro) {
-    livros = listaAnterior;
-
-    renderizarAcervo();
-
-    alert(
-      "Não foi possível excluir o livro. Verifique o servidor."
-    );
-
-    console.error(erro);
+    alert("Não foi possível excluir o livro. Verifique as permissões do Supabase.");
+    console.error("Erro ao excluir livro:", erro);
+  } finally {
+    deleteButton.disabled = false;
   }
 });
-
 
 /* ============================================================
    12. FAVORITAR LIVRO
@@ -715,28 +736,25 @@ deleteButton.addEventListener("click", async () => {
 favoriteButton.addEventListener("click", async () => {
   if (!livroSelecionado) return;
 
-  const favoritoAnterior = livroSelecionado.favorito;
-
-  livroSelecionado.favorito = !favoritoAnterior;
-
-  atualizarBotaoFavorito();
+  const favoritoNovo = !livroSelecionado.favorito;
+  favoriteButton.disabled = true;
 
   try {
-    await salvarLivros();
-  } catch (erro) {
-    // Reverte o botão se não foi possível gravar a mudança.
-    livroSelecionado.favorito = favoritoAnterior;
+    const atualizado = await atualizarLivroNoBanco(livroSelecionado.id, {
+      favorito: favoritoNovo
+    });
 
+    livroSelecionado.favorito = Boolean(atualizado.favorito);
+    const indice = livros.findIndex(livro => livro.id === livroSelecionado.id);
+    if (indice !== -1) livros[indice].favorito = Boolean(atualizado.favorito);
     atualizarBotaoFavorito();
-
-    alert(
-      "Não foi possível salvar o favorito. Verifique o servidor."
-    );
-
-    console.error(erro);
+  } catch (erro) {
+    alert("Não foi possível salvar o favorito. Verifique as permissões do Supabase.");
+    console.error("Erro ao atualizar favorito:", erro);
+  } finally {
+    favoriteButton.disabled = false;
   }
 });
-
 
 /* ============================================================
    13. INICIALIZAÇÃO
@@ -744,12 +762,12 @@ favoriteButton.addEventListener("click", async () => {
 
 carregarLivros().catch(erro => {
   resultsCount.textContent =
-    "Servidor desligado. No terminal, rode: node server.js";
+    "Não foi possível carregar os livros do Supabase. Verifique a conexão e as permissões.";
 
   emptyState.hidden = false;
 
   console.error(
-    "Erro ao carregar os livros:",
+    "Erro ao carregar os livros do Supabase:",
     erro
   );
 });
