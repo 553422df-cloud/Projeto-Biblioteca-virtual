@@ -1,15 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
 
-/* ===== CORES E FONTES DO SITE (variáveis usadas com var(--nome)) ===== */
+/* ===== CORES DO SITE (variáveis usadas com var(--nome)) ===== */
 :root {
-  --ink: #f8f2e9;
-  --muted: #c9c0b4;
-  --gold: #d4aa6a;
-  --dark: #111514;
-  --panel: #1a201e;
-  --wood: #4a2b19;
-  --wood-light: #87552f;
-  --cream: #f2eadf;
+  --ink: #f8f2e9;    /* texto claro */
+  --muted: #c9c0b4;  /* texto apagado */
+  --gold: #d4aa6a;   /* dourado */
+  --cream: #f2eadf;  /* fundo das janelas */
 }
 
 /* ===== REGRAS GERAIS (valem para a página toda) ===== */
@@ -52,6 +48,7 @@ select:focus-visible {
   outline-offset: 3px;
 }
 
+/* Esconde um texto na tela, mas leitores de tela (para cegos) ainda leem */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -145,29 +142,10 @@ select:focus-visible {
   align-items: center;
   padding: 54px clamp(22px, 7vw, 100px);
   overflow: hidden;
-  background: linear-gradient(90deg, #160e09 0%, #24160d 43%, #1c1812 100%);
+  /* uma camada escura por cima da foto (para o texto continuar legível) + a foto */
+  background: linear-gradient(90deg, #160e09ee 0%, #160e0999 50%, #160e0933 100%),
+    url("img/banner.jpeg") center / cover;
   border-bottom: 1px solid #ffffff12;
-}
-
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 0 35%;
-  opacity: .8;
-  background: radial-gradient(ellipse at 72% 45%, #b67c3a35, transparent 35%), repeating-linear-gradient(90deg, transparent 0 90px, #120c08 92px 100px), linear-gradient(0deg, #110c08 0%, transparent 45%);
-}
-
-.hero::after {
-  content: "";
-  position: absolute;
-  right: 7%;
-  bottom: 0;
-  width: 36%;
-  height: 44%;
-  border-top: 10px solid #603c22;
-  background: linear-gradient(180deg, #342013, #1b120d);
-  box-shadow: 0 -4px 0 #9c693c, 0 -8px 25px #0008;
-  opacity: .8;
 }
 
 .hero-content {
@@ -186,14 +164,12 @@ select:focus-visible {
 
 h1,
 h2,
-h3,
 p {
   margin-top: 0;
 }
 
 h1,
-h2,
-.book-title {
+h2 {
   font-family: "Playfair Display", Georgia, serif;
 }
 
@@ -207,6 +183,17 @@ h1 {
   color: #ded4c8;
   line-height: 1.7;
   max-width: 460px;
+}
+
+/* A estrela brilhante no canto do banner */
+.hero-lamp {
+  position: absolute;
+  z-index: 1;
+  right: 15%;
+  top: 28px;
+  font-size: 70px;
+  color: #ffdda0;
+  text-shadow: 0 0 35px #ffbd5a, 0 0 85px #ffb347;
 }
 
 /* ===== BOTÕES (dourado = primary, contorno = secondary) ===== */
@@ -240,14 +227,24 @@ h1 {
   margin-top: 8px;
 }
 
-.hero-lamp {
-  position: absolute;
-  z-index: 1;
-  right: 15%;
-  top: 28px;
-  font-size: 70px;
-  color: #ffdda0;
-  text-shadow: 0 0 35px #ffbd5a, 0 0 85px #ffb347;
+.secondary-button {
+  border-color: #d1c4b4;
+  background: transparent;
+  color: #29241e;
+}
+
+.secondary-button:hover {
+  background: #e8ded1;
+}
+
+/* Botão de excluir (vermelho) */
+.danger-button {
+  border-color: #d3a59f;
+  color: #8f2a20;
+}
+
+.danger-button:hover {
+  background: #f3dad6;
 }
 
 /* ===== SEÇÕES E TÍTULOS ===== */
@@ -283,10 +280,10 @@ h1 {
 }
 
 .category-card {
-  min-height: 110px;
-  /* altura mínima do cartão (era 150px) */
-  padding: 14px;
-  /* espaço interno (era 19px) */
+  position: relative;      /* a imagem de fundo se posiciona dentro do cartão */
+  overflow: hidden;        /* a imagem não passa da borda */
+  min-height: 100px;       /* altura mínima do cartão */
+  padding: 12px;           /* espaço interno */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -325,50 +322,32 @@ h1 {
   border-color: var(--gold);
 }
 
-/* ===== IMAGEM DE FUNDO NOS CARTÕES DE CATEGORIA ===== */
-.category-card {
-  position: relative;
-  overflow: hidden;
-}
-
+/* A imagem de fundo do cartão */
 .category-image {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: .35;
-  /* escurece a imagem para o texto aparecer */
+  opacity: .35;            /* escurece a imagem para o texto aparecer */
   z-index: 0;
 }
 
+/* O texto do cartão fica por cima da imagem */
 .category-card>span {
   position: relative;
   z-index: 1;
-  /* mantém o texto acima da imagem */
 }
-
-
-.category-card {
-  min-height: 100px;
-  /* no celular (era 138px) */
-  padding: 12px;
-  /* no celular (era 15px) */
-}
-
 
 .category-symbol {
   font-size: 22px;
-  /* tamanho do ícone (era 27px) */
   color: var(--gold);
   margin-bottom: 8px;
-  /* espaço abaixo do ícone (era 14px) */
 }
 
 .category-name {
   font-weight: 700;
   margin-bottom: 5px;
-
 }
 
 .category-description {
@@ -402,6 +381,12 @@ h1 {
   border: 1px solid #ffffff25;
   border-radius: 8px;
   padding: 10px;
+}
+
+/* Aviso "foi adicionado / foi excluído" */
+#add-status:not(:empty) {
+  margin-top: 6px;
+  color: var(--gold);
 }
 
 /* ===== ESTANTE DE MADEIRA E OS LIVROS (capas, legendas, prateleiras) ===== */
@@ -453,6 +438,7 @@ h1 {
   background: linear-gradient(135deg, #34516a, #142938);
 }
 
+/* A linha clara perto da lombada */
 .book-cover::before {
   content: "";
   position: absolute;
@@ -461,6 +447,7 @@ h1 {
   background: #ffffff2b;
 }
 
+/* Cores de capa diferentes conforme a posição na estante (para livros sem imagem) */
 .book:nth-child(5n + 2) .book-cover {
   background: linear-gradient(135deg, #6e3928, #28150f);
 }
@@ -471,17 +458,26 @@ h1 {
 
 .book:nth-child(5n + 4) .book-cover {
   background: linear-gradient(135deg, #b28a4e, #57391c);
-  color: #21170e;
 }
 
 .book:nth-child(5n + 5) .book-cover {
   background: linear-gradient(135deg, #594b68, #251e30);
 }
 
+/* Ao passar o mouse: o livro sobe e gira um pouco */
 .book:hover .book-cover,
 .book:focus-visible .book-cover {
   transform: translateY(-10px) rotateY(-5deg);
   box-shadow: 8px 12px 16px #0009;
+}
+
+/* A imagem de capa do livro (preenche a capa inteira) */
+.cover-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .cover-ornament {
@@ -504,6 +500,7 @@ h1 {
   opacity: .85;
 }
 
+/* A legenda embaixo da capa: título e autor numa linha só, com "..." se não couber */
 .book-caption {
   color: #e5d6c4;
   text-align: left;
@@ -521,14 +518,15 @@ h1 {
 }
 
 .book-caption span {
-  display: block;            /* ocupa a linha inteira, para o "..." funcionar */
+  display: block;
   color: #c2b3a3;
   font-size: .75rem;
-  overflow: hidden;          /* esconde o que passar da largura */
-  text-overflow: ellipsis;   /* coloca "..." no fim */
-  white-space: nowrap;       /* não deixa quebrar em duas linhas */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
+/* A tábua de prateleira (a cada 5 livros) */
 .shelf-board {
   grid-column: 1 / -1;
   height: 16px;
@@ -596,6 +594,7 @@ h1 {
   backdrop-filter: blur(5px);
 }
 
+/* O botão "×" no canto */
 .book-dialog>form {
   position: absolute;
   right: 12px;
@@ -614,6 +613,7 @@ h1 {
   cursor: pointer;
 }
 
+/* Janela de detalhes: capa à esquerda, informações à direita */
 .dialog-layout {
   display: grid;
   grid-template-columns: minmax(170px, 240px) 1fr;
@@ -633,6 +633,11 @@ h1 {
   object-fit: cover;
   border-radius: 5px;
   box-shadow: 0 10px 24px #0003;
+}
+
+/* Livro sem capa: o script.js coloca "hidden" e a capa some */
+.dialog-cover[hidden] {
+  display: none;
 }
 
 .dialog-info {
@@ -687,20 +692,67 @@ h1 {
   color: #fff8ef;
 }
 
-.secondary-button {
-  border-color: #d1c4b4;
-  background: transparent;
-  color: #29241e;
-}
-
-.secondary-button:hover {
-  background: #e8ded1;
-}
-
 .dialog-help {
   color: #766b5f;
   font-size: .78rem;
   margin: 13px 0 0;
+}
+
+/* ===== FORMULÁRIO DE NOVO LIVRO ===== */
+#add-dialog {
+  max-height: calc(100vh - 28px);
+  overflow-y: auto;
+}
+
+.add-form-wrap {
+  padding: clamp(22px, 5vw, 42px);
+}
+
+.add-form {
+  display: grid;
+  gap: 14px;
+}
+
+.add-form .eyebrow {
+  color: #8b6536;
+  margin: 0;
+}
+
+.add-form h2 {
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
+  margin: 0 36px 4px 0;
+}
+
+.add-form label {
+  display: grid;
+  gap: 6px;
+  font-size: .85rem;
+  color: #49433c;
+}
+
+.add-form input,
+.add-form select,
+.add-form textarea {
+  padding: 11px 12px;
+  border: 1px solid #cdbfae;
+  border-radius: 8px;
+  background: #fffaf3;
+  color: #25231f;
+  font: inherit;
+}
+
+.add-form :focus-visible {
+  outline: 3px solid #8b6536;
+  outline-offset: 2px;
+}
+
+/* Mensagem de erro do formulário (vermelha) */
+.form-message {
+  margin: 0;
+  min-height: 1.3em;
+  color: #a1362b;
+  font-size: .85rem;
+  font-weight: 600;
 }
 
 /* ===== CELULAR E TABLET (telas até 760px) ===== */
@@ -727,17 +779,6 @@ h1 {
     min-height: 330px;
     padding-top: 44px;
     padding-bottom: 44px;
-  }
-
-  .hero::before {
-    left: 10%;
-    opacity: .4;
-  }
-
-  .hero::after {
-    width: 55%;
-    right: -5%;
-    opacity: .5;
   }
 
   .hero-lamp {
@@ -817,98 +858,4 @@ h1 {
     transition-duration: .01ms !important;
     animation-duration: .01ms !important;
   }
-}
-
-/* ===== FORMULÁRIO DE NOVO LIVRO ===== */
-#add-dialog {
-  max-height: calc(100vh - 28px);
-  overflow-y: auto;
-}
-
-.add-form-wrap {
-  padding: clamp(22px, 5vw, 42px);
-}
-
-.add-form {
-  display: grid;
-  gap: 14px;
-}
-
-.add-form .eyebrow {
-  color: #8b6536;
-  margin: 0;
-}
-
-.add-form h2 {
-  font-size: clamp(1.5rem, 3.5vw, 2rem);
-  margin: 0 36px 4px 0;
-}
-
-.add-form label {
-  display: grid;
-  gap: 6px;
-  font-size: .85rem;
-  color: #49433c;
-}
-
-.add-form input,
-.add-form select,
-.add-form textarea {
-  padding: 11px 12px;
-  border: 1px solid #cdbfae;
-  border-radius: 8px;
-  background: #fffaf3;
-  color: #25231f;
-  font: inherit;
-}
-
-.add-form :focus-visible {
-  outline: 3px solid #8b6536;
-  outline-offset: 2px;
-}
-
-.form-message {
-  margin: 0;
-  min-height: 1.3em;
-  color: #a1362b;
-  font-size: .85rem;
-  font-weight: 600;
-}
-
-#add-status:not(:empty) {
-  margin-top: 6px;
-  color: var(--gold);
-}
-
-
-/* ===== BOTÃO DE EXCLUIR ===== */
-.danger-button {
-  border-color: #d3a59f;
-  color: #8f2a20;
-}
-
-.danger-button:hover {
-  background: #f3dad6;
-}
-
-/* ===== CAPA COLORIDA DENTRO DA JANELA DE DETALHES =====
-   A cor de fundo e da borda vem de cada livro (o script.js coloca). */
-.dialog-cover {
-  min-height: 190px;
-  padding: 14px;
-  border: 12px solid transparent;
-  color: white;
-  object-fit: contain;
-}
-
-/* ===== IMAGEM DE CAPA DOS LIVROS ===== */
-.cover-image {
-  position: absolute;
-  /* fica por cima da capa colorida */
-  inset: 0;
-  /* encosta nas 4 bordas da capa */
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  /* preenche a capa inteira sem distorcer a imagem */
 }

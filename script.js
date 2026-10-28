@@ -180,7 +180,7 @@ async function atualizarLivroNoBanco(id, alteracoes) {
   if (error) throw error;
   return data;
 }
-
+ 
 
 /* ============================================================
    5. CRIAR OS LIVROS NA ESTANTE
@@ -600,11 +600,9 @@ addButton.addEventListener("click", () => {
   addDialog.showModal();
 });
 
-
 cancelAdd.addEventListener("click", () => {
   addDialog.close();
 });
-
 
 addForm.addEventListener("submit", async evento => {
   evento.preventDefault();
